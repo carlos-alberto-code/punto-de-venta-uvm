@@ -1,6 +1,6 @@
 import flet as ft
 
-from .color_palette import ColorPalette
+from theme.theme_config import ColorPalette
 
 
 class IconTextField(ft.UserControl):
