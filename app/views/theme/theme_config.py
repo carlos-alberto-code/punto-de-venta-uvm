@@ -73,7 +73,7 @@ LightTheme = ft.Theme(
 
 DarkTheme = ft.Theme(
     color_scheme=ft.ColorScheme(**_dark_color_palette),
-    text_theme=_light_text_theme
+    text_theme=_dark_text_theme
 )
 
 

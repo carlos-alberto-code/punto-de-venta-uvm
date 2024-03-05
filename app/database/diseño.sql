@@ -23,6 +23,7 @@ CREATE TABLE productos (
   precio_compra DECIMAL(10, 2) NOT NULL CHECK (precio_compra >= 0),
   precio_venta DECIMAL(10, 2) NOT NULL CHECK (precio_venta >= 0),
   stock_minimo INT NOT NULL DEFAULT 1 CHECK (stock_minimo >= 0),
+  description VARCHAR(100) NOT NULL,
   FOREIGN KEY (unidad_id) REFERENCES unidades(id) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (marca_id) REFERENCES marcas(id) ON DELETE RESTRICT ON UPDATE CASCADE
