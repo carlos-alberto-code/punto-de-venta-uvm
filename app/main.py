@@ -1,37 +1,11 @@
-from sqlalchemy import text
-from database.connection import engine, get_db
-from models.models import Base, Marca, Categoria, Units
+import flet as ft
 
-from contextlib import contextmanager
+from views.theme.theme_config import ThemeMode, LightTheme
 
+def main(page: ft.Page):
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme = LightTheme
 
-# Verificar la conexión a la base de datos
-try:
-    with engine.connect() as connection:
-        result = connection.execute(text("SELECT 1"))
-        print("Conexión a la base de datos establecida:", result.fetchall())
-except Exception as e:
-    print("Error al conectar con la base de datos:", e)
+    page.add(ThemeMode(page))
 
-@contextmanager
-def get_db_context():
-    db = next(get_db())
-    try:
-        yield db
-    except Exception as e:
-        db.rollback()
-        raise e
-    finally:
-        db.close()
-
-# Probar la creación de un nuevo producto y su inserción en la base de datos
-try:
-    with get_db_context() as db:
-        nuevo_producto = Marca(
-            nombre='Quaker'
-        )
-        db.add(nuevo_producto)
-        db.commit()
-        print("Producto agregado exitosamente.")
-except Exception as e:
-    print("Error al agregar el producto:", e)
+ft.app(target=main)
