@@ -3,7 +3,7 @@ import flet as ft
 
 
 @dataclass
-class LightColorPalette:
+class _LightColorPalette:
     # Colores principales para tema claro
     primary:        str = field(default='#2A2B47')  # azul oscuro
     on_primary:     str = field(default='#F2F2F2')  # blanco grisáceo
@@ -26,7 +26,7 @@ class LightColorPalette:
 
 
 @dataclass
-class DarkColorPalette:
+class _DarkColorPalette:
     # Colores principales para tema oscuro
     primary:        str = field(default='#F2F2F2')  # blanco grisáceo
     on_primary:     str = field(default='#2A2B47')  # azul oscuro
@@ -48,43 +48,66 @@ class DarkColorPalette:
     surface_tint:   str = field(default='#7F5AFF')  # lila oscuro
 
 
-light_color_palette = asdict(LightColorPalette())
-dark_color_palette  = asdict(DarkColorPalette())
+_light_color_palette = asdict(_LightColorPalette())
+_dark_color_palette  = asdict(_DarkColorPalette())
 
 
-light_text_theme = ft.TextTheme(
-    title_large=ft.TextStyle(size=21, font_family="Roboto", color=LightColorPalette.primary),
-    body_medium=ft.TextStyle(size=12, font_family="Lato", color=LightColorPalette.primary),
+_light_text_theme = ft.TextTheme(
+    title_large=ft.TextStyle(size=21, font_family="Roboto", color=_LightColorPalette.primary),
+    body_medium=ft.TextStyle(size=12, font_family="Lato", color=_LightColorPalette.primary),
 )
 
 
-dark_text_theme = ft.TextTheme(
-    title_large=ft.TextStyle(size=21, font_family="Roboto", color=DarkColorPalette.primary),
-    body_medium=ft.TextStyle(size=12, font_family="Lato", color=DarkColorPalette.primary),
+_dark_text_theme = ft.TextTheme(
+    title_large=ft.TextStyle(size=21, font_family="Roboto", color=_DarkColorPalette.primary),
+    body_medium=ft.TextStyle(size=12, font_family="Lato", color=_DarkColorPalette.primary),
 )
 
 
-def _change_to_light_theme(page: ft.Page):
-    page.bgcolor = light_theme.color_scheme.background # type: ignore
+LightTheme = ft.Theme(
+    color_scheme=ft.ColorScheme(**_light_color_palette),
+    text_theme=_light_text_theme
+)
+
+
+
+DarkTheme = ft.Theme(
+    color_scheme=ft.ColorScheme(**_dark_color_palette),
+    text_theme=_light_text_theme
+)
+
+
+def change_to_light_theme(page: ft.Page):
+    page.bgcolor = LightTheme.color_scheme.background # type: ignore
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.theme = light_theme
+    page.theme = LightTheme
     page.update()
 
 
-light_theme = ft.Theme(
-    color_scheme=ft.ColorScheme(**light_color_palette),
-    text_theme=light_text_theme
-)
-
-
-def _change_to_dark_theme(page: ft.Page):
-    page.bgcolor = dark_theme.color_scheme.background # type: ignore
+def change_to_dark_theme(page: ft.Page):
+    page.bgcolor = DarkTheme.color_scheme.background # type: ignore
     page.theme_mode = ft.ThemeMode.DARK
-    page.theme = dark_theme
+    page.theme = DarkTheme
     page.update()
 
 
-dark_theme = ft.Theme(
-    color_scheme=ft.ColorScheme(**dark_color_palette),
-    text_theme=light_text_theme
-)
+class ThemeMode(ft.UserControl):
+
+    def __init__(self, page: ft.Page):
+        super().__init__()
+        self._ligth_mode_item = ft.PopupMenuItem(
+            text="Light Mode",
+            icon=ft.icons.LIGHT_MODE,
+            on_click=lambda e: change_to_light_theme(page)
+        )
+        self._dark_mode_item = ft.PopupMenuItem(
+            text="Dark Mode",
+            icon=ft.icons.DARK_MODE,
+            on_click=lambda e: change_to_dark_theme(page)
+        )
+    
+    def build(self):
+        return ft.PopupMenuButton(
+            icon=ft.icons.MODE,
+            items=[self._ligth_mode_item, self._dark_mode_item]
+        )
