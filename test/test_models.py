@@ -1,7 +1,7 @@
 import unittest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.models.models import Base, Unit, Brand, Category, Product
+from app.models.models import Base, Unit, Brand, Category, Category
 
 
 class TestModels(unittest.TestCase):
@@ -40,7 +40,7 @@ class TestModels(unittest.TestCase):
         self.assertEqual(category.name, 'Cereales') # type: ignore
     
     def test_create_product(self):
-        new_product = Product(
+        new_product = Category(
             unit_id=1,
             brand_id=1,
             category_id=1,
@@ -53,7 +53,7 @@ class TestModels(unittest.TestCase):
         self.session.add(new_product)
         self.session.commit()
 
-        product = self.session.query(Product).first()
+        product = self.session.query(Category).first()
         self.assertIsNotNone(product)
         self.assertEqual(product.description, 'Avena Quaker') # type: ignore
 
