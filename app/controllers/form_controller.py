@@ -19,7 +19,6 @@ class FormModelController:
 
     def __init__(self, model: DeclarativeMeta) -> None:
         self._model = model
-        print(self._model)
     
 
     @ property
