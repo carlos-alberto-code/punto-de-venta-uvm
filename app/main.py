@@ -9,9 +9,10 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.DARK
 
     # Prubeas del contador con herencia
-    from views.components.strategy import Counter, IntCounterStrategy, FloatCounterStrategy
-    cont = Counter(FloatCounterStrategy())
-    page.add(cont)
+    from views.packages.form.counter import Counter, IntCounter, FloatCounter
+
+    contador = Counter(IntCounter())
+    page.add(contador)
     
 
 
