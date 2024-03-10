@@ -1,3 +1,6 @@
+# TODO: Evitar números negativos en ambas estrategias
+# TODO: Evitar la escritura de texto pero permitir puntos decimales.
+# TODO: En los valores flotantes solo debe permitir dos digitos
 import flet as ft
 
 
@@ -35,6 +38,7 @@ class Counter(ft.UserControl):
         self.strategy = strategy
         self.remove_button = ft.IconButton(icon=ft.icons.REMOVE, on_click=self._decrement)
         self.field = ft.TextField(
+            # expand=True, # Para que se adapte si es que cambia la Row que lo contiene
             value='0',
             text_align=ft.TextAlign.CENTER,
             text_vertical_align=ft.VerticalAlignment.START,
@@ -46,12 +50,13 @@ class Counter(ft.UserControl):
         self.update()
 
     def _decrement(self, e):
-        self.field.value = self.strategy.decrement(str(self.field.value))
+        self.field.value = self.strategy.decrement(str(self.field.value)) if int(str(self.field.value)) > 0 else '0'
         self.update()
     
     def build(self):
         return ft.Row(
-            height=40,
+            # height=40,
+            # width=200,
             controls=[
                 self.remove_button,
                 self.field,
