@@ -11,8 +11,9 @@ def main(page: ft.Page):
     # Prubeas del contador con herencia
     from views.packages.form.counter import Counter, IntCounter, FloatCounter
 
-    contador = Counter(FloatCounter())
+    contador = Counter(IntCounter())
     page.add(contador)
+    print(contador.value)
     
 
 
