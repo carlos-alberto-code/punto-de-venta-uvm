@@ -4,8 +4,6 @@ from sqlalchemy import inspect
 from dataclasses import dataclass
 from typing import List
 
-import flet as ft
-
 
 @dataclass
 class ModelAttribute:

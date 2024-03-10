@@ -61,6 +61,7 @@ class Counter(ft.UserControl):
     
     def build(self):
         return ft.Row(
+            adaptive=True,
             controls=[
                 self._remove_button,
                 self._quantoty_field,

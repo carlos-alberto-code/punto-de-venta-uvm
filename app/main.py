@@ -5,8 +5,9 @@ from views.theme.theme_config import ThemeMode, LightTheme, DarkTheme
 def main(page: ft.Page):
 
     # page.window_title_bar_hidden = True
-    page.theme = DarkTheme
-    page.theme_mode = ft.ThemeMode.DARK
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme = LightTheme
+    page.update()
 
     # Prubeas del contador con herencia
     from views.packages.form.counter import Counter, IntCounter, FloatCounter
