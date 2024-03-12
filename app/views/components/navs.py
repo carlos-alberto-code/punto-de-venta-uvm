@@ -11,7 +11,6 @@ class Sidebar(ft.UserControl):
 
     def build(self):
         return ft.NavigationDrawer(
-            open=True,
             controls=[
                 ft.Container(height=14),
                 ft.NavigationDrawerDestination(icon=ft.icons.PERSON, label="Perfil"),

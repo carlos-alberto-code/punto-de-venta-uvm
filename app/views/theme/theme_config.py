@@ -2,6 +2,8 @@ from dataclasses import dataclass, field, asdict
 import flet as ft
 
 
+# TODO: Implementar Strategy para hacer permitir el cambio en tiempo de ejecución
+
 @dataclass
 class _LightColorPalette:
     # Colores principales para tema claro
@@ -54,13 +56,13 @@ _dark_color_palette  = asdict(_DarkColorPalette())
 
 _light_text_theme = ft.TextTheme(
     title_large=ft.TextStyle(size=21, font_family="Roboto", color=_LightColorPalette.primary),
-    body_medium=ft.TextStyle(size=12, font_family="Lato", color=_LightColorPalette.primary),
+    body_medium=ft.TextStyle(size=14, font_family="Lato", color=_LightColorPalette.primary),
 )
 
 
 _dark_text_theme = ft.TextTheme(
     title_large=ft.TextStyle(size=21, font_family="Roboto", color=_DarkColorPalette.primary),
-    body_medium=ft.TextStyle(size=12, font_family="Lato", color=_DarkColorPalette.primary),
+    body_medium=ft.TextStyle(size=14, font_family="Lato", color=_DarkColorPalette.primary),
 )
 
 

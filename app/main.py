@@ -1,7 +1,7 @@
 import flet as ft
 
 from views.theme.theme_config import LightTheme, DarkTheme
-from views.modules.purchase_view import PurchaseView
+from views.modules.view_purchase import PurchaseView
 
 from views.components.navs import Sidebar
 

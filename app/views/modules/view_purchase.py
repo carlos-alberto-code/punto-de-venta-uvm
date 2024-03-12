@@ -12,8 +12,8 @@ _sidebar_controls = (
 # Aquí se definen los destinos de la barra de navegación de esta vista
 _navigation_destinations = (
     ft.NavigationDestination(icon=ft.icons.ARTICLE, label="Compras"),
-    ft.NavigationDestination(icon=ft.icons.DATA_SAVER_OFF, label="Reportes"),
-    ft.NavigationDestination(icon=ft.icons.STORAGE, label="Inventario"),
+    ft.NavigationDestination(icon=ft.icons.STORE_MALL_DIRECTORY, label="Inventario"),
+    ft.NavigationDestination(icon=ft.icons.MONEY, label="Ventas"),
 )
 
 class PurchaseView(ft.UserControl):
