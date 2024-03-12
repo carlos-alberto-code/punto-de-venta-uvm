@@ -4,7 +4,7 @@ import flet as ft
 from dataclasses import dataclass
 from typing import List
 
-from controller import FormModelController, ModelAttribute
+from controller import FormModelController, ModelFields
 from counter import Counter, IntCounter, FloatCounter
 
 
@@ -25,7 +25,7 @@ class _Adapter:
     #Todos los tipos de dato de texto convergen a un control de campo de texto.
 
 
-    def __init__(self, model_attibutes: List[ModelAttribute]) -> None:
+    def __init__(self, model_attibutes: List[ModelFields]) -> None:
         # Configurado sólo para manejo de texto y números
         self._controls: List[ft.Control] = []
         adapter = {
@@ -38,7 +38,7 @@ class _Adapter:
     def controls(self):
         return self._controls
 
-from .models import Models
+from .models import _Models
 class Form(ft.UserControl):
     # Me basaré en el principio de desarrollar lo que es importante, así que no es necesario
     # que este artefacto contenga todas las características, sino sólo las que darán valor inicial.
@@ -58,7 +58,7 @@ class Form(ft.UserControl):
         'attr_name': ft.Row()
     }
     body['attr_name'].alignment = ft.MainAxisAlignment.CENTER
-    def __init__(self, models: Models) -> None:
+    def __init__(self, models: _Models) -> None:
         super().__init__()
         self.models = models
         model_attributes = FormModelController(model).model_attibutes
