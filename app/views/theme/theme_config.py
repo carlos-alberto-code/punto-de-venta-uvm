@@ -85,7 +85,7 @@ def change_to_light_theme(page: ft.Page):
 
 
 def change_to_dark_theme(page: ft.Page):
-    page.bgcolor = DarkTheme.color_scheme.background # type: ignore
+    page.bgcolor = DarkTheme.color_scheme.primary # type: ignore
     page.theme_mode = ft.ThemeMode.DARK
     page.theme = DarkTheme
     page.update()
@@ -95,6 +95,7 @@ class ThemeMode(ft.UserControl):
 
     def __init__(self, page: ft.Page):
         super().__init__()
+        
         self._ligth_mode_item = ft.PopupMenuItem(
             text="Light Mode",
             icon=ft.icons.LIGHT_MODE,

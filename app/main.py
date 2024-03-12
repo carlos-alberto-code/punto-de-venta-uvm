@@ -1,11 +1,21 @@
 import flet as ft
 
-from views.theme.theme_config import ThemeMode, LightTheme
+from views.theme.theme_config import LightTheme, DarkTheme
+from views.modules.purchase_view import PurchaseView
+
+from views.components.navs import Sidebar
 
 def main(page: ft.Page):
+    
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = LightTheme
+    page.bgcolor = LightTheme.color_scheme.background # type: ignore
+    page.adaptive = True
+    
+    page.views.append(PurchaseView(page).build())
+    
+    page.update()
 
-    page.add(ThemeMode(page))
+    
 
 ft.app(target=main)
