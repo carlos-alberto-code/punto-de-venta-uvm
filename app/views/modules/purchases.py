@@ -27,9 +27,9 @@ sections = { # Son los controles que se muestran en el NavigationDrawer
     2: ft.NavigationDrawerDestination(icon=ft.icons.SHIELD, label='Proveedores'),
 }
 
-def create_views_of_purchases(page: ft.Page):
-    purchase_view = SectionView(page)
+# def create_views_of_purchases(page: ft.Page):
+#     purchase_view = SectionView(page)
 
-    # Aquí puedes agregar el código adicional para renderizar la vista de compras
+#     # Aquí puedes agregar el código adicional para renderizar la vista de compras
 
-    return purchase_view
+#     return purchase_view
