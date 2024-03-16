@@ -111,6 +111,6 @@ class ThemeMode(ft.UserControl):
     
     def build(self):
         return ft.PopupMenuButton(
-            icon=ft.icons.MODE,
+            icon=ft.icons.SUNNY,
             items=[self._ligth_mode_item, self._dark_mode_item]
         )

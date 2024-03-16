@@ -1,9 +1,10 @@
 import flet as ft
 
 from views.theme.theme_config import LightTheme, DarkTheme
-from views.modules.view_purchase import PurchaseView
+from app.views.modules.view_template import SectionView
 
 from views.components.navs import Sidebar
+from views.modules.modules import ModuleView
 
 def main(page: ft.Page):
     
@@ -12,7 +13,12 @@ def main(page: ft.Page):
     page.bgcolor = LightTheme.color_scheme.background # type: ignore
     page.adaptive = True
     
-    page.views.append(PurchaseView(page).build())
+    section = SectionView(page)
+    section.sections.append(ft.NavigationDrawerDestination(icon=ft.icons.SHOP, label='Compras'))
+    section.sections.append(ft.NavigationDrawerDestination(icon=ft.icons.SHIELD, label='Proveedores'))
+    section.modules.append(ft.NavigationDestination(icon=ft.icons.SHOP, label='Compras'))
+    section.modules.append(ft.NavigationDestination(icon=ft.icons.SHIELD, label='Proveedores'))
+    page.views.append(section.build())
     
     page.update()
 
