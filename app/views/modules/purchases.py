@@ -15,7 +15,7 @@
 
 import flet as ft
 
-from view_template import SectionView
+from view_template import ViewTemplate
 
 
 module = ft.NavigationDestination(icon=ft.icons.SHOP, label='Compras')
