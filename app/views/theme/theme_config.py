@@ -2,6 +2,8 @@ from dataclasses import dataclass, field, asdict
 import flet as ft
 
 
+# TODO: Implementar Strategy para hacer permitir el cambio en tiempo de ejecución
+
 @dataclass
 class _LightColorPalette:
     # Colores principales para tema claro
@@ -54,13 +56,13 @@ _dark_color_palette  = asdict(_DarkColorPalette())
 
 _light_text_theme = ft.TextTheme(
     title_large=ft.TextStyle(size=21, font_family="Roboto", color=_LightColorPalette.primary),
-    body_medium=ft.TextStyle(size=12, font_family="Lato", color=_LightColorPalette.primary),
+    body_medium=ft.TextStyle(size=14, font_family="Lato", color=_LightColorPalette.primary),
 )
 
 
 _dark_text_theme = ft.TextTheme(
     title_large=ft.TextStyle(size=21, font_family="Roboto", color=_DarkColorPalette.primary),
-    body_medium=ft.TextStyle(size=12, font_family="Lato", color=_DarkColorPalette.primary),
+    body_medium=ft.TextStyle(size=14, font_family="Lato", color=_DarkColorPalette.primary),
 )
 
 
@@ -85,7 +87,7 @@ def change_to_light_theme(page: ft.Page):
 
 
 def change_to_dark_theme(page: ft.Page):
-    page.bgcolor = DarkTheme.color_scheme.background # type: ignore
+    page.bgcolor = DarkTheme.color_scheme.primary # type: ignore
     page.theme_mode = ft.ThemeMode.DARK
     page.theme = DarkTheme
     page.update()
@@ -95,6 +97,7 @@ class ThemeMode(ft.UserControl):
 
     def __init__(self, page: ft.Page):
         super().__init__()
+        
         self._ligth_mode_item = ft.PopupMenuItem(
             text="Light Mode",
             icon=ft.icons.LIGHT_MODE,
@@ -108,6 +111,6 @@ class ThemeMode(ft.UserControl):
     
     def build(self):
         return ft.PopupMenuButton(
-            icon=ft.icons.MODE,
+            icon=ft.icons.SUNNY,
             items=[self._ligth_mode_item, self._dark_mode_item]
         )
