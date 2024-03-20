@@ -44,7 +44,7 @@ class Section(ft.UserControl):
         )
 
 
-class Rail(ft.UserControl):
+class _Rail(ft.UserControl):
 
     def __init__(self, name: str, icon: str) -> None:
         super().__init__()
@@ -63,7 +63,7 @@ class Module:
     
     def __init__(self, name: str, icon: str, *sections: Section) -> None:
         self._name = name
-        self._rail = Rail(name, icon)
+        self._rail = _Rail(name, icon)
         self._sections = list(sections)
     
     @property
@@ -71,7 +71,7 @@ class Module:
         return self._name
     
     @property
-    def rail(self) -> Rail:
+    def rail(self) -> _Rail:
         return self._rail
     
     @property

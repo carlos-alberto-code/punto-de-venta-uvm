@@ -1,12 +1,18 @@
+from ..theme.theme_config import ThemeMode
+from ..packages.NavEase.module import _Rail, Section
+
 from typing import List
 import flet as ft
-from .navigation_structure import Rail, Section
-from ..theme.theme_config import ThemeMode
+
+
 
 class ViewTemplate(ft.UserControl):
-    def __init__(self, page: ft.Page, modules: dict[int, Rail]) -> None:
+    def __init__(self, page: ft.Page, modules: dict[int, _Rail]) -> None:
         super().__init__()
         self._page = page
+        self.appbar = Appbar(self._page)
+        self.drawer = Drawer(self._page)
+        self.navigation_bar = NavigationBar(self._page)
         self._modules = modules
         self._sections: List[ft.NavigationDrawerDestination] = [section.build() for section in self._modules[0].sections]
         self._view = None
@@ -54,8 +60,8 @@ class ViewTemplate(ft.UserControl):
     def build(self):
         # Construcción de la plantilla
         self._view = ft.View(
-            appbar=self.build_appbar(),
-            drawer=self.build_drawer(),
-            navigation_bar=self.build_navigation_bar(),
+            appbar=self.appbar.build(),
+            drawer=self.drawer.build(),
+            navigation_bar=self.navigation_bar.build(),
         )
         return self._view
