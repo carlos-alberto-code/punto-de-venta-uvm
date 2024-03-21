@@ -24,8 +24,8 @@ class NavegationScreen(ft.UserControl):
         self._drawer = Drawer()
         self._navbar = Navbar(create_modules())
         self._navbar.register(self._drawer)
-        self._navbar = self._navbar.build()
         self._drawer = self._drawer.build()
+        self._navbar = self._navbar.build()
         return ft.View(
             appbar=self._appbar,
             drawer=self._drawer,

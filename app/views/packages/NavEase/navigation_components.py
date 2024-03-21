@@ -15,7 +15,7 @@ from typing import List
 import flet as ft
 
 
-class Appbar(ft.UserControl): # Componente listo
+class Appbar(ft.UserControl):
 
     def __init__(self, page: ft.Page):
         super().__init__()
@@ -36,14 +36,14 @@ class Appbar(ft.UserControl): # Componente listo
 
 
 # Observador
-class Observer(ABC): # Classe abstracta para los observadores
+class Observer(ABC):
     """
     Clase abstracta que sirve como interfaz para los observadores.
     Los observadores son los componentes que se actualizan cuando el sujeto cambia.
     En nuestro caso el sujeto es el Navbar y el observador es el componente Drawer.
     """
     @abstractmethod
-    def update(self, sections: List[ft.NavigationDrawerDestination]): # Método para actualizar el observador
+    def update(self, sections: List[ft.NavigationDrawerDestination]):
         """Cada observador implementa este método, pero cada uno implementa su propia lógica"""
         pass
 
@@ -56,15 +56,17 @@ class Drawer(Observer, ft.UserControl):
     """
     def __init__(self):
         super().__init__()
-        self.module_sections: List[ft.NavigationDrawerDestination] = [] # Secciones de los módulos variables
-        self.menu_controls: List[ft.Control] = [ # Controles fijos del Drawer
+        self._drawer = ft.NavigationDrawer(open=True)
+
+    def _build_menu_controls(self, specific_sections: List[ft.NavigationDrawerDestination] = []):
+        menu_controls: List[ft.Control] = [
             ft.Container(height=14),
             ft.NavigationDrawerDestination(
                 label='Usuario', # TODO: Debe cambiar y usar el nombre del usuario
                 icon=ft.icons.PERSON, # TODO: Posiblemente la foto del usuario
             ),
             ft.Divider(),
-            *self.module_sections, # Agrega específicamente aquí las secciones intermedias
+            *specific_sections, # Agrega específicamente aquí las secciones intermedias
             ft.Divider(),
             ft.NavigationDrawerDestination(
                 label='Configuración',
@@ -75,38 +77,28 @@ class Drawer(Observer, ft.UserControl):
                 icon=ft.icons.LOGOUT,
             ),
         ]
+        return menu_controls
     
     # Método del observador para actualizar las secciones en el Drawer
     def update(self, sections: List[ft.NavigationDrawerDestination]):
-        self.module_sections = sections
-        self.menu_controls = [ # Controles fijos del Drawer
+        menu_controls = [
             ft.Container(height=14),
             ft.NavigationDrawerDestination(
                 label='Usuario', # TODO: Debe cambiar y usar el nombre del usuario
                 icon=ft.icons.PERSON, # TODO: Posiblemente la foto del usuario
             ),
             ft.Divider(),
-            *self.module_sections, # Agrega específicamente aquí las secciones intermedias
+            *sections, # Agrega específicamente aquí las secciones intermedias
             ft.Divider(),
-            ft.NavigationDrawerDestination(
-                label='Configuración',
-                icon=ft.icons.SETTINGS,
-            ),
-            ft.NavigationDrawerDestination(
-                label='Cerrar sesión',
-                icon=ft.icons.LOGOUT,
-            ),
+            ft.NavigationDrawerDestination(label='Configuración', icon=ft.icons.SETTINGS),
+            ft.NavigationDrawerDestination(label='Cerrar sesión', icon=ft.icons.LOGOUT),
         ]
-        self._drawer.controls = self.menu_controls
+        self._drawer.controls = menu_controls
         self._drawer.open = True
         self._drawer.update()
 
 
     def build(self):
-        self._drawer = ft.NavigationDrawer(
-            open=True,
-            controls=self.menu_controls
-        )
         return self._drawer
 
 
@@ -120,6 +112,8 @@ class Navbar(ft.UserControl):
         self._observers: List[Observer] = []
         self.modules = modules
         self._initial_index = 0
+        initial_sections = self.modules[self._initial_index].sections
+        self._notify([section.build() for section in initial_sections])
 
     def register(self, observer: 'Observer'):
         """
@@ -140,7 +134,7 @@ class Navbar(ft.UserControl):
         for observer in self._observers:
             observer.update(sections)
 
-    def get_selected_index(self, event):
+    def update_sections(self, event):
         """
         Maneja el evento de cambio de módulo seleccionado. Obtiene el índice del módulo seleccionado y notifica a los observadores.
         """
@@ -156,5 +150,5 @@ class Navbar(ft.UserControl):
         return ft.NavigationBar(
             selected_index=self._initial_index,
             destinations=[module.rail.build() for module in self.modules],
-            on_change=self.get_selected_index
+            on_change=self.update_sections
         )
