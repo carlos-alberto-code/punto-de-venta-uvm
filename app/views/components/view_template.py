@@ -1,5 +1,5 @@
 from ..theme.theme_config import ThemeMode
-from ..packages.NavEase.module import _Rail, Section
+from ..packages.NavEase.module import Rail, Section
 
 from typing import List
 import flet as ft
@@ -7,7 +7,7 @@ import flet as ft
 
 
 class ViewTemplate(ft.UserControl):
-    def __init__(self, page: ft.Page, modules: dict[int, _Rail]) -> None:
+    def __init__(self, page: ft.Page, modules: dict[int, Rail]) -> None:
         super().__init__()
         self._page = page
         self.appbar = Appbar(self._page)

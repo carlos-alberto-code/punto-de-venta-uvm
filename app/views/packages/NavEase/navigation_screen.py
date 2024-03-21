@@ -1,7 +1,6 @@
 from .navigation_components import Appbar, Navbar, Drawer
-from .events import ScreenEventHandlers
+from ...modules.create import create_modules
 from .module import Module
-
 
 from typing import List
 import flet as ft
@@ -14,33 +13,21 @@ class NavegationScreen(ft.UserControl):
     Este componente sólo se recargará completamente cuando se haga un cambio de usuario.
     """
 
-    screen_event_handlers = ScreenEventHandlers()
 
-    def __init__(self, page: ft.Page, modules: List[Module]):
+    def __init__(self, page: ft.Page):
+        # No debe saber qué módulos existen, sólo debe saber cómo mostrarlos.
         super().__init__()
         self._page = page
-        self._view: ft.View # Declaramos para entender que existe
-        self._modules = modules
-        self._appbar = Appbar(page)
-        self._navbar = Navbar(
-            page,
-            [module.rail.build() for module in self._modules],
-            self.screen_event_handlers.update_sections
-        )
-        self._drawer = Drawer(page)
-    
-    @property
-    def modules(self) -> List[Module]:
-        return self._modules
-    
-    @modules.setter
-    def modules(self, modules: List[Module]):
-        self._modules = modules
 
     def build(self):
-        self._view = ft.View(
-            appbar=self._appbar.build(),
-            drawer=self._drawer.build(),
-            navigation_bar=self._navbar.build(),
+        self._appbar = Appbar(page=self._page).build()
+        self._drawer = Drawer()
+        self._navbar = Navbar(create_modules())
+        self._navbar.register(self._drawer)
+        self._navbar = self._navbar.build()
+        self._drawer = self._drawer.build()
+        return ft.View(
+            appbar=self._appbar,
+            drawer=self._drawer,
+            navigation_bar=self._navbar
         )
-        return self._view
