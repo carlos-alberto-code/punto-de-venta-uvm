@@ -27,6 +27,16 @@ from typing import List
 import flet as ft
 
 
+class Content(ft.UserControl):
+
+    def __init__(self) -> None:
+        super().__init__()
+    
+    def build(self) -> ft.Row:
+        pass
+        return ft.Row()
+
+
 class Section(ft.UserControl):
     """
     Una sección es sólo una opción en un menú de navegación en forma de ``ft.NavigationDrawer``.
@@ -38,10 +48,11 @@ class Section(ft.UserControl):
     un estilo declarativo en el que es fácil ver que un módulo tiene nombre, icono y secciones.
     """
     
-    def __init__(self, name: str, icon: str) -> None:
+    def __init__(self, name: str, icon: str, content: ft.Column = ft.Column(controls=[ft.Text('None')])) -> None:
         super().__init__()
         self._name = name
         self._icon = icon
+        self._content = content
     
     @property
     def name(self) -> str:
