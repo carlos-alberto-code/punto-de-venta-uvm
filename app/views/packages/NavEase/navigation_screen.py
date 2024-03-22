@@ -1,12 +1,9 @@
-from .navigation_components import Appbar, Navbar, Drawer
 from ...modules.create import create_modules
-from .module import Module
-
-from typing import List
+from .navigation_components import Appbar, Navbar, Drawer
 import flet as ft
 
 
-class NavegationScreen(ft.UserControl):
+class NavScreen(ft.UserControl):
     """
     La pantalla de navegación es un componente fijo que sólo se recarga
     cuando se navega entre módulos. Al cambiar de módulo se renderizan nuevas secciones.
@@ -20,14 +17,12 @@ class NavegationScreen(ft.UserControl):
         self._page = page
 
     def build(self):
-        self._appbar = Appbar(page=self._page).build()
-        self._drawer = Drawer()
-        self._navbar = Navbar(create_modules())
-        self._navbar.register(self._drawer)
-        self._drawer = self._drawer.build()
-        self._navbar = self._navbar.build()
+        self.appbar = Appbar()
+        self.drawer = Drawer()
+        self.navbar = Navbar(create_modules())
+        self.navbar.register(self.drawer)
         return ft.View(
-            appbar=self._appbar,
-            drawer=self._drawer,
-            navigation_bar=self._navbar
+            appbar=self.appbar.build(),
+            drawer=self.drawer.build(),
+            navigation_bar=self.navbar.build()
         )
