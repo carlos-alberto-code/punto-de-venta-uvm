@@ -116,19 +116,14 @@ def active_navs():
 
 # TODO: Fix the following issues:
 """
-Si aparece cómo título en el Appbar 'Aplicación', significa que no hay secciones en el Drawer.
-Eso no debería pasar, porque el primer módulo debería ser seleccionado por defecto junto 
-con la primer sección del Drawer para mostrar contenido.
 
-Otro problema es que, al navegar entre módulos, el Drawer mantiene como selección el control anterior.
-Esto no debería pasar, porque al cambiar de módulo, el Drawer debería seleccionar el primer control.
-
-Para ello debemos hacer:
-- Que el Drawer seleccione el primer control (perteneciente al módulos) al cambiar de módulo.
-- Que el Drawer se inicialice con el primer módulo seleccionado y su primer control activo.
+TODO: Se debe mejorar el código, hay que hacerlo más limpio.
 
 Una mejora adicional para mejorar la retroalimentación para el usuario sobre en qué módulo se encuentra
 es cambiar el color de fondo del Drawer y el Appbar para que coincidan con el color del módulo seleccionado.
 Eso implicaría que cada módulo tenga un color de fondo asociado y relacionado con todos los componentes 
 de navegación. Por ahora esa mejora no es prioritaria, pero es algo a tener en cuenta para mejorar la UX.
+
+Otra opción para hacer lo anterior es simplemente mostrar títulos entre las secciones del Drawer, el título
+en el drawer debe coincidir con el del módulo y por tanto el del appbar.
 """
