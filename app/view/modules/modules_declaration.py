@@ -5,14 +5,15 @@ hacemos la declaración y los empaquetamos para que puedan intercambiarse en
 tiempo de ejecución
 """
 
-from ..packages.NavEase.module import Module, Section
+from ..packages.module import Module, Section
 from ..content.purchase_module import purchase_content, inventory_content, providers_content
+# from ..content.inventory_module import inventory_content ... todo su contenido
 
 from typing import List
 import flet as ft
 
 
-# DECLARACIÓN DE MÓUDLOS
+# DECLARACIÓN DE MÓDULOS
 
 PurchaseModule = Module(
     'Compras',
@@ -56,7 +57,7 @@ def create_modules() -> List[Module]:
         InventoryModule,
         CustomersModule,
     )
-
+    ### Ejemplo:
     def create_modules() -> List[Module]:
         return [
             PurchaseModule,

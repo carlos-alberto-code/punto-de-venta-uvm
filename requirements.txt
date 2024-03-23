@@ -10,9 +10,9 @@ colorama==0.4.6
 cookiecutter==2.6.0
 exceptiongroup==1.2.0
 fastapi==0.110.0
-flet==0.21.1
-flet-core==0.21.1
-flet-runtime==0.21.1
+flet==0.21.2
+flet-core==0.21.2
+flet-runtime==0.21.2
 greenlet==3.0.3
 h11==0.14.0
 httpcore==0.17.3
@@ -23,6 +23,7 @@ Jinja2==3.1.3
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 mdurl==0.1.2
+moduibuilder @ git+https://github.com/carlos-alberto-code/moduibuilder.git@a462c97e778dc947bc3f06d8e555e56dcf2f78e7
 mysql-connector-python==8.3.0
 oauthlib==3.2.2
 packaging==23.2
