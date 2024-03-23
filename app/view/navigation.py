@@ -80,7 +80,8 @@ _navbar = ft.NavigationBar(
 )
 _drawer = ft.NavigationDrawer(controls=[])
 _appbar = ft.AppBar(
-    title=ft.Text('Aplicación', size=20),
+    title=ft.Text('Aplicación'),
+    center_title=True,
     actions=[
         ft.IconButton(icon=ft.icons.DARK_MODE),
         ft.IconButton(icon=ft.icons.NOTIFICATIONS),
