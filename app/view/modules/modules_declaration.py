@@ -15,7 +15,7 @@ import flet as ft
 
 # DECLARACIÓN DE MÓDULOS
 
-PurchaseModule = Module(
+_purchase_module = Module(
     'Compras',
     ft.icons.SHOP,
     Section(name='Compras', icon=ft.icons.SHOPPING_CART, content=purchase_content),
@@ -23,7 +23,7 @@ PurchaseModule = Module(
     Section(name='Proveedores', icon=ft.icons.PEOPLE, content=providers_content),
 )
 
-InventoryModule = Module(
+_inventory_module = Module(
     'Inventario',
     ft.icons.INVENTORY,
     Section(name='Productos', icon=ft.icons.ARTICLE),
@@ -31,7 +31,7 @@ InventoryModule = Module(
     Section(name='Stock mínimo', icon=ft.icons.PRODUCTION_QUANTITY_LIMITS),
 )
 
-CustomersModule = Module(
+_customers_module = Module(
     'Clientes',
     ft.icons.PEOPLE,
     Section(name='Clientes', icon=ft.icons.PEOPLE),
@@ -40,34 +40,5 @@ CustomersModule = Module(
 )
 
 
-# CREACIÓN DE MÓDULOS
-def create_modules() -> List[Module]:
-    """
-    Devuelve una lista de módulos.
-    Cómo regla, debemos usar como clave el nombre del módulo (``str``)
-    y como valor el módulo en sí (``Module``). De esta forma podremos 
-    ordenar y localizar los módulos de forma más sencilla.
-
-    ## Implementación
-
-    Se sugiere apegarse a la siguiente forma de desarrollo:
-    ```python
-    from modules_declaration import (
-        PurchaseModule,
-        InventoryModule,
-        CustomersModule,
-    )
-    ### Ejemplo:
-    def create_modules() -> List[Module]:
-        return [
-            PurchaseModule,
-            InventoryModule,
-            CustomersModule,
-        ]
-    ```
-    """
-    return [
-        PurchaseModule,
-        InventoryModule,
-        CustomersModule,
-    ]
+# EMPAQUETADO DE MÓDULOS
+all_modules = _customers_module.all_modules

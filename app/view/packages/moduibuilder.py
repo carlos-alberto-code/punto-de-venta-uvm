@@ -113,10 +113,13 @@ class Module:
     ```
     """
 
+    all_modules: List['Module'] = []
+
     def __init__(self, name: str, icon: str, *sections: Section) -> None:
         self._name = name
         self._rail = Rail(name, icon)
         self._sections = sections
+        self.all_modules.append(self)
     
     @property
     def name(self) -> str:
