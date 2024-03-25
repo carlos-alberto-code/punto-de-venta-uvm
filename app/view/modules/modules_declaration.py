@@ -15,7 +15,9 @@ import flet as ft
 
 # DECLARACIÓN DE MÓDULOS
 
-_purchase_module = Module(
+module = Module
+
+_purchase_module = module(
     'Compras',
     ft.icons.SHOP,
     Section(name='Compras', icon=ft.icons.SHOPPING_CART, content=purchase_content),
@@ -23,7 +25,7 @@ _purchase_module = Module(
     Section(name='Proveedores', icon=ft.icons.PEOPLE, content=providers_content),
 )
 
-_inventory_module = Module(
+_inventory_module = module(
     'Inventario',
     ft.icons.INVENTORY,
     Section(name='Productos', icon=ft.icons.ARTICLE),
@@ -31,14 +33,10 @@ _inventory_module = Module(
     Section(name='Stock mínimo', icon=ft.icons.PRODUCTION_QUANTITY_LIMITS),
 )
 
-_customers_module = Module(
+_customers_module = module(
     'Clientes',
     ft.icons.PEOPLE,
     Section(name='Clientes', icon=ft.icons.PEOPLE),
     Section(name='Grupos', icon=ft.icons.GROUP),
     Section(name='Descuentos', icon=ft.icons.DISCOUNT),
 )
-
-
-# EMPAQUETADO DE MÓDULOS
-all_modules = _customers_module.all_modules

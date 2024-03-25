@@ -2,7 +2,7 @@ from typing import List
 import flet as ft
 
 
-from .modules.modules_declaration import all_modules # Creación de módulos
+from .modules.modules_declaration import module # Creación de módulos
 from .navigation.controls.drawer_controls import DrawerControls # DrawerControls
 from .navigation.controls.appbar_controls import AppbarControls # AppbarControls
 from .navigation.navigation_components import NavigationComponents # NavigationComponents
@@ -75,7 +75,7 @@ appbar_controls = AppbarControls
 drawer_controls = DrawerControls
 nav_components = NavigationComponents
 
-_modules = all_modules
+_modules = module.all_modules
 
 _appbar = nav_components.appbar(
     central_controls=appbar_controls.central_controls(title="App"),
