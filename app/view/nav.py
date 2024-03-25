@@ -1,30 +1,12 @@
 from typing import List
 import flet as ft
 
-from .modules.modules_declaration import create_modules
+
+from .modules.modules_declaration import create_modules # Creación de módulos
+from .navigation.drawer_controls import DrawerControls # DrawerControls
 
 
-class _DrawerControls:
-
-    @staticmethod
-    def get_top_controls() -> List[ft.Control]:
-        return [
-            ft.Container(height=14),
-            ft.NavigationDrawerDestination(label='Carlos Alberto', icon=ft.icons.VERIFIED_USER),
-            ft.Divider()
-        ]
-    
-    @staticmethod
-    def get_middle_controls(section_controls: List[ft.NavigationDrawerDestination]) -> List[ft.Control]:
-        return [*section_controls]
-
-    @staticmethod
-    def get_bottom_controls() -> List[ft.Control]:
-        return [
-            ft.Divider(),
-            ft.NavigationDrawerDestination(label='Configuración', icon=ft.icons.SETTINGS),
-            ft.NavigationDrawerDestination(label='Cerrar sesión', icon=ft.icons.EXIT_TO_APP),
-        ]
+drawer_controls = DrawerControls
 
 
 # EVENT HANDLER
@@ -42,11 +24,11 @@ def _update(event):
     
 
 def _update_drawer_sections(module):
-    sections = _get_and_build_sections(module)
+    drawer_destinations = _get_and_build_sections(module)
     _drawer.controls = [
-        *_DrawerControls.get_top_controls(),
-        *_DrawerControls.get_middle_controls(sections),
-        *_DrawerControls.get_bottom_controls(),
+        *drawer_controls.top_controls(),
+        *drawer_controls.middle_controls(drawer_destinations),
+        *drawer_controls.bottom_controls()
     ]
     _drawer.selected_index = SELECTED_SECTION
     _drawer.open = True
@@ -76,11 +58,11 @@ def _get_and_build_sections(module) -> List[ft.NavigationDrawerDestination]:
 
 def _init_drawer():
     module = _get_module(SELECTED_MODULE) # Módulo seleccionado por defecto
-    sections = _get_and_build_sections(module)
+    drawer_destinations = _get_and_build_sections(module)
     _drawer.controls = [
-        *_DrawerControls.get_top_controls(),
-        *_DrawerControls.get_middle_controls(sections),
-        *_DrawerControls.get_bottom_controls(),
+        *drawer_controls.top_controls(),
+        *drawer_controls.middle_controls(drawer_destinations),
+        *drawer_controls.bottom_controls(),
     ]
     _drawer.selected_index = SELECTED_SECTION
     _drawer.open = True

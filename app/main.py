@@ -1,6 +1,6 @@
 import flet as ft
 
-from view.navigation import active_navs
+from view.nav import active_navs
 
 def main(page: ft.Page):
 
