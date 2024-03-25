@@ -120,6 +120,9 @@ class Module:
         self._rail = Rail(name, icon)
         self._sections = sections
         Module.all_modules.append(self)
+        # NOTE: Usar Module, en lugar de self, permite el acceso global, incluso a las subclases.
+        # Si una subclase heredara de Model y estamos usando self, entonces la subclase no tendría acceso
+        # a la lista de módulos. Por eso se usa Module en lugar de self.
     
     @property
     def name(self) -> str:
