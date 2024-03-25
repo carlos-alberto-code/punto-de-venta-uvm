@@ -119,7 +119,7 @@ class Module:
         self._name = name
         self._rail = Rail(name, icon)
         self._sections = sections
-        self.all_modules.append(self)
+        Module.all_modules.append(self)
     
     @property
     def name(self) -> str:
