@@ -3,10 +3,9 @@ import flet as ft
 
 
 from .modules.modules_declaration import create_modules # Creación de módulos
-from .navigation.drawer_controls import DrawerControls # DrawerControls
-
-
-drawer_controls = DrawerControls
+from .navigation.controls.drawer_controls import DrawerControls # DrawerControls
+from .navigation.controls.appbar_controls import AppbarControls # AppbarControls
+from .navigation.navigation_components import NavigationComponents # NavigationComponents
 
 
 # EVENT HANDLER
@@ -68,25 +67,23 @@ def _init_drawer():
     _drawer.open = True
     _appbar.title = ft.Text(module.name)
 
+
 # Implementation
 
 
+appbar_controls = AppbarControls
+drawer_controls = DrawerControls
+nav_components = NavigationComponents
+
 _modules = create_modules()
-_navbar = ft.NavigationBar(
-    selected_index=SELECTED_MODULE,
-    destinations=_get_and_build_destinations(),
-    on_change=_update,
+
+_appbar = nav_components.appbar(
+    central_controls=appbar_controls.central_controls(title="App"),
+    action_controls=appbar_controls.action_controls()
 )
-_drawer = ft.NavigationDrawer(controls=[], selected_index=0, open=False)
-_appbar = ft.AppBar(
-    title=ft.Text('Aplicación'),
-    center_title=True,
-    actions=[
-        ft.IconButton(icon=ft.icons.DARK_MODE),
-        ft.IconButton(icon=ft.icons.NOTIFICATIONS),
-        ft.IconButton(icon=ft.icons.CLOSE),
-    ]
-)
+_drawer = nav_components.drawer()
+_navbar = nav_components.navbar()
+
 _init_drawer()
 
 # Export

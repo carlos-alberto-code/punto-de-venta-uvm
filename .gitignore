@@ -137,3 +137,6 @@ cython_debug/
 .vscode/
 .idea
 .cursorignore
+
+# Mis notas
+notes.md
