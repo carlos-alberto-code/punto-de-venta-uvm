@@ -3,7 +3,7 @@ import flet as ft
 
 
 from .modules.modules_declaration import module # Creación de módulos
-from .navigation.controls import AppbarControls, DrawerControls # Controles de navegación
+from .navigation.appbar_controls import AppbarControls, DrawerControls # Controles de navegación
 from .navigation.components import NavigationComponents # NavigationComponents
 
 

@@ -1,29 +1,24 @@
 import flet as ft
 
-from view.navigation.controls import AppbarControls
+from view.navigation.appbar_controls import theme_button, close_button
+# from view.modules.modules_declaration import module
 
 def main(page: ft.Page):
 
-    page.theme_mode = ft.ThemeMode.LIGHT
-    page.bgcolor = ft.colors.WHITE
+    # Set the initial theme based on user preference
+    page.theme_mode = ft.ThemeMode.DARK  # This should be replaced with the user's preferred theme
 
+    page.theme_mode = page.session.get('theme_mode')
+    theme_button.icon = ft.icons.LIGHT_MODE if page.theme_mode == ft.ThemeMode.DARK else ft.icons.DARK_MODE
 
     # Appbar
     page.appbar = ft.AppBar(
-        title=AppbarControls.central_controls(title='Compras'),
-        actions=AppbarControls.action_controls()
+        title=ft.Text('Appbar title'),
+        actions=[
+            theme_button,
+            close_button
+        ]
     )
-
-    # Navbar
-    page.navigation_bar = ft.NavigationBar(
-        destinations=[]
-    )
-
-    # Drawer
-    page.drawer = ft.NavigationDrawer(
-
-    )
-
     page.update()
 
 ft.app(target=main)
