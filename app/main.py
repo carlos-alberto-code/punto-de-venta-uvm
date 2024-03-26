@@ -1,12 +1,29 @@
 import flet as ft
 
-from view.nav import active_navs
+from view.navigation.controls import AppbarControls
 
 def main(page: ft.Page):
 
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = ft.colors.WHITE
-    page.navigation_bar, page.drawer, page.appbar = active_navs()
+
+
+    # Appbar
+    page.appbar = ft.AppBar(
+        title=AppbarControls.central_controls(title='Compras'),
+        actions=AppbarControls.action_controls()
+    )
+
+    # Navbar
+    page.navigation_bar = ft.NavigationBar(
+        destinations=[]
+    )
+
+    # Drawer
+    page.drawer = ft.NavigationDrawer(
+
+    )
+
     page.update()
 
 ft.app(target=main)

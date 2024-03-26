@@ -5,12 +5,15 @@ import flet as ft
 class AppbarControls:
 
     @classmethod
-    def central_controls(cls, title: str) -> List[ft.Control]:
-        return [
-            ft.IconButton(icon=ft.icons.ARROW_LEFT),
-            ft.Text(f'{title}'),
-            ft.IconButton(icon=ft.icons.ARROW_RIGHT),
-        ]
+    def central_controls(cls, title: str) -> ft.Row:
+        return ft.Row(
+            alignment=ft.MainAxisAlignment.CENTER,
+            controls=[
+                ft.IconButton(icon=ft.icons.KEYBOARD_DOUBLE_ARROW_LEFT),
+                ft.Text(f'{title}'),
+                ft.IconButton(icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT),
+            ]
+        )
 
     @classmethod
     def action_controls(cls) -> List[ft.Control]:

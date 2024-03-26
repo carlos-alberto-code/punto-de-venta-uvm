@@ -75,7 +75,6 @@ drawer_controls = DrawerControls
 nav_components = NavigationComponents
 
 _modules = module.all_modules
-print(_modules)
 
 _appbar = nav_components.appbar(
     central_controls=appbar_controls.central_controls(title="App"),
