@@ -8,10 +8,13 @@ import flet as ft
 # Pero el enfoque que se adoptará aquí es que todos los controles se inyecten siempre que haya un evento de cambio.
 class Appbar(ft.UserControl):
 
-    def __init__(self, actions: List[ft.Control] = []):
+    def __init__(self, title: ft.Control = ft.Text('Appbar'), actions: List[ft.Control] = []):
+        self.title = title
         self.actions = actions
 
     def build(self):
         return ft.AppBar(
+            title=self.title,
+            center_title=True,
             actions=self.actions
         )
