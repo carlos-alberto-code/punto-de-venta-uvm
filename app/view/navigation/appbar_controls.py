@@ -12,8 +12,8 @@ class AppbarActions:
 
     def __init__(self, theme_mode: ft.ThemeMode) -> None:
         self.theme_mode = theme_mode
-        self.theme_button = ft.IconButton(icon=self._get_theme_icon(), on_click=self._toggle_theme)
-        self.close_button = ft.IconButton(icon=_close, on_click=self._close_app)
+        self.theme_button = ft.IconButton(icon=self._get_theme_icon(), on_click=self._toggle_theme, tooltip='Cambiar el tema')
+        self.close_button = ft.IconButton(icon=_close, on_click=self._close_app, tooltip='Cerrar la app')
     
     @property
     def controls(self) -> List[ft.Control]:
