@@ -47,14 +47,14 @@ class Section(ft.UserControl):
     su progreso sin que la falta de contenido impida la visualización de la sección.
     """
     
-    def __init__(self, name: str, icon: str, content: ft.Column = ft.Column(controls=[ft.Text('None')])) -> None:
+    def __init__(self, name: str, icon: str, content: ft.Control = ft.Column(controls=[ft.Text('None')])) -> None:
         super().__init__()
         self._name = name
         self._icon = icon
         self._content = content
     
     @property
-    def content(self) -> ft.Column:
+    def content(self) -> ft.Control:
         return self._content
     
     def __repr__(self):

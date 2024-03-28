@@ -1,7 +1,8 @@
 import flet as ft
 
-from view.navigation.appbar_controls import AppbarActions
-from view.modules.modules_declaration import module
+from page.navigation.appbar_controls import AppbarActions
+from page.modules.builder import Module
+
 
 def main(page: ft.Page):
 
@@ -42,5 +43,6 @@ def main(page: ft.Page):
     )
 
     page.update()
+    print(Module.all_modules)
 
 ft.app(target=main)
