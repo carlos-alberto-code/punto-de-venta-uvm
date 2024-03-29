@@ -1,7 +1,8 @@
 import flet as ft
-
 from page.navigation.appbar_controls import AppbarActions
 from page.modules.builder import Module
+
+from page.modules import purchase_module, customer_module # Import all modules from the modules folder
 
 
 def main(page: ft.Page):
@@ -44,5 +45,6 @@ def main(page: ft.Page):
 
     page.update()
     print(Module.all_modules)
+
 
 ft.app(target=main)
