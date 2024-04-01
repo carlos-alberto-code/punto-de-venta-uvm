@@ -47,7 +47,12 @@ class Section(ft.UserControl):
     su progreso sin que la falta de contenido impida la visualización de la sección.
     """
     
-    def __init__(self, name: str, icon: str, content: ft.Control = ft.Column(controls=[ft.Text('None')])) -> None:
+    def __init__(
+            self,
+            name: str = 'Undefined',
+            icon: str = ft.icons.NOT_ACCESSIBLE,
+            content: ft.Control = ft.Column(controls=[ft.Text('None')])
+    ) -> None:
         super().__init__()
         self._name = name
         self._icon = icon
@@ -116,6 +121,12 @@ class Module:
     all_modules: List['Module'] = []
 
     def __init__(self, name: str, icon: str, *sections: Section) -> None:
+        if not sections:
+            sections = (
+                Section(),
+                Section(),
+                Section(),
+            )
         self._name = name
         self._rail = Rail(name, icon)
         self._sections = sections

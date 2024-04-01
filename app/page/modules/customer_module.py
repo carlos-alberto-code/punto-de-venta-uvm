@@ -1,4 +1,4 @@
-from .builder import Module, Section
+from ..navigation.builder import Module, Section
 from .content.customers.customers_section import CustomersModule
 
 import flet as ft

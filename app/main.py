@@ -1,14 +1,26 @@
 import flet as ft
-from page.navigation.appbar_controls import AppbarActions
-from page.modules.builder import Module
 
-from page.modules import purchase_module, customer_module # Import all modules from the modules folder
+from page.navigation.drawer_controls import DrawerControls
+from page.navigation.appbar_controls import AppbarActions
+
+from page.navigation.events import update_module, update_content
+from page.navigation.builder import Module
+from page.modules import ( # El orden en el que se importan es el orden en que se mostrará en el Navbar
+    purchase_module,
+    inventory_module,
+    pos_module,
+    sales_module,
+    customer_module,
+)
 
 
 def main(page: ft.Page):
 
 
     page.theme_mode = ft.ThemeMode.LIGHT  # Se remplaza por las preferencias de usuario
+
+    
+    modules = Module.all_modules
 
 
     # APPBAR
@@ -22,29 +34,25 @@ def main(page: ft.Page):
 
 
     # NAVIGATIONBAR
-
-    def update_module(event):
-        print('Se actualizan los controles del Drawer y el título del Appbar.')
-        pass
     
+    SELECTED_MODULE = 0
     page.navigation_bar = ft.NavigationBar(
-        destinations=[ft.NavigationDestination(label='Home')],
+        selected_index=SELECTED_MODULE,
+        destinations=[module.rail.build() for module in modules],
         on_change=update_module,
     )
 
 
     # DRAWER
 
-    def update_content(event):
-        print('Se actualiza el contenido')
-
+    SELECTED_SECTION = 1
     page.drawer = ft.NavigationDrawer(
-        controls=[ft.NavigationDrawerDestination(label='User')],
+        selected_index=SELECTED_SECTION,
+        controls=DrawerControls.load_controls([]),
         on_change=update_content
     )
 
     page.update()
-    print(Module.all_modules)
 
 
 ft.app(target=main)

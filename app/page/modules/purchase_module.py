@@ -1,4 +1,4 @@
-from .builder import Module, Section
+from ..navigation.builder import Module, Section
 from .content.purchases.suppliers_section import content
 
 
