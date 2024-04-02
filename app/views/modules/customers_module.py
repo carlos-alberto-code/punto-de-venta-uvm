@@ -47,7 +47,7 @@ class CustomersModule(ft.UserControl):
                 ]
             )
         ])
-        
+
         return ft.View(
             route="customers",
             controls=[
@@ -60,7 +60,7 @@ class CustomersModule(ft.UserControl):
                         ], alignment= ft.MainAxisAlignment.CENTER),
                         ft.Row(
                             [
-                            #self.search_bar,
+                            self.search_bar,
                             ], 
                             alignment= ft.MainAxisAlignment.END),
                         ft.Row(

@@ -1,7 +1,7 @@
 from .navigation_components import Appbar, Navbar, Drawer
 from ...modules.create import create_modules
 from .module import Module
-
+from ...modules.customers_module import CustomersModule
 from typing import List
 import flet as ft
 
@@ -29,5 +29,7 @@ class NavegationScreen(ft.UserControl):
         return ft.View(
             appbar=self._appbar,
             drawer=self._drawer,
-            navigation_bar=self._navbar
+            navigation_bar=self._navbar,
+            
+            
         )
