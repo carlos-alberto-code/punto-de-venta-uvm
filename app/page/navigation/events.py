@@ -5,6 +5,7 @@ import flet as ft
 
 
 def update_module(event: ft.ControlEvent): # Actualiza el módulo seleccionado en el Navbar
+    event.page.clean()
     index = event.control.selected_index
     module = Module.all_modules[index]
     # Actualiza el título del AppBar
