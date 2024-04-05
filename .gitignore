@@ -140,3 +140,5 @@ cython_debug/
 
 # Mis notas
 notes.md
+
+diagrams/
