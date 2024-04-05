@@ -3,7 +3,7 @@ import flet as ft
 from page.navigation.drawer_controls import DrawerControls
 from page.navigation.appbar_controls import AppbarActions
 
-from page.navigation.events import update_module#, update_content
+from page.navigation.events import update_module, update_content
 from page.navigation.builder import Module
 from page.modules import ( # El orden en el que se importan es el orden en que se mostrará en el Navbar
     purchase_module,
@@ -49,7 +49,7 @@ def main(page: ft.Page):
     page.drawer = ft.NavigationDrawer(
         selected_index=SELECTED_SECTION,
         controls=DrawerControls.load_controls([]),
-        # on_change=update_content
+        on_change=update_content
     )
 
     page.update()

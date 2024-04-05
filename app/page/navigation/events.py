@@ -27,20 +27,19 @@ def update_content(event: ft.ControlEvent): # Actualiza el contenido de la secci
     module = state.get_current_module()
     # Preparar la lista de secciones de este módulo
     sections = module.sections
-    # Determinar en qué sección estamos
-    drawer_index = event.control.selected_index
-    section = sections[0] # Selecciono esté, por que los demás están fuera del rango.
+    # Determinar el drawer index
+    drawer_index = get_drawer_index(event)
+    section = sections[drawer_index]
     # Agregar los controles de section.content a la pagina
+    clean_page(event)
     event.page.add(section.content)
-    event.page.drawer.open = False
-    event.page.update()
+    close_drawer(event)
+    update_page(event)
     # TODO: Creo entender el error.
     # El error se da por que la tupla que contiene las secciones es una tupla que proviene de fuera
     # Entonces, los controles del drawer, son otra lista, y las secciones vienen a añadirse
     # Con lo cual, cuando se da un clic en una sección que proviene del módulo, está no estará
     # en el radar de la lista de controles del drawer, por eso da un tuple index out of range
-
-
 
 
 
@@ -66,7 +65,6 @@ def get_controls_from_current_drawer_index(event: ft.ControlEvent):
     drawer_index = event.page.drawer.selected_index
     module = state.get_current_module()
     module_sections = module.sections
-    print(module_sections)
     return module_sections[drawer_index].content
 
 def close_drawer(event: ft.ControlEvent):
@@ -74,3 +72,7 @@ def close_drawer(event: ft.ControlEvent):
 
 def update_page(event: ft.ControlEvent):
     event.page.update()
+
+
+def get_drawer_index(event: ft.ControlEvent) -> int:
+    return event.control.selected_index
