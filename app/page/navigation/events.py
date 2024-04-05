@@ -22,24 +22,15 @@ def update_module(event: ft.ControlEvent):
     update_page(event)
 
 
-def update_content(event: ft.ControlEvent): # Actualiza el contenido de la sección del Drawer
-    # Determinar en qué módulo estamos
+def update_content(event: ft.ControlEvent):
     module = state.get_current_module()
-    # Preparar la lista de secciones de este módulo
     sections = module.sections
-    # Determinar el drawer index
     drawer_index = get_drawer_index(event)
     section = sections[drawer_index]
-    # Agregar los controles de section.content a la pagina
     clean_page(event)
     event.page.add(section.content)
-    close_drawer(event)
+    close_drawer(event) # TODO: Algo pasa que el drawer no se cierra aquí, pero sí en el otro evento
     update_page(event)
-    # TODO: Creo entender el error.
-    # El error se da por que la tupla que contiene las secciones es una tupla que proviene de fuera
-    # Entonces, los controles del drawer, son otra lista, y las secciones vienen a añadirse
-    # Con lo cual, cuando se da un clic en una sección que proviene del módulo, está no estará
-    # en el radar de la lista de controles del drawer, por eso da un tuple index out of range
 
 
 
@@ -73,6 +64,5 @@ def close_drawer(event: ft.ControlEvent):
 def update_page(event: ft.ControlEvent):
     event.page.update()
 
-
 def get_drawer_index(event: ft.ControlEvent) -> int:
-    return event.control.selected_index
+    return event.page.drawer.selected_index
