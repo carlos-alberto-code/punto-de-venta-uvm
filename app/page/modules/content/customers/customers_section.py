@@ -4,9 +4,9 @@ import flet as ft
 _search_bar = ft.TextField(hint_text="Buscar cliente", width=200, height=50, icon=ft.icons.SEARCH)
 
 # Create buttons
-_add_button = ft.ElevatedButton("Agregar compra", icon="Check_circle")
-_edit_button = ft.ElevatedButton("Editar compra", icon="Edit")
-_delete_button = ft.ElevatedButton("Eliminar compra", icon="Delete")
+_add_button = ft.ElevatedButton("Agregar cliente", icon="Check_circle")
+_edit_button = ft.ElevatedButton("Editar cliente", icon="Edit")
+_delete_button = ft.ElevatedButton("Eliminar cliente", icon="Delete")
 
 _table = ft.DataTable(
     sort_column_index=0,
