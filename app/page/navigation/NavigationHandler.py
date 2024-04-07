@@ -4,6 +4,13 @@
 # Además, puedo establecer un valor inicial para renderizar los controles del módulo determinado.
 
 from .builder import Module
+from ..modules import ( # El orden en el que se importan es el orden en que se mostrará en el Navbar
+    purchase_module,
+    inventory_module,
+    pos_module,
+    sales_module,
+    customer_module,
+)
 
 
 class State:
@@ -20,3 +27,7 @@ class State:
 
     def get_current_module(self):
         return Module.all_modules[self._current_index_module]
+    
+    # función para obtener los controles de los módulos
+    def get_navigation_bar_controls(self):
+        return [module.rail.build() for module in Module.all_modules]

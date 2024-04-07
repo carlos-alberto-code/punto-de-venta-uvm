@@ -5,22 +5,18 @@ from page.navigation.appbar_controls import AppbarActions
 
 from page.navigation.events import update_module, update_content
 from page.navigation.builder import Module
-from page.modules import ( # El orden en el que se importan es el orden en que se mostrará en el Navbar
-    purchase_module,
-    inventory_module,
-    pos_module,
-    sales_module,
-    customer_module,
-)
+from page.navigation.NavigationHandler import State
 
 
 def main(page: ft.Page):
 
-
+    
     page.theme_mode = ft.ThemeMode.LIGHT  # Se remplaza por las preferencias de usuario
 
     
     modules = Module.all_modules
+
+    state = State()
 
 
     # APPBAR
@@ -51,6 +47,7 @@ def main(page: ft.Page):
         controls=DrawerControls.load_controls([]),
         on_change=update_content
     )
+
 
     page.update()
 
