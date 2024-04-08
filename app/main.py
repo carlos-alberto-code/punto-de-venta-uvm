@@ -1,8 +1,6 @@
 import flet as ft
 
-
 from page.navigation.components import NavigationComponentsFactory
-
 from page.navigation.builder import Module
 from page.modules import (
     purchase_module,
@@ -22,8 +20,8 @@ def main(page: ft.Page):
     nav_components = NavigationComponentsFactory(modules)
 
     page.navigation_bar = nav_components.build_navigation_bar()
-    page.appbar = nav_components.build_appbar()
-    page.drawer = nav_components.build_drawer()
+    page.appbar         = nav_components.build_appbar()
+    page.drawer         = nav_components.build_drawer()
 
     page.update()
 
