@@ -11,7 +11,7 @@ _chat        = ft.icons.STACKED_BAR_CHART_OUTLINED
 
 class AppbarActions:
 
-    def __init__(self, theme_mode: ft.ThemeMode) -> None:
+    def __init__(self, theme_mode: ft.ThemeMode = ft.ThemeMode.LIGHT) -> None:
         self.theme_mode     = theme_mode
         self.theme_button   = ft.IconButton(icon=self._get_theme_icon(), on_click=self._toggle_theme, tooltip='Cambiar el tema')
         self.close_button   = ft.IconButton(icon=_close, on_click=self._close_app, tooltip='Cerrar la app')
@@ -31,15 +31,3 @@ class AppbarActions:
     
     def _close_app(self, event: ft.ControlEvent):
         event.page.window_close()
-
-
-
-"""
-NOTE: En caso de necesitarse más controles, este es el lugar en el que se declaran,
-junto con sus eventos. Es posible en un futuro crear una estructura de datos que pueda
-encapsular todos los controles.
-
-EXPLICACION: Se buscó separar la lógica de los controles de la barra de aplicaciones en
-en este archivo para mantener el código más limpio y organizado. La clase AppbarActions
-se encarga de sostener estos controles y manejar los eventos correspondientes.
-"""
