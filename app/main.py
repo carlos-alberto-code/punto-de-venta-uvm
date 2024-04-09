@@ -19,9 +19,11 @@ def main(page: ft.Page):
     modules = Module.all_modules
     nav_components = NavigationComponentsFactory(modules)
 
-    page.navigation_bar = nav_components.build_navigation_bar()
     page.appbar         = nav_components.build_appbar()
     page.drawer         = nav_components.build_drawer()
+    page.navigation_bar = nav_components.build_navigation_bar()
+
+    page.add(nav_components.initial_content())
 
     page.update()
 

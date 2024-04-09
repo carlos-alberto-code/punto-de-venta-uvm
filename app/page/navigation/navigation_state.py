@@ -1,17 +1,9 @@
-# Busco un objeto que me permita manejar el estado de la navegación.
-# El evento de cambio de módulo, debe actualizar el módulo seleccionado en el Navbar
-# Con este objeto puedo saber en qué módulo estoy actualmente.
-# Además, puedo establecer un valor inicial para renderizar los controles del módulo determinado.
-
-from typing import List
-import flet as ft
-
 from .builder import Module
 
 
 class NavigationState:
-    def __init__(self, initial_module: int = 0) -> None:
-        self._current_index_module = initial_module
+    def __init__(self) -> None:
+        self._current_index_module = 0
 
     @property
     def current_index(self):
@@ -27,5 +19,3 @@ class NavigationState:
     # función para obtener los controles de los módulos
     def get_navigation_bar_controls(self):
         return [module.rail.build() for module in Module.all_modules]
-
-
