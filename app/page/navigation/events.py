@@ -1,10 +1,10 @@
-from .navigation_state import NavigationState
+from .navigation_state import NavigationStateManager
 
 from time import sleep
 import flet as ft
 
 
-state = NavigationState()
+state = NavigationStateManager()
 
 
 def update_module(event: ft.ControlEvent):

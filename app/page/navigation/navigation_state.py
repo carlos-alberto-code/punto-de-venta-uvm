@@ -1,7 +1,11 @@
 from .builder import Module
 
 
-class NavigationState:
+class NavigationStateManager:
+    """
+    Esta clase tiene la responsabilidad de gestionar el estado de la navegación de la aplicación.
+    
+    """
     def __init__(self) -> None:
         self._current_index_module = 0
 
