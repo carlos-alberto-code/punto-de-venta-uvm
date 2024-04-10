@@ -22,11 +22,11 @@ def update_module(event: ft.ControlEvent):
 
 
 def update_content(event: ft.ControlEvent):
+    _clean_page(event)
     module = navigation_state_manager.current_module
     sections = module.sections
     drawer_index = _get_drawer_index(event)
     section = sections[drawer_index]
-    _clean_page(event)
     event.page.add(section.content)
     _close_drawer(event) # TODO: Algo pasa que el drawer no se cierra aquí, pero sí en el otro evento
     _update_page(event)
