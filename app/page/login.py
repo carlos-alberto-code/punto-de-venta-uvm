@@ -1,4 +1,3 @@
-from typing import Optional
 import flet as ft
 
 from .components.counter import Counter, IntCounter
@@ -16,9 +15,9 @@ class LoginPage(ft.UserControl):
         self.page = page
         page.vertical_alignment   = ft.MainAxisAlignment.CENTER
         page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-        page.window_width  = 450
-        page.window_height = 400
-        page.window_center()
+        # page.window_width  = 450
+        # page.window_height = 400
+        # page.window_center()
         self.title = ft.Text(
             value='Sign in',
             size=25,
@@ -28,6 +27,7 @@ class LoginPage(ft.UserControl):
         )
         self.age_text = ft.Text(
             value='Edad',
+            size=18,
         )
         # Casilla de verificación que indique si es o no propietario
         self.is_owner = ft.Checkbox(
@@ -38,9 +38,20 @@ class LoginPage(ft.UserControl):
         )
 
     def build(self):
-        counter = Counter(IntCounter()).build()
+        counter = Counter(
+            strategy=IntCounter(),
+            start_value=18,
+            end_value=100,
+        )
+        counter.msg_title = 'Edad inválida'
+        counter.msg = 'La edad debe ser mayor a 18 años y menor a 100 años.'
+        counter = counter.build()
+        
         # Agrega los controles a la página
         container = ft.Container(
+            padding=15,
+            border=ft.border.all(color='black', width=1),
+            border_radius=15,
             content=ft.Column(
                 controls=[
                     self.title,
