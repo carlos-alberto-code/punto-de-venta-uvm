@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import List
 
 from controller import FormModelController, ModelFields
-from counter import Counter, IntCounter, FloatCounter
+from app.page.components.counter import Counter, IntCounter, FloatCounter
 
 
 @dataclass
