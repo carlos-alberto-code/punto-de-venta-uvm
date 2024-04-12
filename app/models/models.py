@@ -111,7 +111,7 @@ class Sale(Base):
     id:          Mapped[int]     = mapped_column(Integer, primary_key=True, autoincrement=True)
     customer_id: Mapped[int]     = mapped_column(Integer, ForeignKey('customers.id'), nullable=False)
     date:        Mapped[Date]    = mapped_column(Date, nullable=False)
-    total:       Mapped[DECIMAL] = mapped_column(DECIMAL(5, 2), nullable=False)
+    total:       Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
 
     customer = relationship("Customer", backref="sales")
 
@@ -126,8 +126,35 @@ class SaleDetail(Base):
     sale_id:          Mapped[int]     = mapped_column(Integer, ForeignKey('sales.id'), primary_key=True, nullable=False)
     product_id:       Mapped[int]     = mapped_column(Integer, ForeignKey('products.sku'), primary_key=True, nullable=False)
     quantity:         Mapped[int]     = mapped_column(Integer, nullable=False)
-    unit_sale_price:  Mapped[DECIMAL] = mapped_column(DECIMAL(4, 2), nullable=False)
-    total_unit_price: Mapped[DECIMAL] = mapped_column(DECIMAL(5, 2), nullable=False)
+    unit_sale_price:  Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
+    total_unit_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
 
     sale    = relationship("Sale", backref="sale_details")
     product = relationship("Product", backref="sale_details")
+
+
+# Se agregan dos tablas para el manejo de usuarios y roles
+class User(Base):
+    __tablename__ = 'users'
+    __table_args__ = (
+        CheckConstraint('age >= 18'),
+    )
+
+    id:        Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    full_name: Mapped[str] = mapped_column(String(50), nullable=False)
+    age:       Mapped[int] = mapped_column(Integer, nullable=False)
+    whatsapp:  Mapped[str] = mapped_column(CHAR(10), nullable=False, unique=True)
+    username:  Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    password:  Mapped[str] = mapped_column(String(50), nullable=False)
+    role_id:   Mapped[int] = mapped_column(Integer, ForeignKey('roles.id'), nullable=False)
+
+    role = relationship("Role", backref="users")
+
+
+class Role(Base):
+    __tablename__ = 'roles'
+
+    id:   Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+
+    users = relationship("User", backref="role")
