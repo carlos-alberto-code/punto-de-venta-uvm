@@ -35,6 +35,7 @@ class LoginPage(ft.UserControl):
         )
         self.button_create_user = ft.FilledButton(
             text='Crear una cuenta',
+            on_click=lambda _: print('Se clicó el boton para crear cuenta')
         )
 
     def build(self):
@@ -43,8 +44,8 @@ class LoginPage(ft.UserControl):
             start_value=18,
             end_value=100,
         )
-        counter.msg_title = 'Edad inválida'
-        counter.msg = 'La edad debe ser mayor a 18 años y menor a 100 años.'
+        counter._msg_title = 'Edad inválida'
+        counter._msg = 'La edad debe ser mayor a 18 años y menor a 100 años.'
         counter = counter.build()
         
         # Agrega los controles a la página
@@ -60,6 +61,7 @@ class LoginPage(ft.UserControl):
                     counter,
                     self.is_owner,
                     self.button_create_user
+                    
                 ]
             )
         )
