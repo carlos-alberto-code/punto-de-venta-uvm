@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 DATABASE_URI = 'mysql+mysqlconnector://carlosDB:93KnvK@localhost:3306/punto_de_venta_uvm'
 
 # Estableciendo el motor de la base de datos
-engine = create_engine(DATABASE_URI, echo=True)
+engine = create_engine(DATABASE_URI)# echo=True)
 
 # Creando todas las tablas definidas en los modelos
 Base.metadata.create_all(bind=engine)
