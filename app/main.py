@@ -1,22 +1,20 @@
 import flet as ft
 
 # from page.login import LoginPage
-from controllers.role_controller import RoleTest
+from controllers.role_controller import RoleController
 from page.user_view import UserView, OwnerView, EmployeeView
+
+from controllers.unit_controller import UnitControllerTest
 
 
 def main(page: ft.Page):
 
     page.theme_mode = ft.ThemeMode.LIGHT  # Se remplaza por las preferencias de usuario
 
-    # page.add(LoginPage(page).build())
-    roles = RoleTest()
-    print(roles.get_role(3))
+    # roles_controller = RoleController()
+    # roles_controller.delete_role(1)
 
-    user_view = UserView(OwnerView())
-    user_view.build_view()
-    user_view.view_strategy = EmployeeView()
-    user_view.build_view()
-
+    unt = UnitControllerTest()
+    unt.new_unit(name='Metro')
 
 ft.app(target=main)

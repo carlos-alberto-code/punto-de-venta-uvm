@@ -148,7 +148,7 @@ class User(Base):
     password:  Mapped[str] = mapped_column(String(50), nullable=False)
     role_id:   Mapped[int] = mapped_column(Integer, ForeignKey('roles.id'), nullable=False)
 
-    role = relationship("Role", backref="users")
+    role = relationship("Role", back_populates="users")
 
 
 class Role(Base):
@@ -157,4 +157,4 @@ class Role(Base):
     id:   Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
 
-    users = relationship("User", backref="role")
+    users = relationship("User", back_populates="role")

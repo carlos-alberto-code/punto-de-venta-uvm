@@ -1,6 +1,8 @@
 from abc import abstractmethod
 
+
 class ViewStrategy:
+
     @abstractmethod
     def build(self):
         print(f'Construcción de la vista {self.__class__.__name__}')
@@ -31,4 +33,11 @@ class UserView:
     
     def build_view(self):
         return self.view_strategy.build()
+
+
+
+class User:
     
+    def __init__(self, username: str, password: str) -> None:
+        self.username = username
+        self.password = password
