@@ -58,19 +58,13 @@ class NavigationComponentsFactory:
         page.drawer.open = False # type: ignore
 
 
-
-
-
 class Initializer:
 
     def __init__(self, modules: List[Module], index: int) -> None:
         self._modules = modules
         self._index = index
         
-    
     def initial_module(self) -> Module:
         if self._index < 0 or self._index >= len(self._modules):
             raise IndexError('El índice para acceder al módulo está fuera del rango de los módulos que existen.')
         return self._modules[self._index]
-    
-    
