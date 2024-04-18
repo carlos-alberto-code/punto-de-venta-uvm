@@ -21,7 +21,9 @@ def main(page: ft.Page):
     page.navigation_bar = factory.build_navigation_bar()
     page.appbar         = factory.build_appbar()
     page.drawer         = factory.build_drawer()
+    
     factory.build_content(page)
+
     page.update()
 
 ft.app(target=main)
