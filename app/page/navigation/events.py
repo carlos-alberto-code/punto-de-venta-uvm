@@ -43,7 +43,7 @@ def _update_appbar_title(event: ft.ControlEvent, title: str) -> None:
     event.page.appbar.title = ft.Text(title)
 
 def _update_drawer_controls(event, module):
-    event.page.drawer.controls = [control.build() for control in module.sections]
+    event.page.drawer.controls = [control for control in module.sections]
 
 def _open_drawer(event: ft.ControlEvent):
     event.page.drawer.open = True

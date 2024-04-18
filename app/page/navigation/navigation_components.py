@@ -21,7 +21,7 @@ class NavigationComponentsFactory:
         self.navigation_state_manager = NavigationStateManager()
         self.navigation_state_manager.modules = modules
         
-        self.initila_module = Initializer(modules, self.NAVBAR_INDEX).initial_module()
+        self.initial_module = Initializer(modules, self.NAVBAR_INDEX).initial_module()
 
     def build_navigation_bar(self) -> ft.NavigationBar:
         return ft.NavigationBar(
@@ -31,11 +31,11 @@ class NavigationComponentsFactory:
         )
     
     def _build_navigation_bar_controls(self) -> List[ft.NavigationDestination]:
-        return [module.rail.build() for module in self.modules]
+        return [module.rail for module in self.modules]
     
     def build_appbar(self) -> ft.AppBar:
         return ft.AppBar(
-            title=ft.Text(f'{self.initila_module.name}'),
+            title=ft.Text(f'{self.initial_module.name}'),
             center_title=True,
             actions=AppbarActions().controls,
         )
@@ -48,11 +48,11 @@ class NavigationComponentsFactory:
         )
     
     def _build_drawer_controls(self) -> List[ft.Control]:
-        return [control.build() for control in self.initila_module.sections]
+        return [control for control in self.initial_module.sections]
     
     def build_content(self, page: ft.Page) -> None:
         page.drawer.open = True # type: ignore
-        content = self.initila_module.sections[self.DRAWER_INDEX].content
+        content = self.initial_module.sections[self.DRAWER_INDEX].content
         page.add(content)
         sleep(2)
         page.drawer.open = False # type: ignore
