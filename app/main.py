@@ -1,20 +1,25 @@
 import flet as ft
 
-# from page.login import LoginPage
-from controllers.role_controller import RoleController
-from page.user_view import UserView, OwnerView, EmployeeView
-
-from controllers.unit_controller import UnitControllerTest
+from page.navigation.navigation_components import NavigationComponentsFactory
+from page.navigation.builder import Module
+from page.modules import (
+    purchase_module,
+    inventory_module,
+    pos_module,
+    sales_module,
+    # TODO: Eliminar el módulo de consumidor
+)
 
 
 def main(page: ft.Page):
 
     page.theme_mode = ft.ThemeMode.LIGHT  # Se remplaza por las preferencias de usuario
+    
+    modules = Module.all
+    factory = NavigationComponentsFactory(modules)
 
-    # roles_controller = RoleController()
-    # roles_controller.delete_role(1)
-
-    unt = UnitControllerTest()
-    unt.new_unit(name='Metro')
+    page.navigation_bar = factory.build_navigation_bar()
+    page.appbar         = factory.build_appbar()
+    page.drawer         = factory.build_drawer()
 
 ft.app(target=main)

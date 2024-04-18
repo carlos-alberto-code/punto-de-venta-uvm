@@ -8,3 +8,5 @@ Module(
     ft.icons.PEOPLE,
     Section('Clientes', ft.icons.PERSON, CustomerSection)
 )
+
+# TODO: Eliminar el módulo de consumidor y todas las carpetas: Firmado: 2024-04-17

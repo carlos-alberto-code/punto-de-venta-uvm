@@ -118,7 +118,7 @@ class Module:
     ```
     """
 
-    all_modules: List['Module'] = []
+    all: List['Module'] = []
 
     def __init__(self, name: str, icon: str, *sections: Section) -> None:
         if not sections:
@@ -130,7 +130,7 @@ class Module:
         self._name = name
         self._rail = Rail(name, icon)
         self._sections = sections
-        Module.all_modules.append(self)
+        Module.all.append(self)
         # NOTE: Usar Module, en lugar de self, permite el acceso global, incluso a las subclases.
         # Si una subclase heredara de Model y estamos usando self, entonces la subclase no tendría acceso
         # a la lista de módulos. Por eso se usa Module en lugar de self.
