@@ -43,29 +43,31 @@ brands_ids = [brand.id for brand in get_brands()]
 # Si existen registros en las tablas Unit, Category y Brand, entonces insertar 20 productos
 if exist_data():
     with get_db() as db:
-        db.query(Product).order_by(Product.sku)
-        # Crear e insertar 20 productos
-        for i in range(20):
-            producto = Product(
-                sku=i+1,
-                # Una unidad aleatoria
-                unit_id=random.choice(units_ids),
-                # Una categoría aleatoria
-                category_id=random.choice(categories_ids),
-                # Una marca aleatoria
-                brand_id=random.choice(brands_ids),
-                # Cantidad aleatoria entre 1 y 30
-                quantity=random.randint(1, 30),
-                # Precio de compra aleatorio entre 1 y 100
-                purchase_price=random.randint(1, 100),
-                # Precio de venta aleatorio entre 1 y 100
-                sale_price=random.randint(1, 100),
-                # Stock mínimo aleatorio entre 1 y 10
-                minimum_stock=random.randint(1, 10),
-                # Descripción aleatoria
-                description=f'Descripción del producto {i+1}'
-            )
-            db.add(producto)
-        db.commit()
-        print('Productos insertados exitosamente')
+        if not db.query(Product).first():
+            # Crear e insertar 20 productos
+            for i in range(20):
+                producto = Product(
+                    sku=i+1,
+                    # Una unidad aleatoria
+                    unit_id=random.choice(units_ids),
+                    # Una categoría aleatoria
+                    category_id=random.choice(categories_ids),
+                    # Una marca aleatoria
+                    brand_id=random.choice(brands_ids),
+                    # Cantidad aleatoria entre 1 y 30
+                    quantity=random.randint(1, 30),
+                    # Precio de compra aleatorio entre 1 y 100
+                    purchase_price=random.randint(1, 100),
+                    # Precio de venta aleatorio entre 1 y 100
+                    sale_price=random.randint(1, 100),
+                    # Stock mínimo aleatorio entre 1 y 10
+                    minimum_stock=random.randint(1, 10),
+                    # Descripción aleatoria
+                    description=f'Descripción del producto {i+1}'
+                )
+                db.add(producto)
+            db.commit()
+            print('Productos insertados exitosamente')
+        else:
+            print('Ya existen productos en la base de datos')
         
