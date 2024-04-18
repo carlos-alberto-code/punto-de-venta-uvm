@@ -16,7 +16,6 @@ def exist_data():
             return False
         return True
 
-
 # Una función para obtener todos las unidades
 def get_units():
     with get_db() as db:
