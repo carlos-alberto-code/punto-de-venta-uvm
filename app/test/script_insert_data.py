@@ -2,6 +2,9 @@
 Este script se encarga de insertar datos en las tablas de la base de datos.
 Los datos son simplemente de prueba, no son los datos que por ahora son reales, aunque se asemejan.
 """
+import sys
+sys.path.append('..')
+
 from models.models import Unit, Category, Brand
 from database.connection import get_db
 
