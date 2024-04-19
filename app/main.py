@@ -7,7 +7,6 @@ from page.modules import (
     inventory_module,
     pos_module,
     sales_module,
-    # TODO: Eliminar el módulo de consumidor
 )
 
 
