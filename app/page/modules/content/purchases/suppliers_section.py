@@ -1,4 +1,5 @@
 import flet as ft
+from controllers.supplier_controller import SupplierController
 
 _title = ft.Text('Proveedores', size=25)
 _table = ft.DataTable(
@@ -13,22 +14,16 @@ _table = ft.DataTable(
     rows=[
         ft.DataRow(
             cells=[
-                ft.DataCell(ft.Text('1')),
-                ft.DataCell(ft.Text('Coca-Cola')),
-                ft.DataCell(ft.Text('5591616910')),
+                ft.DataCell(ft.Text(str(supplier.id))),
+                ft.DataCell(ft.Text(supplier.name)),
+                ft.DataCell(ft.Text(supplier.phone)),
             ]
-        ),
-        ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text('2')),
-                ft.DataCell(ft.Text('Mazda')),
-                ft.DataCell(ft.Text('5591616910')),
-            ]
-        ),
+        )for supplier in SupplierController().get_all()
     ]
 )
 
 ProvidersSection = ft.Column(
+    scroll= ft.ScrollMode.ALWAYS,
     controls=[
         ft.Row(
             [
