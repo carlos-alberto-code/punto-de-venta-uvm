@@ -1,4 +1,7 @@
 import flet as ft
+import sys
+sys.path.append('..')
+from controllers.categories_controller import CategorieController
 
 _title = ft.Text('Categorias',size=25)
 _table = ft.DataTable(
@@ -9,44 +12,15 @@ _table = ft.DataTable(
     rows=[
         ft.DataRow(
             cells=[
-                ft.DataCell(ft.Text('1')),
-                ft.DataCell(ft.Text('Electronicos'))
+                ft.DataCell(ft.Text(str(categorie.id))),
+                ft.DataCell(ft.Text(categorie.name))
             ]
-        ),
-        ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text('2')),
-                ft.DataCell(ft.Text('Ropa'))
-            ]
-        ),
-        ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text('3')),
-                ft.DataCell(ft.Text('Alimentos'))
-            ]
-        ),
-        ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text('4')),
-                ft.DataCell(ft.Text('Hogar'))
-            ]
-        ),
-        ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text('5')),
-                ft.DataCell(ft.Text('Tecnologia'))
-            ]
-        ),
-        ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text('6')),
-                ft.DataCell(ft.Text('Zapatos'))
-            ]
-        ),
+        )for categorie in CategorieController().get_all()
     ]
 )
 
 CategoriesSection = ft.Column(
+    scroll=ft.ScrollMode.ALWAYS,
     controls=[
         ft.Row(
             [
