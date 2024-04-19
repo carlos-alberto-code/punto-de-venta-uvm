@@ -46,3 +46,8 @@ class CategorieController:
             categorie = db.query(Category).filter(Category.id == categorie_id).first()
             db.delete(categorie)
             db.commit()
+    
+    def get_all(self):
+        with get_db() as db:
+            categories = db.query(Category).all()
+            return categories
