@@ -13,6 +13,7 @@ from page.modules import (
 def main(page: ft.Page):
 
     page.theme_mode = ft.ThemeMode.LIGHT  # Se remplaza por las preferencias de usuario
+    page.scroll = ft.ScrollMode.AUTO
     
     modules = Module.all
     factory = NavigationComponentsFactory(modules)
