@@ -1,7 +1,7 @@
 import flet as ft
 
 from page.navigation.navigation_components import NavigationComponentsFactory
-from page.navigation.builder import Module
+from page.navigation.module import Module
 from page.modules import (
     purchase_module,
     inventory_module,
@@ -16,7 +16,7 @@ def main(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
     page.window_maximized = True
     
-    modules = Module.all
+    modules = Module.all_modules
     factory = NavigationComponentsFactory(modules)
 
     page.navigation_bar = factory.build_navigation_bar()

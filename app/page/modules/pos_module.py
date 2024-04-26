@@ -1,4 +1,4 @@
-from ..navigation.builder import Module, Section
+from ..navigation.module import Module, Section
 import flet as ft
 
 

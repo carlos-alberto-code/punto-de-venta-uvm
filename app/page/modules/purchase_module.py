@@ -1,4 +1,4 @@
-from ..navigation.builder import Module, Section
+from ..navigation.module import Module, Section
 from .content.purchases.suppliers_section import ProvidersSection
 from .content.purchases.purchase_section import PurchaseSection
 from .content.purchases.categories_section import CategoriesSection

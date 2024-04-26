@@ -6,7 +6,7 @@ import flet as ft
 from .navigation_state import NavigationStateManager
 from .events import update_module, update_content
 from .appbar_controls import AppbarActions
-from .builder import Module
+from .module import Module
 
 class NavigationComponentsFactory:
 
@@ -48,11 +48,11 @@ class NavigationComponentsFactory:
         )
     
     def _build_drawer_controls(self) -> List[ft.Control]:
-        return [control for control in self.initial_module.sections]
+        return [control for control in self.initial_module._drawer_sections]
     
     def build_content(self, page: ft.Page) -> None:
         page.drawer.open = True # type: ignore
-        content = self.initial_module.sections[self.DRAWER_INDEX].content
+        content = self.initial_module._drawer_sections[self.DRAWER_INDEX].content
         page.add(content)
         sleep(2)
         page.drawer.open = False # type: ignore

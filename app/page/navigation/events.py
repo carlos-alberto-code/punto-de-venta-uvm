@@ -24,7 +24,7 @@ def update_module(event: ft.ControlEvent):
 def update_content(event: ft.ControlEvent):
     _clean_page(event)
     module = navigation_state_manager.current_module
-    sections = module.sections
+    sections = module._drawer_sections
     drawer_index = _get_drawer_index(event)
     section = sections[drawer_index]
     event.page.add(section.content)
@@ -54,7 +54,7 @@ def _select_drawer_index(event: ft.ControlEvent, index: int):
 def _get_content_from_current_drawer_destination(event: ft.ControlEvent):
     drawer_index = event.page.drawer.selected_index
     module = navigation_state_manager.current_module
-    module_sections = module.sections
+    module_sections = module._drawer_sections
     return module_sections[drawer_index].content
 
 def _close_drawer(event: ft.ControlEvent):
