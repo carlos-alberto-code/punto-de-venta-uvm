@@ -1,5 +1,5 @@
 import flet as ft
-from controllers.product_contrller import ProductController
+from controllers.inventory_controller import InventoryController
 
 _title = ft.Text('Inventario', size=25)
 _table = ft.DataTable(
@@ -29,7 +29,7 @@ _table = ft.DataTable(
                 ft.DataCell(ft.Text(str(product.minimum_stock))),
                 ft.DataCell(ft.Text(product.description)),
             ]
-        )for product in ProductController().get_all()
+        )for product in InventoryController().get_all()
     ]
 )
 

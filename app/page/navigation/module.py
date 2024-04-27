@@ -8,7 +8,7 @@ class Section(ft.NavigationDrawerDestination):
             label: str = 'Not section defined.',
             icon: str = ft.icons.QUERY_BUILDER,
             content: ft.Control = ft.Column(
-                alignment=ft.MainAxisAlignment.CENTER,
+                # alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 controls=[ft.Text('Not controls defined.')]
             )

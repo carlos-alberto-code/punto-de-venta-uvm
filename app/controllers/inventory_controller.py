@@ -1,8 +1,8 @@
 from database.connection import get_db
-from models.models import Product
+from models.models import Product, Unit, Category, Brand
 
 
-class ProductController:
+class InventoryController:
 
     # Un método para comprobar si un rol existe, mediante su id
     def id_product_exist(self, product_id: int):
@@ -55,3 +55,23 @@ class ProductController:
         with get_db() as db:
             products = db.query(Product).all()
             return products
+
+
+class UnitController:
+
+    # Definir el crud para la tabla units
+
+    def get_all_units(self):
+        with get_db() as db:
+            units = db.query(Unit).all()
+            return units
+    
+    def new_unit(self, unit_name: str):
+        with get_db() as db:
+            unit = db.query(Unit).filter(Unit.name == unit_name).first()
+            if unit is not None:
+                return None
+            new_unit = Unit(name=unit_name)
+            db.add(new_unit)
+            db.commit()
+    
