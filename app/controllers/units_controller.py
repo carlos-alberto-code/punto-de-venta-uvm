@@ -42,3 +42,19 @@ class UnitsController:
             unit = db.query(Unit).filter_by(name=name.lower()).first()
             db.delete(unit)
             db.commit()
+    
+    def update_unit(self, old_name: str, new_name: str) -> None:
+        '''
+        Checks if the unit name exists in the units table. If it doesn't exist, it raises an exception.
+        If it exists, it checks if the new name already exists in the units table. If it already exists, it raises an exception.
+        If the new name doesn't exist, it updates the unit name in the units table.
+        '''
+        if not self._checker.name_exist(old_name, Unit):
+            raise Exception(f'The unit "{old_name.lower()}" does not exist in the table "{Unit.__tablename__}".')
+        if self._checker.name_exist(new_name, Unit):
+            raise Exception(f'The unit "{new_name.lower()}" already exists in the table "{Unit.__tablename__}".')
+        with get_db() as db:
+            unit = db.query(Unit).filter_by(name=old_name.lower()).first()
+            if unit is not None:
+                unit.name = new_name.lower()
+                db.commit()
