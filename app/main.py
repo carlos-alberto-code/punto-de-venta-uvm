@@ -15,33 +15,28 @@ from page.modules import (
 
 def main(page: ft.Page):
 
-    # modules = Module.all_modules
-    # init    = Initializer(modules=modules, navbar_index=0, drawer_index=0)
-    # struct  = NavigationStructureFactory(initializer=init)
+    modules = Module.all_modules
+    init    = Initializer(modules=modules, navbar_index=3, drawer_index=0)
+    struct  = NavigationStructureFactory(initializer=init)
 
-    # page.window_maximized       = True
-    # page.scroll                 = ft.ScrollMode.AUTO
-    # page.vertical_alignment     = ft.MainAxisAlignment.CENTER
-    # page.horizontal_alignment   = ft.CrossAxisAlignment.CENTER
+    page.window_maximized       = True
+    page.scroll                 = ft.ScrollMode.AUTO
+    page.vertical_alignment     = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment   = ft.CrossAxisAlignment.CENTER
 
-    # content = init.initial_drawer_section_content
-    # page.add(content)
+    content = init.initial_drawer_section_content
+    page.add(content)
 
-    # page.navigation_bar = struct.navbar
-    # page.drawer         = struct.drawer
-    # page.appbar         = struct.appbar()
-    # page.update()
+    page.navigation_bar = struct.navbar
+    page.drawer         = struct.drawer
+    page.appbar         = struct.appbar()
+    page.update()
 
-    # sleep(1.5)
-    # page.drawer.open = False
-    # page.update()
+    sleep(1.5)
+    page.drawer.open = False
+    page.update()
 
-    # Prueba del controlador de la tabla unidades
-    from controllers.units_controller import UnitsController
 
-    units_controller = UnitsController()
-    units = units_controller.get_all_units()
-    for unit in units:
-        print(unit.name)
+
 
 ft.app(target=main)
