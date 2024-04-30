@@ -24,15 +24,16 @@ class StockSection(ft.Column):
         self.products = ProductController.get_all()
         self.spacing = 20
         self.sort_functions = {
-            'SKU': lambda: self.sort_by('sku', int),
-            'UNIDAD': lambda: self.sort_by('unit', lambda x: str(x).lower()),
-            'CATEGORÍA': lambda: self.sort_by('category', str),
-            'MARCA': lambda: self.sort_by('brand', str),
-            'CANTIDAD': lambda: self.sort_by('quantity', int),
-            'PRECIO DE COMPRA': lambda: self.sort_by('purchase_price', float),
-            'PRECIO DE VENTA': lambda: self.sort_by('sale_price', float),
-            'STOCK MÍNIMO': lambda: self.sort_by('minimum_stock', int),
+            'sku': lambda: self.sort_by('sku', int),
+            'unit': lambda: self.sort_by('unit', lambda x: str(x).lower()),
+            'category': lambda: self.sort_by('category', lambda x: str(x).lower()),
+            'brand': lambda: self.sort_by('brand', lambda x: str(x).lower()),
+            'quantity': lambda: self.sort_by('quantity', int),
+            'purchase_price': lambda: self.sort_by('purchase_price', float),
+            'sale_price': lambda: self.sort_by('sale_price', float),
+            'minimum_stock': lambda: self.sort_by('minimum_stock', int),
         }
+        self.sort_order = {key: True for key in self.sort_functions.keys()}
         self.controls = [
             ft.Row(
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
@@ -73,11 +74,13 @@ class StockSection(ft.Column):
         ]
 
     def sort_by(self, attribute, type):
-        self.products = sorted(self.products, key=lambda product: type(getattr(product, attribute)))
+        reverse_order = not self.sort_order[attribute]
+        self.products = sorted(self.products, key=lambda product: type(getattr(product, attribute)), reverse=reverse_order)
+        self.sort_order[attribute] = reverse_order
         self.update_table()
 
     def update_table(self):
-        self.controls[1].rows = [
+        self.controls[1].rows = [ # type: ignore
             ft.DataRow(
                 cells=[
                     ft.DataCell(ft.Text(str(product.sku))),
@@ -94,34 +97,34 @@ class StockSection(ft.Column):
         ]
 
     def sort_by_sku(self, event: ft.ControlEvent):
-        self.sort_functions['SKU']()
+        self.sort_functions['sku']()
         event.page.update()
 
     def sort_by_unit(self, event: ft.ControlEvent):
-        self.sort_functions['UNIDAD']()
+        self.sort_functions['unit']()
         event.page.update()
 
     def sort_by_category(self, event: ft.ControlEvent):
-        self.sort_functions['CATEGORÍA']()
+        self.sort_functions['category']()
         event.page.update()
     
     def sort_by_brand(self, event: ft.ControlEvent):
-        self.sort_functions['MARCA']()
+        self.sort_functions['brand']()
         event.page.update()
     
     def sort_by_quantity(self, event: ft.ControlEvent):
-        self.sort_functions['CANTIDAD']()
+        self.sort_functions['quantity']()
         event.page.update()
     
     def sort_by_purchase_price(self, event: ft.ControlEvent):
-        self.sort_functions['PRECIO DE COMPRA']()
+        self.sort_functions['purchase_price']()
         event.page.update()
 
     def sort_by_sale_price(self, event: ft.ControlEvent):
-        self.sort_functions['PRECIO DE VENTA']()
+        self.sort_functions['sale_price']()
         event.page.update()
     
     def sort_by_minimum_stock(self, event: ft.ControlEvent):
-        self.sort_functions['STOCK MÍNIMO']()
+        self.sort_functions['minimum_stock']()
         event.page.update()
     
