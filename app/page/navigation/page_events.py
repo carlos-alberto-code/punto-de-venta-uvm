@@ -17,8 +17,14 @@ class PageEvents:
         event.page.drawer.open = False
         event.page.update()
     
-    def change_appbar_title(self, title: str, event: ft.ControlEvent):
-        event.page.appbar.title = ft.Text(value=title)
+    def change_appbar_title(self, title: str, icon: str, event: ft.ControlEvent):
+        event.page.appbar.title = ft.Row(
+            alignment=ft.MainAxisAlignment.CENTER,
+            controls=[
+                ft.Icon(icon),
+                ft.Text(title),
+            ]
+        )
     
     def add_to_page(self, content: ft.Control, event: ft.ControlEvent):
         event.page.add(content)

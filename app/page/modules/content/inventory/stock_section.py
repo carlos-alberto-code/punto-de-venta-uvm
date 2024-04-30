@@ -74,7 +74,7 @@ class StockSection(ft.Column):
     
     def __init__(self):
         super().__init__()
-        self.products = ProductController().get_all()
+        self.products = ProductController.get_all()
         self.controls = [
             ft.Row(
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,

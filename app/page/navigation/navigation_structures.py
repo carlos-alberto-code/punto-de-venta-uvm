@@ -29,7 +29,13 @@ class NavigationStructureFactory:
     def appbar(self, appbar_actions: list[ft.Control] = []):
         return ft.AppBar(
             center_title=True,
-            title=ft.Text(f'{self.init_module.label}'),
+            title=ft.Row(
+                alignment=ft.MainAxisAlignment.CENTER,
+                controls=[
+                    ft.Icon(name=self.init_module.icon),
+                    ft.Text(self.init_module.label)
+                ]
+            ),
             actions=appbar_actions
         )
     

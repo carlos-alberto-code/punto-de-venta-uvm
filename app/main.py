@@ -16,7 +16,7 @@ from page.modules import (
 def main(page: ft.Page):
 
     modules = Module.all_modules
-    init    = Initializer(modules=modules, navbar_index=3, drawer_index=0)
+    init    = Initializer(modules=modules, navbar_index=1, drawer_index=0)
     struct  = NavigationStructureFactory(initializer=init)
 
     page.window_maximized       = True

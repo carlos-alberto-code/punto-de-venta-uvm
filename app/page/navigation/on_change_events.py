@@ -13,7 +13,7 @@ e = PageEvents()
 def update_module(event: ft.ControlEvent):
     e.clear_page(event)
     state.navbar_index = event.page.navigation_bar.selected_index
-    e.change_appbar_title(str(state.current_module.label), event)
+    e.change_appbar_title(str(state.current_module.label), str(state.current_module.icon), event)
     sections = state.current_module.drawer_sections
     event.page.drawer.controls = sections
     e.open_drawer(event)
