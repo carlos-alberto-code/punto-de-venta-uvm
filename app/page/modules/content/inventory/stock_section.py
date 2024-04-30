@@ -44,14 +44,14 @@ class StockSection(ft.Column):
             ), # Row End
             ft.DataTable(
                 columns=[
-                    ft.DataColumn(ft.TextButton('SKU', on_click=self.sort_by_sku)),
-                    ft.DataColumn(ft.TextButton('UNIDAD', on_click=self.sort_by_unit)),
-                    ft.DataColumn(ft.TextButton('CATEGORÍA', on_click=self.sort_by_category)),
-                    ft.DataColumn(ft.TextButton('MARCA', on_click=self.sort_by_brand)),
-                    ft.DataColumn(ft.TextButton('CANTIDAD', on_click=self.sort_by_quantity)),
-                    ft.DataColumn(ft.TextButton('PRECIO DE COMPRA', on_click=self.sort_by_purchase_price)),
-                    ft.DataColumn(ft.TextButton('PRECIO DE VENTA', on_click=self.sort_by_sale_price)),
-                    ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=self.sort_by_minimum_stock)),
+                    ft.DataColumn(ft.TextButton('SKU', on_click=lambda event: self.sort_by_key('sku', event))),
+                    ft.DataColumn(ft.TextButton('UNIDAD', on_click=lambda event: self.sort_by_key('unit', event))),
+                    ft.DataColumn(ft.TextButton('CATEGORÍA', on_click=lambda event: self.sort_by_key('category', event))),
+                    ft.DataColumn(ft.TextButton('MARCA', on_click=lambda event: self.sort_by_key('brand', event))),
+                    ft.DataColumn(ft.TextButton('CANTIDAD', on_click=lambda event: self.sort_by_key('quantity', event))),
+                    ft.DataColumn(ft.TextButton('PRECIO DE COMPRA', on_click=lambda event: self.sort_by_key('purchase_price', event))),
+                    ft.DataColumn(ft.TextButton('PRECIO DE VENTA', on_click=lambda event: self.sort_by_key('sale_price', event))),
+                    ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=lambda event: self.sort_by_key('minimum_stock', event))),
                     ft.DataColumn(ft.TextButton('DESCRIPCIÓN')),
                 ],
                 rows=[
@@ -66,7 +66,9 @@ class StockSection(ft.Column):
                             ft.DataCell(ft.Text(str(product.sale_price))),
                             ft.DataCell(ft.Text(str(product.minimum_stock))),
                             ft.DataCell(ft.Text(product.description)),
-                        ]
+                        ],
+                        selected=True,
+                        on_select_changed=lambda event: print(event),
                     ) for product in self.products
                     
                 ]
@@ -92,39 +94,12 @@ class StockSection(ft.Column):
                     ft.DataCell(ft.Text(str(product.sale_price))),
                     ft.DataCell(ft.Text(str(product.minimum_stock))),
                     ft.DataCell(ft.Text(product.description)),
-                ]
+                ],
+                selected=True,
+                on_select_changed=lambda e: print(type(e)),
             ) for product in self.products
         ]
-
-    def sort_by_sku(self, event: ft.ControlEvent):
-        self.sort_functions['sku']()
-        event.page.update()
-
-    def sort_by_unit(self, event: ft.ControlEvent):
-        self.sort_functions['unit']()
-        event.page.update()
-
-    def sort_by_category(self, event: ft.ControlEvent):
-        self.sort_functions['category']()
-        event.page.update()
     
-    def sort_by_brand(self, event: ft.ControlEvent):
-        self.sort_functions['brand']()
-        event.page.update()
-    
-    def sort_by_quantity(self, event: ft.ControlEvent):
-        self.sort_functions['quantity']()
-        event.page.update()
-    
-    def sort_by_purchase_price(self, event: ft.ControlEvent):
-        self.sort_functions['purchase_price']()
-        event.page.update()
-
-    def sort_by_sale_price(self, event: ft.ControlEvent):
-        self.sort_functions['sale_price']()
-        event.page.update()
-    
-    def sort_by_minimum_stock(self, event: ft.ControlEvent):
-        self.sort_functions['minimum_stock']()
-        event.page.update()
-    
+    def sort_by_key(self, key: str, event: ft.ControlEvent):
+        self.sort_functions[key]()
+        self.update()
