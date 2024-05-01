@@ -11,6 +11,8 @@ class CategorySection(ft.Column):
 
     def __init__(self):
         super().__init__()
+        # self.alignment = ft.MainAxisAlignment.CENTERq
+        self.horizontal_alignment = ft.CrossAxisAlignment.CENTER
         self.categories = CategorieController().get_all()
         self.sort_functions = {
             'id': lambda: self.sort_by('id', int),
