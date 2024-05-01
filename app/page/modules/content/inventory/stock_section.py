@@ -22,7 +22,6 @@ class StockSection(ft.Column):
     def __init__(self):
         super().__init__()
         self.products = ProductController.get_all()
-        print(self.products)
         self.spacing = 20
         self.sort_functions = {
             'sku': lambda: self.sort_by('sku', int),
