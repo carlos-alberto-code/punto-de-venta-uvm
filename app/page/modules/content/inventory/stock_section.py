@@ -21,6 +21,7 @@ class StockSection(ft.Column):
     
     def __init__(self):
         super().__init__()
+        self.horizontal_alignment = ft.CrossAxisAlignment.CENTER
         self.products = ProductController.get_all()
         self.spacing = 20
         self.sort_functions = {
