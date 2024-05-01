@@ -6,7 +6,7 @@ import sys
 sys.path.append('..')
 
 from models.models import Unit, Category, Brand
-from database.connection import get_db
+from app.database.connection import get_db
 
 units_data = ['kg', 'litro', 'pieza', 'metro', 'caja', 'bolsa']
 categories_data = ['frutas', 'verduras', 'lácteos', 'carnes', 'bebidas', 'pan', 'dulces', 'abarrotes', 'limpieza', 'higiene']

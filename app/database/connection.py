@@ -1,13 +1,19 @@
-from models.models import Base
-from sqlalchemy import create_engine
+from dotenv import load_dotenv
+import os
 from contextlib import contextmanager
+
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from models.models import Base
 
-DATABASE_URI = 'mysql+mysqlconnector://carlosDB:93KnvK@localhost:3306/punto_de_venta_uvm'
+
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL", default="sqlite:///./test.db")
+
 
 # Estableciendo el motor de la base de datos
-engine = create_engine(DATABASE_URI)# echo=True)
+engine = create_engine(DATABASE_URL)# echo=True)
 
 # Creando todas las tablas definidas en los modelos
 Base.metadata.create_all(bind=engine)
