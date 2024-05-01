@@ -9,6 +9,7 @@ class SupplierSection(ft.Column):
 
     def __init__(self):
         super().__init__()
+        self.horizontal_alignment = ft.CrossAxisAlignment.CENTER
         self.suppliers = SupplierController().get_all()
         self.sort_functions = {
             'id': lambda: self.sort_by('id', int),
