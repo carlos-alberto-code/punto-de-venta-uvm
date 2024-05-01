@@ -9,7 +9,7 @@ from models.models import Base
 
 
 load_dotenv()
-DATABASE_URL = os.getenv("DATABASE_URL", default="sqlite:///./test.db")
+DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./test.db')
 
 
 # Estableciendo el motor de la base de datos
