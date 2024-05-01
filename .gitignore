@@ -142,3 +142,5 @@ cython_debug/
 notes.md
 
 diagrams/
+
+connection.env

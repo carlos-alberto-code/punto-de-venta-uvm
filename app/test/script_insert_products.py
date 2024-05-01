@@ -2,7 +2,7 @@ import random
 import sys
 sys.path.append('..')
 
-from database.connection import get_db
+from app.database.connection import get_db
 from models.models import Product, Unit, Category, Brand
 
 

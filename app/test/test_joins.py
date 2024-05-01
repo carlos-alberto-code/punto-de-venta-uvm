@@ -3,7 +3,7 @@ sys.path.append('..')
 
 from sqlalchemy import or_
 
-from database.connection import get_db
+from app.database.connection import get_db
 from models.models import Product, Unit, Category, Brand
 
 
