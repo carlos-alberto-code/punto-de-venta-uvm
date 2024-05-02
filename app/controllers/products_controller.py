@@ -1,4 +1,5 @@
 from sqlalchemy import or_
+from sqlalchemy.orm import joinedload
 
 from database.connection import get_db
 from models.models import Product, Category, Brand, Unit
@@ -23,7 +24,7 @@ class ProductController:
                 .all()
     
     @staticmethod
-    def get_all():
+    def get_all_products():
         with get_db() as db:
             return db.query(
                 Product.sku,
