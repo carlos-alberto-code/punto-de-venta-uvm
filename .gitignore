@@ -146,3 +146,4 @@ diagrams/
 connection.env
 
 test.py
+test_flet.py

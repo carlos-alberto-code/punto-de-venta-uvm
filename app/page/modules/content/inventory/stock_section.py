@@ -103,3 +103,51 @@ class StockSection(ft.Column):
     def sort_by_key(self, key: str, event: ft.ControlEvent):
         self.sort_functions[key]()
         self.update()
+
+from time import sleep
+ft.SearchBar()
+class Filter(ft.SearchBar):
+    # Esta clase es un componente de búsqueda y filtrado, pensado para buscar y filtrar en función de las unidades, categorías y marcas
+    def __init__(self):
+        super().__init__()
+        self.width = 400
+        self.height = 40
+        self.tooltip = 'Selecciona un filtro y escribe el nombre de la unidad, categoría o marca que deseas buscar'
+        self.bar_leading = ft.Icon(name=ft.icons.SEARCH_SHARP)
+        self.view_leading = ft.Icon(name=ft.icons.SEARCH_SHARP)
+        self.bar_hint_text = 'Selecciona un filtro'
+        self.bar_trailing = [
+            ft.PopupMenuButton(
+                icon=ft.icons.FILTER_LIST,
+                items=[
+                    ft.PopupMenuItem(text='Unidad', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
+                    ft.PopupMenuItem(text='Categoría', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
+                    ft.PopupMenuItem(text='Marca', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
+                ]
+            )
+        ]
+        self.view_trailing = [
+            ft.PopupMenuButton(
+                icon=ft.icons.FILTER_LIST,
+                items=[
+                    ft.PopupMenuItem(text='Unidad', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
+                    ft.PopupMenuItem(text='Categoría', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
+                    ft.PopupMenuItem(text='Marca', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
+                ]
+            ),
+            ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda e: self.close_view()),
+        ]
+        self.on_tap = self.do_nothing
+        # Siempre debe ir un control al final que permita agregar una nueva propiedad, dependiendo del filtro seleccionado
+        # Al seleccionarse un filtro, se inyectan los controles dependiendo la opción seleccionada.
+        # Pero siempre estará el control para registrar una nueva propiedad al final de las opciones.
+        self.controls = [ft.ElevatedButton(text='Agregar nueva propiedad', icon=ft.icons.ADD)]
+    
+    def do_nothing(self, event):
+        self.close_view()
+    
+    def run_searcher(self, event):
+        self.view_hint_text = f'Escribe el nombre de la {event.control.text.lower()}'
+        self.close_view()
+        sleep(0.08)
+        self.open_view()
