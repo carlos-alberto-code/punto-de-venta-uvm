@@ -1,11 +1,13 @@
+from .database_exceptions import DataException, UnitAlreadyExists
+from .checker import Checker, validate_name
 from database.connection import get_db
 from models.models import Unit
-from .data_checker import DataChecker
+
 
 class UnitsController:
 
     def __init__(self) -> None:
-        self._checker = DataChecker()
+        self._checker = Checker()
 
     def get_all_units(self) -> list[Unit]:
         '''
@@ -14,23 +16,25 @@ class UnitsController:
         sorted alphabetically by the unit name.
         '''
         if not self._checker.exist_data_in(Unit):
-            raise Exception(f'There is no data in the table "{Unit.__tablename__}".')
+            raise DataException(Unit.__tablename__)
         with get_db() as db:
             units = db.query(Unit).order_by(Unit.name).all()
             return units
     
-    def new_unit(self, name: str) -> None:
+    @validate_name
+    def create_unit(self, name: str) -> None:
         '''
         Checks if the unit name already exists in the units table. If it already exists, it raises an exception.
         If it doesn't exist, it creates a new unit with the provided name and adds it to the units table.
         '''
         if self._checker.name_exist(name, Unit):
-            raise Exception(f'The unit "{name.lower()}" already exists in the table "{Unit.__tablename__}".')
+            raise UnitAlreadyExists(name)
         with get_db() as db:
             unit = Unit(name=name.lower())
             db.add(unit)
             db.commit()
     
+    @validate_name
     def delete_unit(self, name: str) -> None:
         '''
         Checks if the unit name exists in the units table. If it doesn't exist, it raises an exception.
@@ -58,3 +62,17 @@ class UnitsController:
             if unit is not None:
                 unit.name = new_name.lower()
                 db.commit()
+
+    def search_unit(self, name: str):
+            """
+            Search for units with a given name.
+
+            Parameters:
+            name (str): The name to search for.
+
+            Returns:
+            list: A list of units matching the given name.
+            """
+            with get_db() as db:
+                units = db.query(Unit).filter(Unit.name.ilike(f'%{name}%')).all()
+                return units
