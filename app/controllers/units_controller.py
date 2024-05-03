@@ -1,4 +1,4 @@
-from .database_exceptions import DataException, UnitAlreadyExists, UnitNotFoundException
+from .database_exceptions import EmptyTableException, ValueNotFoundException, ValueAlreadyExistsException
 from .checker import Checker, validate_name
 from database.connection import get_db
 from sqlalchemy.orm import Session
@@ -46,7 +46,7 @@ class UnitsController:
     def get_all_units(self) -> list[Unit]:
         with get_db() as db:
             if not self._checker.exist_data_in(Unit, db):
-                raise DataException(Unit.__tablename__)
+                raise EmptyTableException(Unit.__tablename__)
             repo = UnitRepository(db)
             units = repo.get_all_units()
             return units
@@ -55,7 +55,7 @@ class UnitsController:
     def create_unit(self, name: str) -> None:
         with get_db() as db:
             if self._checker.name_exist(name, Unit, db):
-                raise UnitAlreadyExists(name)
+                raise ValueAlreadyExistsException(name, Unit.__tablename__)
             repo = UnitRepository(db)
             repo.create_unit(name)
     
@@ -63,7 +63,7 @@ class UnitsController:
     def delete_unit(self, name: str) -> None:
         with get_db() as db:
             if not self._checker.name_exist(name, Unit, db):
-                raise UnitNotFoundException(name)
+                raise ValueNotFoundException(name, Unit.__tablename__)
             repo = UnitRepository(db)
             repo.delete_unit(name)
 
@@ -71,7 +71,7 @@ class UnitsController:
     def update_unit(self, old_name: str, new_name: str) -> None:
         with get_db() as db:
             if self._checker.name_exist(new_name, Unit, db):
-                raise UnitAlreadyExists(new_name)
+                raise ValueAlreadyExistsException(new_name, Unit.__tablename__)
             repo = UnitRepository(db)
             repo.update_unit(old_name, new_name)
 
