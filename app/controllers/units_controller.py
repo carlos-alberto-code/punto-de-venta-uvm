@@ -7,7 +7,12 @@ from models.models import Unit
 class UnitsController:
 
     def __init__(self) -> None:
+        self._table_name = Unit.__tablename__
         self._checker = Checker()
+    
+    @property
+    def table_name(self) -> str:
+        return self._table_name
 
     def get_all_units(self) -> list[Unit]:
         '''

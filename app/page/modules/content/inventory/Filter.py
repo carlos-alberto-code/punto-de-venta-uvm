@@ -7,6 +7,8 @@ y buscar productos en función de sus unidades, categorías y marcas.
 from time import sleep
 import flet as ft
 
+from controllers.filter_controller import FilterController
+
 
 class FilterButton(ft.PopupMenuButton):
     def __init__(self, props: str, e) -> None:
@@ -24,25 +26,28 @@ class FilterButton(ft.PopupMenuButton):
 
 
 class Filter(ft.SearchBar):
-    def __init__(self, properties: str) -> None:
+    def __init__(self, **table_controllers: FilterController) -> None:
         super().__init__()
-        self._filters = properties
+        self.controllers = table_controllers
+        units = self.controllers['Units']
+        
+        
         self.width = 400
         self.height = 40
         self.bar_leading = ft.Icon(name=ft.icons.SEARCH_SHARP, size=18)
         self.view_leading = ft.Icon(name=ft.icons.SEARCH_SHARP, size=18)
         self.bar_hint_text = 'Selecciona un filtro'
         self.view_hint_text_style = ft.TextStyle(size=18)
-        self.bar_trailing = [FilterButton(properties)]
-        self.view_trailing = [
-            FilterButton(properties),
-            ft.IconButton(
-                icon=ft.icons.CLOSE,
-                on_click=lambda _: self.close_view(),
-                icon_size=18
-            )
-        ]
+        # self.bar_trailing = [FilterButton(properties)]
+        # self.view_trailing = [
+        #     FilterButton(properties),
+        #     ft.IconButton(
+        #         icon=ft.icons.CLOSE,
+        #         on_click=lambda _: self.close_view(),
+        #         icon_size=18
+        #     )
+        # ]
         self.on_tap = self.do_nothing
     
-    def do_nothing(self, e):
-        pass
+    def do_nothing(self, event):
+        self.close_view()
