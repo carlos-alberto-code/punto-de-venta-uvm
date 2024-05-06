@@ -3,7 +3,7 @@ from models.models import Unit, Category, Brand
 from database.connection import get_db
 
 
-class FilterController(ABC):
+class IFilter(ABC):
     # Esta será una interfaz que debrán usar ciertos controladores 
     # para que se pueda implementar la funcionalidad de filtrado y búsqueda.
 
@@ -23,13 +23,13 @@ class FilterController(ABC):
         raise NotImplementedError
 
 
-class UnitsController(FilterController):
+class UnitsController(IFilter):
     pass
 
 
-class CategoriesController(FilterController):
+class CategoriesController(IFilter):
     pass
 
 
-class BrandsController(FilterController):
+class BrandsController(IFilter):
     pass
