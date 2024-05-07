@@ -1,33 +1,44 @@
-# Crearemos los decoradores que nos ayudarán a validar los datos que se envían a la base de datos.
-# Otro tipo de decoradores que podríamos crear serían los que se encarguen de manejar las excepciones que se generen en la base de datos.
-# Y un último tipo de decoradores serían los que se encarguen de manejar la autenticación de los usuarios.
+from typing import Any
+from models.models import Base
+from sqlalchemy.orm import Session
+from database.connection import get_db
+from sqlalchemy.exc import IntegrityError
 
 
 def validate_name(func):
-    """
-    A decorator function that validates the name parameter.
-
-    Args:
-        func (function): The function to be decorated.
-
-    Returns:
-        function: The decorated function.
-
-    Raises:
-        TypeError: If the name parameter is not a string.
-        ValueError: If the name parameter is empty, contains non-alphabetic characters, or exceeds 50 characters in length.
-    """
-    def wrapper(name: str, *args, **kwargs):
+    def wrapper(self, name: str, *args, **kwargs):
         if not isinstance(name, str):
             raise TypeError(f'The name must be a string, not {type(name).__name__}.')
         if not name:
             raise ValueError('The name cannot be empty.')
-        if not name.isalpha():
-            raise ValueError('The name must contain only letters.')
-        if len(name) > 50:
-            raise ValueError('The name must be less than 50 characters long.')
-        return func(name, *args, **kwargs)
-    
+        if not name.isalnum():
+            raise ValueError('The name must contain only alphanumeric characters.')
+        if len(name) < 3 or len(name) > 20:
+            raise ValueError('The name must be between 3 and 20 characters long.')
+        return func(self, name, *args, **kwargs)
     return wrapper
 
 
+# Decorador para comprobar si el id existe en la base de datos. Puede tomar cualquier modelo como argumento y una session
+def validate_id_existence(model: Any, db: Session):
+    def decorator(func):
+        def wrapper(self, id: int, *args, **kwargs):
+            if not db.query(model).get(id):
+                raise ValueError(f'The id {id} does not exist.')
+            return func(self, id, *args, **kwargs)
+        return wrapper
+    return decorator
+
+
+def validate_unique(model: Any, field: str, db: Session):
+    def decorator(func):
+        def wrapper(self, value, *args, **kwargs):
+            if db.query(model).filter(getattr(model, field) == value).first():
+                raise ValueError(f'The {field} {value} already exists.')
+            try:
+                return func(self, value, *args, **kwargs)
+            except IntegrityError:
+                db.rollback()
+                raise ValueError(f'The {field} {value} already exists.')
+        return wrapper
+    return decorator

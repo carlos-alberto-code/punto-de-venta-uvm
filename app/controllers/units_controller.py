@@ -1,5 +1,5 @@
 from .database_exceptions import EmptyTableException, ValueNotFoundException, ValueAlreadyExistsException
-from .checker import Checker, validate_name
+from .decorators import Checker, validate_name
 from database.connection import get_db
 from sqlalchemy.orm import Session
 from models.models import Unit

@@ -28,10 +28,11 @@ class FilterButton(ft.PopupMenuButton):
 ft.SearchBar()
 class SearchBarFilter(ft.SearchBar):
     
-    def __init__(self, **table_controllers: IFilter) -> None:
+    def __init__(self, **controllers: IFilter) -> None:
         super().__init__()
-        self.controllers = table_controllers
-        units = self.controllers['Units']
+        self.controllers = controllers
+        print(self.controllers.keys())
+        print(self.controllers['Marca'].get_all_values())
         
         
         self.width = 400
