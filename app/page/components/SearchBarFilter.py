@@ -32,7 +32,7 @@ class SearchBarFilter(ft.SearchBar):
         super().__init__()
         self.controllers = controllers
         print(self.controllers.keys())
-        print(self.controllers['Marca'].get_all_values())
+        print(self.controllers['Marca'].get_all())
         
         
         self.width = 400

@@ -1,26 +1,36 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 
 class IFilter(ABC):
-    # Esta será una interfaz que debrán usar controladores simples para implementar la funcionalidad de búsqueda y filtrado.
-    # Esta interfaz es define un contrato de sólo lectura y creación, es decir CR del CRUD.
+    """
+    This is an interface that concrete classes should implement to handle value filtering.
+    It is expected that these classes make use of a repository to access the data.
+    """
 
     @abstractmethod
-    def get_property_name(self):
-        # Para obtener el nombre de la propiedad que se está filtrando.
+    def get_all(self) -> List[object]:
+        """
+        Returns all instances of a simple table in alphabetical order.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def search(self, value: str) -> List[object]:
+        """
+        Searches for values in real-time.
+
+        Args:
+            value (str): The value to search for.
+        """
         raise NotImplementedError
     
     @abstractmethod
-    def get_all_values(self):
-        # Para obtener todos los valores y mostrarlos en el SearchBarFilter.
-        raise NotImplementedError
+    def create(self, value: str) -> None:
+        """
+        Creates values.
 
-    @abstractmethod
-    def search(self, value: str):
-        # Para buscar valores en tiempo real.
-        raise NotImplementedError
-    
-    @abstractmethod
-    def create(self, value: str):
-        # Para crear valores.
+        Args:
+            value (str): The value to create.
+        """
         raise NotImplementedError
