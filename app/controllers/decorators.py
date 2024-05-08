@@ -7,12 +7,10 @@ from sqlalchemy.exc import IntegrityError
 
 def validate_name(func):
     def wrapper(self, name: str, *args, **kwargs):
-        if not isinstance(name, str):
-            raise TypeError(f'The name must be a string, not {type(name).__name__}.')
         if not name:
             raise ValueError('The name cannot be empty.')
-        if not name.isalnum():
-            raise ValueError('The name must contain only alphanumeric characters.')
+        if not all(char.isalnum() or char.isspace() for char in name):
+            raise ValueError('The name must contain only alphanumeric characters and spaces.')
         if len(name) < 3 or len(name) > 20:
             raise ValueError('The name must be between 3 and 20 characters long.')
         return func(self, name, *args, **kwargs)
