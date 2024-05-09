@@ -1,16 +1,21 @@
 import sys
 sys.path.append('..')
 
-from app.controllers.crud_repository import CrudRepository
+from controllers.crud_repository import CrudRepository
 from database.connection import get_db
-from models.models import Brand, Category, Unit
+from models.models import Unit
 
 
-def view_brands(controller):
+def view_all(controller):
     for entity in controller.get_all():
         print(entity.name)
 
+# with get_db() as db:
+#     controller = CrudRepository(model=Unit, session=db)
+#     view_all(controller)
+
 with get_db() as db:
     controller = CrudRepository(model=Unit, session=db)
-    view_brands(controller)
+    controller.create('bolsa')
+    view_all(controller)
  

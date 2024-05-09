@@ -1,11 +1,15 @@
-from typing import Any
-from models.models import Base
-from sqlalchemy.orm import Session
-from database.connection import get_db
-from sqlalchemy.exc import IntegrityError
+from functools           import wraps
+from sqlalchemy.exc      import IntegrityError
 
 
+# Decorador para comprobar si el nombre cumple con las siguientes condiciones:
 def validate_name(func):
+    '''
+    Decorador para comprobar si el nombre cumple con las siguientes condiciones:
+    - No puede estar vacío.
+    - Solo puede contener caracteres alfanuméricos y espacios.
+    - Debe tener entre 3 y 20 caracteres de longitud.
+    '''
     def wrapper(self, name: str, *args, **kwargs):
         if not name:
             raise ValueError('The name cannot be empty.')
@@ -17,26 +21,27 @@ def validate_name(func):
     return wrapper
 
 
-# Decorador para comprobar si el id existe en la base de datos. Puede tomar cualquier modelo como argumento y una session
-def validate_id_existence(model: Any, db: Session):
-    def decorator(func):
-        def wrapper(self, id: int, *args, **kwargs):
-            if not db.query(model).get(id):
-                raise ValueError(f'The id {id} does not exist.')
-            return func(self, id, *args, **kwargs)
-        return wrapper
-    return decorator
+# Decorador para comprobar si un nombre que no debe repetirse ya existe en la base de datos.
+def validate_unique_name(func):
+    @wraps(func)
+    def wrapper(repo, name: str, *args, **kwargs):
+        print('Validating unique name...')
+        if repo.db.query(repo.model).filter(repo.model.name == name).first():
+            raise ValueError(f'The name {name} already exists.')
+        try:
+            return func(repo, name, *args, **kwargs)
+        except IntegrityError:
+            repo.db.rollback()
+            raise ValueError(f'The name {name} already exists.')
+    return wrapper
 
 
-def validate_unique(model: Any, field: str, db: Session):
-    def decorator(func):
-        def wrapper(self, value, *args, **kwargs):
-            if db.query(model).filter(getattr(model, field) == value).first():
-                raise ValueError(f'The {field} {value} already exists.')
-            try:
-                return func(self, value, *args, **kwargs)
-            except IntegrityError:
-                db.rollback()
-                raise ValueError(f'The {field} {value} already exists.')
-        return wrapper
-    return decorator
+# Decorador para comprobar si el id existe en la base de datos.
+def validate_id(func):
+    @wraps(func)
+    def wrapper(repo, id: int, *args, **kwargs):
+        print('Validating id...')
+        if not repo.db.query(repo.model).get(id):
+            raise ValueError(f'The id {id} does not exist.')
+        return func(repo, id, *args, **kwargs)
+    return wrapper
