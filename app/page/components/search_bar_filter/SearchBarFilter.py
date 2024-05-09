@@ -7,7 +7,7 @@ y buscar productos en función de sus unidades, categorías y marcas.
 from time import sleep
 import flet as ft
 
-from controllers.filter_interface import IFilter
+from app.page.components.search_bar_filter.filter_interface import IFilter
 
 
 class FilterButton(ft.PopupMenuButton):

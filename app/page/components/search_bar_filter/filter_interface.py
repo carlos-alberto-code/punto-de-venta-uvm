@@ -9,14 +9,14 @@ class IFilter(ABC):
     """
 
     @abstractmethod
-    def get_all(self) -> List[object]:
+    def get_all(self):
         """
         Returns all instances of a simple table in alphabetical order.
         """
         raise NotImplementedError
 
     @abstractmethod
-    def search(self, value: str) -> List[object]:
+    def search(self, value: str):
         """
         Searches for values in real-time.
 

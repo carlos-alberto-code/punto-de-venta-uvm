@@ -146,3 +146,4 @@ diagrams/
 connection.env
 
 test/
+test-filtering.py
