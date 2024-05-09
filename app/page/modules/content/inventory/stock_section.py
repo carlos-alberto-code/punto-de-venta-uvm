@@ -1,11 +1,10 @@
 import flet as ft
 
 from controllers.products_controller import ProductController
+from ....components.search_bar_filter.SearchBarFilter import SearchBarFilter
 
 
-_search_bar = ft.TextField(
-    label='Buscar',
-)
+_search_bar = SearchBarFilter()
 
 _filter_by = ft.Dropdown(
     label='Filtrar por',

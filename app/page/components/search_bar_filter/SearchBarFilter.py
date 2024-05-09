@@ -7,7 +7,7 @@ y buscar productos en función de sus unidades, categorías y marcas.
 from time import sleep
 import flet as ft
 
-from app.page.components.search_bar_filter.filter_interface import IFilter
+from page.components.search_bar_filter.filter_interface import IFilter
 
 
 class FilterButton(ft.PopupMenuButton):
@@ -27,44 +27,10 @@ class FilterButton(ft.PopupMenuButton):
 
 ft.SearchBar()
 class SearchBarFilter(ft.SearchBar):
-    
+    # Esta clase es un componente de búsqueda y filtrado, pensado para buscar y filtrar en función de las unidades, categorías y marcas
     def __init__(self, **controllers: IFilter) -> None:
         super().__init__()
         self.controllers = controllers
-        print(self.controllers.keys())
-        print(self.controllers['Marca'].get_all())
-        
-        
-        self.width = 400
-        self.height = 40
-        self.bar_leading = ft.Icon(name=ft.icons.SEARCH_SHARP, size=18)
-        self.view_leading = ft.Icon(name=ft.icons.SEARCH_SHARP, size=18)
-        self.bar_hint_text = 'Selecciona un filtro'
-        self.view_hint_text_style = ft.TextStyle(size=18)
-        # self.bar_trailing = [FilterButton(properties)]
-        # self.view_trailing = [
-        #     FilterButton(properties),
-        #     ft.IconButton(
-        #         icon=ft.icons.CLOSE,
-        #         on_click=lambda _: self.close_view(),
-        #         icon_size=18
-        #     )
-        # ]
-        self.on_tap = self.do_nothing
-    
-    def do_nothing(self, event):
-        self.close_view()
-
-
-
-#### 
-
-
-
-class Filter(ft.SearchBar):
-    # Esta clase es un componente de búsqueda y filtrado, pensado para buscar y filtrar en función de las unidades, categorías y marcas
-    def __init__(self):
-        super().__init__()
         self.width = 400
         self.height = 40
         self.tooltip = 'Selecciona un filtro y escribe el nombre de la unidad, categoría o marca que deseas buscar'
@@ -73,22 +39,20 @@ class Filter(ft.SearchBar):
         self.bar_hint_text = 'Selecciona un filtro'
         self.bar_trailing = [
             ft.PopupMenuButton(
-                icon=ft.icons.FILTER_LIST,
-                items=[
-                    ft.PopupMenuItem(text='Unidad', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
-                    ft.PopupMenuItem(text='Categoría', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
-                    ft.PopupMenuItem(text='Marca', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
-                ]
+            icon=ft.icons.FILTER_LIST,
+            items=[
+                ft.PopupMenuItem(text=key, icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher)
+                for key in self.controllers.keys()
+            ]
             )
         ]
         self.view_trailing = [
             ft.PopupMenuButton(
-                icon=ft.icons.FILTER_LIST,
-                items=[
-                    ft.PopupMenuItem(text='Unidad', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
-                    ft.PopupMenuItem(text='Categoría', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
-                    ft.PopupMenuItem(text='Marca', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher),
-                ]
+            icon=ft.icons.FILTER_LIST,
+            items=[
+                ft.PopupMenuItem(text=key, icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher)
+                for key in self.controllers.keys()
+            ]
             ),
             ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda e: self.close_view()),
         ]
