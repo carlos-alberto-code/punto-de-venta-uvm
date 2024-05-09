@@ -145,4 +145,4 @@ diagrams/
 
 connection.env
 
-test-flet-controls.py
+test/
