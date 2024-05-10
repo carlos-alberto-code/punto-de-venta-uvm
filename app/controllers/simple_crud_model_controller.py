@@ -1,0 +1,2 @@
+class SimpleCrudModelController:
+    pass

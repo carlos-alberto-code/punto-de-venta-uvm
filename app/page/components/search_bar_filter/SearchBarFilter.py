@@ -3,6 +3,19 @@ from time import sleep
 from .filter_interface import IFilter
 
 
+ft.Card()
+class SearchResult(ft.Card):
+    def __init__(self, text: str) -> None:
+        super().__init__()
+        self.content = ft.Container(
+            height=30,
+            alignment=ft.alignment.center,
+            ink=True,
+            on_click=lambda e: print(f'You clicked on {text}'),
+            content=ft.Text(value=text),
+        )
+
+
 ft.SearchBar()
 class SearchBarFilter(ft.SearchBar):
     def __init__(
@@ -39,7 +52,18 @@ class SearchBarFilter(ft.SearchBar):
         self.close_view()
 
     def run_searcher(self, event):
-        self.view_hint_text = f'Escribe el nombre de la {event.control.text.lower()}'
         self.close_view()
-        sleep(0.08)
+        instances = self.controllers[event.control.text].get_all()
+        sleep(0.1)
+        new_controls = [
+            SearchResult(
+            text=instance.name,
+            ) for instance in instances
+        ]
+        self.controls = [
+            *new_controls,
+            ft.ElevatedButton(text='Registrar', icon=ft.icons.ADD)
+        ]
         self.open_view()
+        self.update()
+        
