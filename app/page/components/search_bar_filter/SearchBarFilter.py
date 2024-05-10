@@ -1,5 +1,7 @@
 import flet as ft
 from time import sleep
+
+from pytest import mark
 from .filter_interface import IFilter
 
 
@@ -7,12 +9,14 @@ ft.Card()
 class SearchResult(ft.Card):
     def __init__(self, text: str) -> None:
         super().__init__()
+        self.elevation = 3
+        self.margin = 6
         self.content = ft.Container(
             height=30,
             alignment=ft.alignment.center,
             ink=True,
-            on_click=lambda e: print(f'You clicked on {text}'),
             content=ft.Text(value=text),
+            on_click=lambda e: print(f'You clicked on {text}'),
         )
 
 
@@ -36,7 +40,7 @@ class SearchBarFilter(ft.SearchBar):
         self.bar_trailing = [self._create_popup_menu_button()]
         self.view_trailing = [self._create_popup_menu_button(), ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda e: self.close_view())]
         self.on_tap = self.do_nothing
-        self.controls = [ft.ElevatedButton(text='Agregar nueva propiedad', icon=ft.icons.ADD)]
+        self.on_change = self.update_results
 
     def _create_popup_menu_button(self):
         return ft.PopupMenuButton(
@@ -53,6 +57,7 @@ class SearchBarFilter(ft.SearchBar):
 
     def run_searcher(self, event):
         self.close_view()
+        self.contoller = self.controllers[event.control.text]
         instances = self.controllers[event.control.text].get_all()
         sleep(0.1)
         new_controls = [
@@ -62,8 +67,22 @@ class SearchBarFilter(ft.SearchBar):
         ]
         self.controls = [
             *new_controls,
-            ft.ElevatedButton(text='Registrar', icon=ft.icons.ADD)
+            ft.ElevatedButton(text='Nueva', icon=ft.icons.ADD)
         ]
         self.open_view()
-        self.update()
+    
+    def update_results(self, event):
+        self.close_view(event.data)
+        results = self.contoller.search(event.data)
+        sleep(0.01)
+        new_controls = [
+            SearchResult(
+                text=result.name
+            ) for result in results
+        ]
+        self.controls = [
+            *new_controls,
+            ft.ElevatedButton(text='Nueva', icon=ft.icons.ADD)
+        ]
+        self.open_view()
         

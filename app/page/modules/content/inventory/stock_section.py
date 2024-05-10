@@ -7,8 +7,8 @@ from page.components.search_bar_filter.properties_controller import UnitFilter, 
 
 _search_bar = SearchBarFilter(
     Categoria=CategoryFilter(),
+    Marca=BrandFilter(),
     Unidad=UnitFilter(),
-    Marca=BrandFilter()
 )
 
 _filter_by = ft.Dropdown(
