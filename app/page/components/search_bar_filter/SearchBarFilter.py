@@ -11,17 +11,17 @@ from page.components.search_bar_filter.filter_interface import IFilter
 
 
 class FilterButton(ft.PopupMenuButton):
-    def __init__(self, props: str, e) -> None:
-        super().__init__(
-            items=[
-                ft.PopupMenuItem(
-                    text=name,
-                    icon=ft.icons.ARROW_DROP_DOWN_CIRCLE,
-                    on_click=e
-                ) for name in props
-            ],
-            icon=ft.icons.FILTER_LIST,
-            icon_size=18,
+    def __init__(self, e, **controllers: IFilter) -> None:
+        super().__init__()
+        self.icon = ft.icons.FILTER_LIST
+        self.controllers = controllers
+        self.items = [self.create_item(name) for name in self.controllers.keys()]
+    
+    def create_item(self, name: str, on_click=None):
+        return ft.PopupMenuItem(
+            text=name,
+            icon=ft.icons.ARROW_DROP_DOWN_CIRCLE,
+            on_click=on_click
         )
 
 
@@ -57,9 +57,6 @@ class SearchBarFilter(ft.SearchBar):
             ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda e: self.close_view()),
         ]
         self.on_tap = self.do_nothing
-        # Siempre debe ir un control al final que permita agregar una nueva propiedad, dependiendo del filtro seleccionado
-        # Al seleccionarse un filtro, se inyectan los controles dependiendo la opción seleccionada.
-        # Pero siempre estará el control para registrar una nueva propiedad al final de las opciones.
         self.controls = [ft.ElevatedButton(text='Agregar nueva propiedad', icon=ft.icons.ADD)]
     
     def do_nothing(self, event):
@@ -70,3 +67,5 @@ class SearchBarFilter(ft.SearchBar):
         self.close_view()
         sleep(0.08)
         self.open_view()
+        # Colocar los controles de búsqueda en función del filtro seleccionado
+        

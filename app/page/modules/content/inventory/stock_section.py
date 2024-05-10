@@ -1,10 +1,15 @@
 import flet as ft
 
 from controllers.products_controller import ProductController
-from ....components.search_bar_filter.SearchBarFilter import SearchBarFilter
+from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
+from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
 
 
-_search_bar = SearchBarFilter()
+_search_bar = SearchBarFilter(
+    Categoria=CategoryFilter(),
+    Unidad=UnitFilter(),
+    Marca=BrandFilter()
+)
 
 _filter_by = ft.Dropdown(
     label='Filtrar por',
