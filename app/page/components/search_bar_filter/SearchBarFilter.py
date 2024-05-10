@@ -57,7 +57,7 @@ class SearchBarFilter(ft.SearchBar):
     
 
     def run_searcher(self, event):
-        self.close_view('')
+        self.close_view()
         self.contoller = self.controllers[event.control.text]
         instances = self.controllers[event.control.text].get_all()
         sleep(0.1)
