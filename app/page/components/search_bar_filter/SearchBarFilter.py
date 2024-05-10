@@ -2,6 +2,8 @@ import flet as ft
 from time import sleep
 from .filter_interface import IFilter
 
+
+ft.SearchBar()
 class SearchBarFilter(ft.SearchBar):
     def __init__(
             self,
