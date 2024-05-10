@@ -46,7 +46,7 @@ class SearchBarFilter(ft.SearchBar):
         return ft.PopupMenuButton(
             icon=ft.icons.FILTER_LIST,
             menu_position=ft.PopupMenuPosition.UNDER,
-            items=[self._create_popup_menu_item(key) for key in self.controllers.keys()]
+            items=[self._create_popup_menu_item(key) for key in self.controllers.keys()],
         )
 
     def _create_popup_menu_item(self, key):
@@ -54,9 +54,10 @@ class SearchBarFilter(ft.SearchBar):
 
     def do_nothing(self, event):
         self.close_view()
+    
 
     def run_searcher(self, event):
-        self.close_view()
+        self.close_view('')
         self.contoller = self.controllers[event.control.text]
         instances = self.controllers[event.control.text].get_all()
         sleep(0.1)
