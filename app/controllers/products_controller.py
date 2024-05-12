@@ -40,3 +40,7 @@ class ProductController:
             .join(Category, Product.category_id == Category.id)\
             .join(Brand, Product.brand_id == Brand.id)\
             .all()
+    
+    def get_by_id(self, product_id):
+        with get_db() as db:
+            return db.query(Product).filter(Product.sku == product_id).first()
