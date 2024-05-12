@@ -1,5 +1,5 @@
 from database.connection import get_db
-from models.models import Supplier
+from database.models import Supplier
 class SupplierController:
     #comprobar si la categoria existe
     def id_supplier_exist(self,supplier_id: int):

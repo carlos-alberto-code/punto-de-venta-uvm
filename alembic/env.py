@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 # Importar la metadata de mis modelos
-from app.models.models import declarative_base
+from app.database.models import declarative_base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

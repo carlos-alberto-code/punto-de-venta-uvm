@@ -1,5 +1,5 @@
 from database.connection import get_db
-from models.models import Category
+from database.models import Category
 class CategorieController:
     #comprobar si la categoria existe
     def id_categorie_exist(self,categorie_id: int):

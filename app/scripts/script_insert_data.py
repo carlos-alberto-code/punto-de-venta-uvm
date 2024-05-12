@@ -5,7 +5,7 @@ Los datos son simplemente de prueba, no son los datos que por ahora son reales, 
 import sys
 sys.path.append('..')
 
-from models.models import Unit, Category, Brand
+from app.database.models import Unit, Category, Brand
 from app.database.connection import get_db
 
 units_data = ['kg', 'litro', 'pieza', 'metro', 'caja', 'bolsa']

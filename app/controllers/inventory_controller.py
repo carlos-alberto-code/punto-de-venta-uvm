@@ -1,5 +1,5 @@
 from database.connection import get_db
-from models.models import Product, Unit, Category, Brand
+from database.models import Product, Unit, Category, Brand
 
 
 class InventoryController:

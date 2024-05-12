@@ -2,7 +2,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 
 from database.connection import get_db
-from models.models import Product, Category, Brand, Unit
+from database.models import Product, Category, Brand, Unit
 
 
 class ProductController:

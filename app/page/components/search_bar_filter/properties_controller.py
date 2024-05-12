@@ -1,5 +1,5 @@
 from database.connection import get_db
-from models.models import Brand, Category, Unit
+from database.models import Brand, Category, Unit
 from controllers.repository import Repository
 from .filter_interface import IFilter
 
