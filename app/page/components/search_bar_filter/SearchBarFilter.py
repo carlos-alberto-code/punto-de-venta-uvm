@@ -14,7 +14,7 @@ class SearchResult(ft.Card):
         self.content = ft.Container(
             height=30,
             alignment=ft.alignment.center,
-            ink=True,
+            ink=True, 
             content=ft.Text(value=text),
             on_click=lambda e: print(f'You clicked on {text}'),
         )
