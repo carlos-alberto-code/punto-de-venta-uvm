@@ -9,8 +9,8 @@ ft.Card()
 class SearchResult(ft.Card):
     def __init__(self, text: str) -> None:
         super().__init__()
-        self.elevation = 3
-        self.margin = 6
+        # self.elevation = 3
+        # self.margin = 6
         self.content = ft.Container(
             height=30,
             alignment=ft.alignment.center,

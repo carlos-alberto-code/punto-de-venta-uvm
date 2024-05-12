@@ -6,7 +6,7 @@ import flet as ft
 _light_mode  = ft.icons.LIGHT_MODE
 _dark_mode   = ft.icons.DARK_MODE
 _close       = ft.icons.CLOSE
-_chat        = ft.icons.STACKED_BAR_CHART_OUTLINED
+_chat        = ft.icons.NOTIFICATIONS
 
 
 class AppbarActions:
@@ -15,10 +15,11 @@ class AppbarActions:
         self.theme_mode     = theme_mode
         self.theme_button   = ft.IconButton(icon=self._get_theme_icon(), on_click=self._toggle_theme, tooltip='Cambiar el tema')
         self.close_button   = ft.IconButton(icon=_close, on_click=self._close_app, tooltip='Cerrar la app')
+        self.notification   = ft.IconButton(icon=_chat, tooltip='Notificaciones')
     
     @property
     def controls(self) -> List[ft.Control]:
-        return [self.theme_button, self.close_button]
+        return [self.theme_button, self.notification,self.close_button]
 
     def _get_theme_icon(self) -> str:
         return _light_mode if self.theme_mode == ft.ThemeMode.DARK else _dark_mode
