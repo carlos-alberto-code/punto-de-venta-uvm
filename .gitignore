@@ -147,3 +147,4 @@ connection.env
 
 test/
 test-filtering.py
+test_flet.py

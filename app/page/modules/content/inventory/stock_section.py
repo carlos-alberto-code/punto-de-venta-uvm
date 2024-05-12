@@ -2,6 +2,7 @@ import flet as ft
 
 from controllers.products_controller import ProductController
 from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
+from page.modules.content.inventory.top_buttons import AddNewButton, ShareButton
 from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
 
 
@@ -19,7 +20,18 @@ _filter_by = ft.Dropdown(
         ft.dropdown.Option(text='Marca'),
     ]
 )
-
+top = ft.Row(
+    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+    controls=[
+        _search_bar,
+        ft.Row(
+            controls=[
+                ShareButton(),
+                AddNewButton(),
+            ]
+        )
+    ]
+)
 
 class StockSection(ft.Column):
     
@@ -39,13 +51,7 @@ class StockSection(ft.Column):
         }
         self.sort_order = {key: True for key in self.sort_functions.keys()}
         self.controls = [
-            ft.Row(
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                controls=[
-                    _search_bar,
-                    _filter_by
-                ],
-            ), # Row End
+            top,
             ft.DataTable(
                 columns=[
                     ft.DataColumn(ft.TextButton('SKU', on_click=lambda event: self.sort_by_key('sku', event))),
