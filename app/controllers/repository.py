@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .decorators    import (
+from controllers.decorators import (
     validate_id,
     validate_name,
     validate_unique_name,
