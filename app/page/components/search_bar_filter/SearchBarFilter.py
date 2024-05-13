@@ -1,7 +1,6 @@
 import flet as ft
 from time import sleep
 
-from pytest import mark
 from .filter_interface import IFilter
 
 
