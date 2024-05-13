@@ -6,7 +6,7 @@ class Field(ft.Row):
     def __init__(self, property, value):
         super().__init__()
         self.property   = ft.TextButton(text=property, on_click=self.edit_field)
-        self.value      = ft.TextField(value=value, read_only=True, border=ft.InputBorder.NONE)
+        self.value      = ft.TextField(value=value, read_only=True, border=ft.InputBorder.NONE, expand=True)
         self.controls   = [
             ft.Row(controls=[self.property], alignment=ft.MainAxisAlignment.START, width=150),
             ft.Row(controls=[self.value], alignment=ft.MainAxisAlignment.START, expand=True),
@@ -24,6 +24,7 @@ class ProductDetail(ft.Card):
     def __init__(self, product):
         super().__init__()
         self.product = product
+        self.elevation = 5
         self.width = 300
         self.expand = True
         img = ft.Image(
@@ -48,10 +49,10 @@ class ProductDetail(ft.Card):
                 controls=[
                     img,
                     ft.Divider(),
-                    Field('SKU', self.product.sku),
-                    Field('Unidad', self.product.unit_id),
-                    Field('Categoría', self.product.category_id),
-                    Field('Marca', self.product.brand_id),
+                    # Field('SKU', self.product.sku),
+                    Field('Unidad', self.product.unit),
+                    Field('Categoría', self.product.category),
+                    Field('Marca', self.product.brand),
                     Field('Cantidad', self.product.quantity),
                     Field('Precio de compra', self.product.purchase_price),
                     Field('Precio de venta', self.product.sale_price),
