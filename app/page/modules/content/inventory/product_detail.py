@@ -20,6 +20,8 @@ class Field(ft.Row):
 
 
 class ProductDetail(ft.Card):
+    # TODO: A la hora de cambiar una propiedad, debería mostrar una lista de opciones para seleccionar, cómo en el SearchBarFilter, y permitir el registro de una nueva.
+    
     
     def __init__(self, product):
         super().__init__()
