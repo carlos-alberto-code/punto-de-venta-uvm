@@ -6,25 +6,8 @@ from database.models import Product, Category, Brand, Unit
 
 
 class ProductController:
-    
-    @staticmethod
-    def search_products(search_string, limit=10):
-        with get_db() as db:
-            return db.query(Product, Unit, Category, Brand)\
-                .join(Unit, Product.unit_id == Unit.id)\
-                .join(Category, Product.category_id == Category.id)\
-                .join(Brand, Product.brand_id == Brand.id)\
-                .filter(or_(
-                    Product.description.ilike(f'%{search_string}%'),
-                    Unit.name.ilike(f'%{search_string}%'),
-                    Category.name.ilike(f'%{search_string}%'),
-                    Brand.name.ilike(f'%{search_string}%')
-                ))\
-                .limit(limit)\
-                .all()
-    
-    @staticmethod
-    def get_all_products():
+
+    def _product_query(self):
         with get_db() as db:
             return db.query(
                 Product.sku,
@@ -38,9 +21,25 @@ class ProductController:
                 Brand.name.label('brand')
             ).join(Unit, Product.unit_id == Unit.id)\
             .join(Category, Product.category_id == Category.id)\
-            .join(Brand, Product.brand_id == Brand.id)\
-            .all()
+            .join(Brand, Product.brand_id == Brand.id)
+    
+    # def search_products(self, search_string, limit=10):
+    #     with get_db() as db:
+    #         return db.query(Product, Unit, Category, Brand)\
+    #             .join(Unit, Product.unit_id == Unit.id)\
+    #             .join(Category, Product.category_id == Category.id)\
+    #             .join(Brand, Product.brand_id == Brand.id)\
+    #             .filter(or_(
+    #                 Product.description.ilike(f'%{search_string}%'),
+    #                 Unit.name.ilike(f'%{search_string}%'),
+    #                 Category.name.ilike(f'%{search_string}%'),
+    #                 Brand.name.ilike(f'%{search_string}%')
+    #             ))\
+    #             .limit(limit)\
+    #             .all()
+    
+    def get_all_products(self):
+        return self._product_query().all()
     
     def get_by_id(self, product_id):
-        with get_db() as db:
-            return db.query(Product).filter(Product.sku == product_id).first()
+        return self._product_query().filter(Product.sku == product_id).first()
