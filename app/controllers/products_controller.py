@@ -23,10 +23,9 @@ class ProductController:
             return db.query(
                 Product.sku,
                 Product.quantity,
-                Product.purchase_price,
-                Product.sale_price,
-                Product.minimum_stock,
-                Product.description,
+                Product.cost_price,
+                Product.selling_price,
+                Product.reorder_level,
                 Unit.name.label('unit'),
                 Category.name.label('category'),
                 Brand.name.label('brand')

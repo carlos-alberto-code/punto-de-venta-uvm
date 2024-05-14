@@ -30,9 +30,9 @@ class Product(Base):
     __tablename__ = 'products'
     __table_args__ = (
         CheckConstraint('quantity >= 0'),
-        CheckConstraint('purchase_price >= 0'),
-        CheckConstraint('sale_price >= 0'),
-        CheckConstraint('minimum_stock >= 0'),
+        CheckConstraint('cost_price >= 0'),
+        CheckConstraint('selling_price >= 0'),
+        CheckConstraint('reorder_level >= 0'),
     )
 
     sku:            Mapped[int]     = mapped_column(Integer, primary_key=True, autoincrement=True)
