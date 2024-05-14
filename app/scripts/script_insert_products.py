@@ -1,9 +1,9 @@
 import random
 import sys
-sys.path.append('..')
+sys.path.append('app/')
 
-from app.database.connection import get_db
-from app.database.models import Product, Unit, Category, Brand
+from database.connection import get_db
+from database.models import Product, Unit, Category, Brand
 
 
 # Comprobar si las tablas Unit, Category y Brand tienen registros para que este script pueda funcionar
@@ -56,13 +56,12 @@ if exist_data():
                     # Cantidad aleatoria entre 1 y 30
                     quantity=random.randint(1, 30),
                     # Precio de compra aleatorio entre 1 y 100
-                    purchase_price=random.randint(1, 100),
+                    cost_price=random.randint(1, 100),
                     # Precio de venta aleatorio entre 1 y 100
-                    sale_price=random.randint(1, 100),
+                    selling_price=random.randint(1, 100),
                     # Stock mínimo aleatorio entre 1 y 10
-                    minimum_stock=random.randint(1, 10),
+                    reorder_level=random.randint(1, 10),
                     # Descripción aleatoria
-                    description=f'Descripción del producto {i+1}'
                 )
                 db.add(producto)
             db.commit()

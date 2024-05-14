@@ -3,14 +3,14 @@ Este script se encarga de insertar datos en las tablas de la base de datos.
 Los datos son simplemente de prueba, no son los datos que por ahora son reales, aunque se asemejan.
 """
 import sys
-sys.path.append('..')
+sys.path.append('app/')
 
-from app.database.models import Unit, Category, Brand
-from app.database.connection import get_db
+from database.models import Unit, Category, Brand
+from database.connection import get_db
 
-units_data = ['kg', 'litro', 'pieza', 'metro', 'caja', 'bolsa']
-categories_data = ['frutas', 'verduras', 'lácteos', 'carnes', 'bebidas', 'pan', 'dulces', 'abarrotes', 'limpieza', 'higiene']
-brands_data = ['Coca-Cola', 'Bimbo', 'Lala', 'Alpura', 'Jumex', 'Zwan', 'Barcel', 'Gamesa', 'Sabritas', 'Pepsi', 'Knorr', 'Herdez', 'La Costeña', 'Nestlé', 'Danone', 'Kellogg\'s', 'Unilever', 'Colgate', 'P&G', 'Johnson & Johnson']
+units_data = ['KILOGRAMO', 'LITRO', 'PIEZA', 'METRO', 'CAJA', 'BOLSA']
+categories_data = ['FRUTAS', 'VERDURAS', 'LÁCTEOS', 'CARNES', 'BEBIDAS', 'PAN', 'DULCES', 'ABARROTES', 'LIMPIEZA', 'HIGIENE']
+brands_data = ['COCA-COLA', 'BIMBO', 'LALA', 'ALPURA', 'JUMEX', 'ZWAN', 'BARCEL', 'GAMESA', 'SABRITAS', 'PEPSI', 'KNORR', 'HERDEZ', 'LA COSTEÑA', 'NESTLÉ', 'DANONE', 'KELLOGG\'S', 'UNILEVER', 'COLGATE', 'P&G', 'JOHNSON & JOHNSON']
 
 # Insertar datos en la tabla units
 with get_db() as db:
