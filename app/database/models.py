@@ -40,10 +40,9 @@ class Product(Base):
     category_id:    Mapped[int]     = mapped_column(Integer, ForeignKey('categories.id'), nullable=False)
     brand_id:       Mapped[int]     = mapped_column(Integer, ForeignKey('brands.id'), nullable=False)
     quantity:       Mapped[int]     = mapped_column(Integer, nullable=False)
-    purchase_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
-    sale_price:     Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
-    minimum_stock:  Mapped[int]     = mapped_column(Integer, nullable=False, default=1)
-    description:    Mapped[str]     = mapped_column(String(100), nullable=False)
+    cost_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
+    selling_price:     Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
+    reorder_level:  Mapped[int]     = mapped_column(Integer, nullable=False, default=1)
 
     unit     = relationship("Unit", backref="products")
     brand    = relationship("Brand", backref="products")
