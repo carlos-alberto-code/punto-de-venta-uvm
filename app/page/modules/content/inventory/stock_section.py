@@ -58,14 +58,13 @@ class StockSection(ft.Column):
             rows=[
                 ft.DataRow(
                 cells=[
-                    # ft.DataCell(ft.Text(str(product.sku)), visible=False),
-                    ft.DataCell(ft.Text(str(product.unit), expand=True)),
-                    ft.DataCell(ft.Text(str(product.category), expand=True)),
-                    ft.DataCell(ft.Text(str(product.brand), expand=True)),
-                    ft.DataCell(ft.Text(str(product.quantity), expand=True)),
-                    ft.DataCell(ft.Text(str(product.cost_price), expand=True)),
-                    ft.DataCell(ft.Text(str(product.selling_price), expand=True)),
-                    ft.DataCell(ft.Text(str(product.reorder_level), expand=True)),
+                    ft.DataCell(ft.Text(str(product.unit))),
+                    ft.DataCell(ft.Text(str(product.category))),
+                    ft.DataCell(ft.Text(str(product.brand))),
+                    ft.DataCell(ft.Text(str(product.quantity))),
+                    ft.DataCell(ft.Text(str(product.cost_price))),
+                    ft.DataCell(ft.Text(str(product.selling_price))),
+                    ft.DataCell(ft.Text(str(product.reorder_level))),
                 ],
                 ) for product in self.products
                 

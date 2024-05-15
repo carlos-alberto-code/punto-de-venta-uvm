@@ -3,11 +3,10 @@ from typing import List, Optional
 from controllers.products_controller import ProductController
 
 
-def create_column(label: str, data_type=None, func=lambda _:None):
+def create_column(label: str, on_sort=lambda _:None):
     return ft.DataColumn(
         label=ft.Text(value=label),
-        # numeric=data_type in (int, float),
-        on_sort=func,
+        on_sort=on_sort,
     )
 
 
@@ -32,7 +31,6 @@ def create_data_cell(value: str) -> ft.DataCell:
     )
 
 
-ft.DataTable()
 class ProductTable(ft.DataTable):
 
     def __init__(self, columns: Optional[list[ft.DataColumn]] = None, rows: Optional[list[ft.DataRow]] = None):

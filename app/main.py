@@ -23,8 +23,8 @@ def main(page: ft.Page):
     page.window_maximized       = True
     page.scroll                 = ft.ScrollMode.AUTO
     page.theme_mode             = ft.ThemeMode.LIGHT
-    page.vertical_alignment     = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment   = ft.CrossAxisAlignment.CENTER
+    # page.vertical_alignment     = ft.MainAxisAlignment.CENTER
+    # page.horizontal_alignment   = ft.CrossAxisAlignment.CENTER
 
     content = init.initial_drawer_section_content
     page.add(content)
