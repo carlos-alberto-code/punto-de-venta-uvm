@@ -6,12 +6,7 @@ from page.navigation.navigation_structures import NavigationStructureFactory
 from page.navigation.appbar_controls import AppbarActions
 from page.navigation.initializer import Initializer
 from page.navigation.module import Module
-from page.modules import (
-    purchase_module,
-    inventory_module,
-    pos_module,
-    sales_module,
-)
+from page.modules import modules
 
 
 def main(page: ft.Page):
