@@ -40,7 +40,7 @@ class StockSection(ft.Column):
             'quantity': lambda: self.sort_by('quantity', int),
             'cost_price': lambda: self.sort_by('cost_price', float),
             'selling_price': lambda: self.sort_by('selling_price', float),
-            'reorder_leve': lambda: self.sort_by('reorder_leve', int),
+            'reorder_level': lambda: self.sort_by('reorder_level', int),
         }
         self.sort_order = {key: True for key in self.sort_functions.keys()}
         self.controls = [
@@ -53,22 +53,20 @@ class StockSection(ft.Column):
                     ft.DataColumn(ft.TextButton('CANTIDAD', on_click=lambda event: self.sort_by_key('quantity', event))),
                     ft.DataColumn(ft.TextButton('PRECIO DE COMPRA', on_click=lambda event: self.sort_by_key('cost_price', event))),
                     ft.DataColumn(ft.TextButton('PRECIO DE VENTA', on_click=lambda event: self.sort_by_key('selling_price', event))),
-                    ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=lambda event: self.sort_by_key('reorder_leve', event))),
+                    ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=lambda event: self.sort_by_key('reorder_level', event))),
                 ],
                 rows=[
                     ft.DataRow(
                         cells=[
                             # ft.DataCell(ft.Text(str(product.sku)), visible=False),
-                            ft.DataCell(ft.Text(str(product.unit))),
-                            ft.DataCell(ft.Text(str(product.category))),
+                            ft.DataCell(ft.Text(str(product.unit), expand=True)),
+                            ft.DataCell(ft.Text(str(product.category), expand=True)),
                             ft.DataCell(ft.Text(str(product.brand))),
-                            ft.DataCell(ft.Text(str(product.quantity)), on_tap=lambda e: print(e.control.content)),
+                            ft.DataCell(ft.Text(str(product.quantity))),
                             ft.DataCell(ft.Text(str(product.cost_price))),
                             ft.DataCell(ft.Text(str(product.selling_price))),
                             ft.DataCell(ft.Text(str(product.reorder_level))),
                         ],
-                        # selected=True,
-                        # on_select_changed=lambda e: print(f"row select changed: {e.control.cells[2].content}"),
                     ) for product in self.products
                     
                 ]
@@ -86,15 +84,13 @@ class StockSection(ft.Column):
             ft.DataRow(
                 cells=[
                     ft.DataCell(ft.Text(str(product.unit))),
-                    ft.DataCell(ft.Text(str(product.category)), on_tap=lambda e: print(e.control)),
-                    ft.DataCell(ft.Text(str(product.brand)), show_edit_icon=True),
+                    ft.DataCell(ft.Text(str(product.category))),
+                    ft.DataCell(ft.Text(str(product.brand))),
                     ft.DataCell(ft.Text(str(product.quantity))),
                     ft.DataCell(ft.Text(str(product.cost_price))),
                     ft.DataCell(ft.Text(str(product.selling_price))),
-                    ft.DataCell(ft.Text(str(product.reorder_level)), on_tap=lambda e: print('tap'), on_double_tap=lambda e: print('Duble tap', e.control)),
+                    ft.DataCell(ft.Text(str(product.reorder_level))),
                 ],
-                selected=True,
-                on_select_changed=lambda e: print(e.control),
             ) for product in self.products
         ]
     

@@ -12,7 +12,7 @@ class AddNewButton(ft.ElevatedButton):
 class ShareButton(ft.PopupMenuButton):
     def __init__(self):
         super().__init__(
-            icon=ft.icons.SHARE_OUTLINED,
+            icon=ft.icons.SHARE,
             menu_position=ft.PopupMenuPosition.UNDER,
         )
         self.items = [
