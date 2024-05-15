@@ -1,18 +1,16 @@
 from time import sleep
-
 import flet as ft
 
-from page.navigation.navigation_structures import NavigationStructureFactory
-from page.navigation.appbar_controls import AppbarActions
-from page.navigation.initializer import Initializer
-from page.navigation.module import Module
 from page.modules import modules
+from page.navigation.initializer import Initializer
+from page.navigation.appbar_controls import AppbarActions
+from page.navigation.navigation_structures import NavigationStructureFactory
 
 
 def main(page: ft.Page):
 
-    modules = Module.all_modules
-    init    = Initializer(modules=modules, navbar_index=1, drawer_index=0)
+    mods    = modules.Module.all_modules
+    init    = Initializer(modules=mods, navbar_index=1, drawer_index=0)
     struct  = NavigationStructureFactory(initializer=init)
 
     page.window_maximized       = True
