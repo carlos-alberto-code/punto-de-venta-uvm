@@ -46,30 +46,30 @@ class StockSection(ft.Column):
         self.controls = [
             top,
             ft.DataTable(
-                columns=[
-                    ft.DataColumn(ft.TextButton('UNIDAD', on_click=lambda event: self.sort_by_key('unit', event))),
-                    ft.DataColumn(ft.TextButton('CATEGORÍA', on_click=lambda event: self.sort_by_key('category', event))),
-                    ft.DataColumn(ft.TextButton('MARCA', on_click=lambda event: self.sort_by_key('brand', event))),
-                    ft.DataColumn(ft.TextButton('CANTIDAD', on_click=lambda event: self.sort_by_key('quantity', event))),
-                    ft.DataColumn(ft.TextButton('PRECIO DE COMPRA', on_click=lambda event: self.sort_by_key('cost_price', event))),
-                    ft.DataColumn(ft.TextButton('PRECIO DE VENTA', on_click=lambda event: self.sort_by_key('selling_price', event))),
-                    ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=lambda event: self.sort_by_key('reorder_level', event))),
+            columns=[
+                ft.DataColumn(ft.TextButton('UNIDAD', on_click=lambda event: self.sort_by_key('unit', event))),
+                ft.DataColumn(ft.TextButton('CATEGORÍA', on_click=lambda event: self.sort_by_key('category', event))),
+                ft.DataColumn(ft.TextButton('MARCA', on_click=lambda event: self.sort_by_key('brand', event))),
+                ft.DataColumn(ft.TextButton('CANTIDAD', on_click=lambda event: self.sort_by_key('quantity', event))),
+                ft.DataColumn(ft.TextButton('PRECIO DE COMPRA', on_click=lambda event: self.sort_by_key('cost_price', event))),
+                ft.DataColumn(ft.TextButton('PRECIO DE VENTA', on_click=lambda event: self.sort_by_key('selling_price', event))),
+                ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=lambda event: self.sort_by_key('reorder_level', event))),
+            ],
+            rows=[
+                ft.DataRow(
+                cells=[
+                    # ft.DataCell(ft.Text(str(product.sku)), visible=False),
+                    ft.DataCell(ft.Text(str(product.unit), expand=True)),
+                    ft.DataCell(ft.Text(str(product.category), expand=True)),
+                    ft.DataCell(ft.Text(str(product.brand), expand=True)),
+                    ft.DataCell(ft.Text(str(product.quantity), expand=True)),
+                    ft.DataCell(ft.Text(str(product.cost_price), expand=True)),
+                    ft.DataCell(ft.Text(str(product.selling_price), expand=True)),
+                    ft.DataCell(ft.Text(str(product.reorder_level), expand=True)),
                 ],
-                rows=[
-                    ft.DataRow(
-                        cells=[
-                            # ft.DataCell(ft.Text(str(product.sku)), visible=False),
-                            ft.DataCell(ft.Text(str(product.unit), expand=True)),
-                            ft.DataCell(ft.Text(str(product.category), expand=True)),
-                            ft.DataCell(ft.Text(str(product.brand))),
-                            ft.DataCell(ft.Text(str(product.quantity))),
-                            ft.DataCell(ft.Text(str(product.cost_price))),
-                            ft.DataCell(ft.Text(str(product.selling_price))),
-                            ft.DataCell(ft.Text(str(product.reorder_level))),
-                        ],
-                    ) for product in self.products
-                    
-                ]
+                ) for product in self.products
+                
+            ]
             )
         ]
 
