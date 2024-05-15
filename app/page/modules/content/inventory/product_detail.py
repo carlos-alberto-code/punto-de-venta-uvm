@@ -56,8 +56,8 @@ class ProductDetail(ft.Card):
                     Field('Categoría', self.product.category),
                     Field('Marca', self.product.brand),
                     Field('Cantidad', self.product.quantity),
-                    Field('Precio de compra', self.product.purchase_price),
-                    Field('Precio de venta', self.product.sale_price),
+                    Field('Precio de compra', self.product.cost_price),
+                    Field('Precio de venta', self.product.selling_price),
                     save_button
                 ]
             )

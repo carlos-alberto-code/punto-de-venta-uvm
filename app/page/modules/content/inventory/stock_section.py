@@ -12,14 +12,6 @@ _search_bar = SearchBarFilter(
     Unidad=UnitFilter(),
 )
 
-_filter_by = ft.Dropdown(
-    label='Filtrar por',
-    options=[
-        ft.dropdown.Option(text='Categoría'),
-        ft.dropdown.Option(text='Unidad'),
-        ft.dropdown.Option(text='Marca'),
-    ]
-)
 top = ft.Row(
     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
     controls=[
@@ -32,6 +24,7 @@ top = ft.Row(
         )
     ]
 )
+
 
 class StockSection(ft.Column):
     
@@ -54,7 +47,6 @@ class StockSection(ft.Column):
             top,
             ft.DataTable(
                 columns=[
-                    ft.DataColumn(ft.TextButton('SKU', on_click=lambda event: self.sort_by_key('sku', event)), visible=False),
                     ft.DataColumn(ft.TextButton('UNIDAD', on_click=lambda event: self.sort_by_key('unit', event))),
                     ft.DataColumn(ft.TextButton('CATEGORÍA', on_click=lambda event: self.sort_by_key('category', event))),
                     ft.DataColumn(ft.TextButton('MARCA', on_click=lambda event: self.sort_by_key('brand', event))),
@@ -66,7 +58,7 @@ class StockSection(ft.Column):
                 rows=[
                     ft.DataRow(
                         cells=[
-                            ft.DataCell(ft.Text(str(product.sku)), visible=False),
+                            # ft.DataCell(ft.Text(str(product.sku)), visible=False),
                             ft.DataCell(ft.Text(str(product.unit))),
                             ft.DataCell(ft.Text(str(product.category))),
                             ft.DataCell(ft.Text(str(product.brand))),
@@ -93,7 +85,6 @@ class StockSection(ft.Column):
         self.controls[1].rows = [ # type: ignore
             ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.Text(str(product.sku))),
                     ft.DataCell(ft.Text(str(product.unit))),
                     ft.DataCell(ft.Text(str(product.category)), on_tap=lambda e: print(e.control)),
                     ft.DataCell(ft.Text(str(product.brand)), show_edit_icon=True),

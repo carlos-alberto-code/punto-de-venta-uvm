@@ -1,4 +1,5 @@
 import flet as ft
+from typing import List, Optional
 from controllers.products_controller import ProductController
 
 
@@ -34,9 +35,10 @@ def create_data_cell(value: str) -> ft.DataCell:
 ft.DataTable()
 class ProductTable(ft.DataTable):
 
-    def __init__(self, columns=None, rows=None):
+    def __init__(self, columns: Optional[list[ft.DataColumn]] = None, rows: Optional[list[ft.DataRow]] = None):
         super().__init__(
             columns=columns,
-            rows=rows
+            rows=rows,
+            border_radius=10,
         )
    
