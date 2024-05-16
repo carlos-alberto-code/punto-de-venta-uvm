@@ -19,8 +19,8 @@ Module(
 
 # SECCIONES DEL MÓDULO DE INVENTARIO
 
-from .content.inventory.stock_section    import StockSection
-from .content.inventory.TestStockSection import TestStockSection
+from .content.inventory.StockView     import StockView
+from .content.inventory.stock_section import StockSection
 
 Module(
     'Inventario',
@@ -33,7 +33,7 @@ Module(
     Section(
         label='Test Stock Section',
         icon=ft.icons.ADD_BOX,
-        content=TestStockSection()
+        content=StockView()
     ),
 )
 

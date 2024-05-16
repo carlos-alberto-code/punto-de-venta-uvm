@@ -4,12 +4,9 @@ from time import sleep
 from .filter_interface import IFilter
 
 
-ft.Card()
 class SearchResult(ft.Card):
     def __init__(self, text: str) -> None:
         super().__init__()
-        # self.elevation = 3
-        # self.margin = 6
         self.content = ft.Container(
             height=30,
             alignment=ft.alignment.center,
@@ -19,7 +16,6 @@ class SearchResult(ft.Card):
         )
 
 
-ft.SearchBar()
 class SearchBarFilter(ft.SearchBar):
     def __init__(
             self,

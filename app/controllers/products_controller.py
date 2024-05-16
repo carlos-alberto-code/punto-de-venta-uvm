@@ -1,11 +1,12 @@
-from sqlalchemy import or_
-from sqlalchemy.orm import joinedload
+from sqlalchemy import desc as desc_order
 
 from database.connection import get_db
 from database.models import Product, Category, Brand, Unit
 
 
 class ProductController:
+    # TODO: Agregar paginación cuando sean muchos productos.
+    # TODO: Agregar validación de datos.
     """
     Este controlador se encarga de manejar las operaciones relacionadas con los productos.
     Puede hacer las siguientes operaciones:
@@ -48,20 +49,19 @@ class ProductController:
     #             .limit(limit)\
     #             .all()
     
-    def get_all_products(self):
-        return self._product_query().all()
+    def get_all(self, order_by=None):
+        return self._product_query().order_by(order_by).all()
     
     def get_by_id(self, product_id):
         return self._product_query().filter(Product.sku == product_id).first()
-    
-    def filter_by_category(self, category_id):
-        return self._product_query().filter(Category.id == category_id).all()
-    
-    def filter_by_brand(self, brand_id):
-        return self._product_query().filter(Brand.id == brand_id).all()
-    
-    def filter_by_unit(self, unit_id):
-        return self._product_query().filter(Unit.id == unit_id).all()
+
+    def filter_by(self, model, id, order_by=None, desc=False):
+        query = self._product_query().filter(model.id == id)
+        if desc and order_by:
+            query = query.order_by(desc_order(order_by))
+        elif order_by:
+            query = query.order_by(order_by)
+        return query.all()
     
     def update_product(self, product_id, **kwargs):
         with get_db() as db:
@@ -70,3 +70,4 @@ class ProductController:
                 setattr(product, key, value)
             db.commit()
             return product
+    

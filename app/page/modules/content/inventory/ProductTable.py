@@ -1,9 +1,9 @@
 import flet as ft
-from typing import List, Optional
+from typing import Callable, Optional, List
 from controllers.products_controller import ProductController
 
 
-def create_column(label: str, on_sort=lambda _:None):
+def create_column(label: str, on_sort: Optional[Callable] = None):
     return ft.DataColumn(
         label=ft.Text(value=label),
         on_sort=on_sort,
@@ -33,10 +33,9 @@ def create_data_cell(value: str) -> ft.DataCell:
 
 class ProductTable(ft.DataTable):
 
-    def __init__(self, columns: Optional[list[ft.DataColumn]] = None, rows: Optional[list[ft.DataRow]] = None):
+    def __init__(self, columns: Optional[List[ft.DataColumn]] = None, rows: Optional[List[ft.DataRow]] = None):
         super().__init__(
             columns=columns,
             rows=rows,
             border_radius=10,
         )
-   
