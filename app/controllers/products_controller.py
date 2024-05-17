@@ -49,8 +49,13 @@ class ProductController:
     #             .limit(limit)\
     #             .all()
     
-    def get_all(self, order_by=None):
-        return self._product_query().order_by(order_by).all()
+    def get_all(self, order_by=None, desc=False):
+        query = self._product_query()
+        if desc and order_by:
+            query = query.order_by(desc_order(order_by))
+        elif order_by:
+            query = query.order_by(order_by)
+        return query.all()
     
     def get_by_id(self, product_id):
         return self._product_query().filter(Product.sku == product_id).first()

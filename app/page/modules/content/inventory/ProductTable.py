@@ -6,6 +6,7 @@ from controllers.products_controller import ProductController
 def create_column(label: str, on_sort: Optional[Callable] = None):
     return ft.DataColumn(
         label=ft.Text(value=label),
+        tooltip=f'Ordenar por {label}',
         on_sort=on_sort,
     )
 
@@ -30,7 +31,7 @@ def create_data_cell(value: str) -> ft.DataCell:
         on_tap=eneable_txt_field
     )
 
-
+ft.DataTable()
 class ProductTable(ft.DataTable):
 
     def __init__(self, columns: Optional[List[ft.DataColumn]] = None, rows: Optional[List[ft.DataRow]] = None):
@@ -38,4 +39,6 @@ class ProductTable(ft.DataTable):
             columns=columns,
             rows=rows,
             border_radius=10,
+            horizontal_lines=ft.BorderSide(width=1),
+            vertical_lines=ft.BorderSide(width=1),
         )
