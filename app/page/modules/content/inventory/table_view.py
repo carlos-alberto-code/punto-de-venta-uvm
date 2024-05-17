@@ -165,12 +165,21 @@ def create_row(*product_attributes) -> ft.DataRow:
     )
 
 
-# FUNCIÓN DE ORDENAMIENTO DE PRODUCTOS
+# EVENTOS
+
+from context_execution import product_table, products
+
 
 column_to_attribute_map = dict(zip(ColumnNames(), ProductAttributes()))
 columns_state_order = {name: True for name in ColumnNames()}
 
 def sort_products(event):
     column_name = event.control.label.value
-    print(column_name)
-    
+    attr_name = column_to_attribute_map[column_name]
+    columns_state_order[column_name] = not columns_state_order[column_name]
+    products.sort(
+        key=lambda product: getattr(product, attr_name),
+        reverse=columns_state_order[column_name]
+    )
+    for p in products:
+        print(p.unit)
