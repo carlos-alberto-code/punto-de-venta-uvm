@@ -10,6 +10,7 @@ from table_view import (
     ColumnNames,
     ProductAttributes,
     ProductAttributesTypes,
+    sort_products,
     create_column,
     create_row,
 )
@@ -22,6 +23,7 @@ product_table = ft.DataTable(
         create_column(
             label=col_name,
             is_numeric=issubclass(col_type, (float, int)),
+            on_sort=sort_products
         ) for col_name, col_type in zip(ColumnNames(), ProductAttributesTypes()
         )
     ],
