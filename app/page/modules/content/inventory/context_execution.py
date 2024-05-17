@@ -16,6 +16,11 @@ product_table = ProductTable(products)
 
 def main(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
-    page.add(product_table)
+    page.add(ft.Row(
+        controls=[
+            product_table, ft.ElevatedButton(text='Save', icon=ft.icons.SAVE)
+        ],
+        scroll=ft.ScrollMode.AUTO
+    ))
 
 ft.app(target=main)
