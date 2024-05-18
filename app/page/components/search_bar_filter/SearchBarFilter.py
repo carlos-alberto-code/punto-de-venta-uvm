@@ -9,10 +9,19 @@ class SearchResult(ft.Card):
         super().__init__()
         self.content = ft.Container(
             height=30,
+            margin=3,
             alignment=ft.alignment.center,
-            ink=True, 
-            content=ft.Text(value=text),
-            on_click=lambda e: print(f'You clicked on {text}'),
+            ink=True,
+            border_radius=10,
+            content=ft.Row(
+                [
+                    ft.Icon(str(ft.icons.ARROW_DROP_DOWN_CIRCLE_OUTLINED)),
+                    ft.Text(value=text), 
+                    ft.Icon(str(ft.icons.ARROW_DROP_DOWN_CIRCLE_OUTLINED)),
+                ],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+            ),
+            on_click=lambda e: print(f'You clicked on {e.control.content.controls[1].value}'),
         )
 
 
