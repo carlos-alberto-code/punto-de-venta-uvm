@@ -10,12 +10,14 @@ from controllers.products_controller import ProductController
 from ProductTable import ProductTable
 
 controller = ProductController()
-products = controller.get_all()[:30]
+products = controller.get_all()
+products = products[:10]
 
 product_table = ProductTable(products)
 
 def main(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
+    page.theme_mode = ft.ThemeMode.LIGHT
     page.add(ft.Row(
         controls=[
             product_table, ft.ElevatedButton(text='Save', icon=ft.icons.SAVE)

@@ -1,9 +1,6 @@
 import flet as ft
-from time import sleep
 from attr import dataclass
 from typing import Callable, Optional, List
-
-from numpy import product
 
 
 @dataclass
@@ -175,6 +172,10 @@ class ProductTable(ft.DataTable):
     def __init__(self, products):
         super().__init__()
         self._products = products
+        self.vertical_lines   = ft.BorderSide(width=1)
+        self.horizontal_lines = ft.BorderSide(width=1)
+        self.border_radius = 10
+        self.border = ft.border.all(width=1)
         self.columns = [
             create_column(
                 on_sort=self.sort_products,
