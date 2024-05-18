@@ -1,28 +1,28 @@
-from time import sleep
 import sys
+
 sys.path.append('app/')
+
 
 import flet as ft
 
-# from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
-# from ProductTable import create_column, create_row, create_data_cell, sort_products, columns_state_order, attribute_names
+from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
 from controllers.products_controller import ProductController
-from ProductTable import ProductTable
+from app.page.modules.content.inventory.__product_table import ProductTable
 
 controller = ProductController()
 products = controller.get_all()
-products = products[:10]
+products = products[:30]
 
-product_table = ProductTable(products)
+pt = ProductTable(products)
+
+
 
 def main(page: ft.Page):
-    page.scroll = ft.ScrollMode.AUTO
+    # page.scroll = ft.ScrollMode.HIDDEN
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.add(ft.Row(
-        controls=[
-            product_table, ft.ElevatedButton(text='Save', icon=ft.icons.SAVE)
-        ],
-        scroll=ft.ScrollMode.AUTO
+
+    page.add(ft.Column(
+        [pt], scroll=ft.ScrollMode.AUTO, expand=True
     ))
 
 ft.app(target=main)

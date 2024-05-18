@@ -14,7 +14,7 @@ def main(page: ft.Page):
     struct  = NavigationStructureFactory(initializer=init)
 
     page.window_maximized       = True
-    page.scroll                 = ft.ScrollMode.AUTO
+    # page.scroll                 = ft.ScrollMode.AUTO
     page.theme_mode             = ft.ThemeMode.LIGHT
     # page.vertical_alignment     = ft.MainAxisAlignment.CENTER
     # page.horizontal_alignment   = ft.CrossAxisAlignment.CENTER

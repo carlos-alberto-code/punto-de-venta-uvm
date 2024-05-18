@@ -28,7 +28,7 @@ class ProductDetail(ft.Card):
         self.product = product
         self.elevation = 5
         self.width = 300
-        self.expand = True
+        self.height = 650
         img = ft.Image(
             src='https://images.pexels.com/photos/335257/pexels-photo-335257.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
             width=150,
@@ -43,7 +43,7 @@ class ProductDetail(ft.Card):
         )
         self.content = ft.Container(
             padding=10,
-            expand=True,
+            # expand=True,
             content=ft.Column(
                 alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
