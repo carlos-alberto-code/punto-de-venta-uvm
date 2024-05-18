@@ -7,7 +7,6 @@ class ProductTable(ft.DataTable):
         super().__init__()
         self.products = products
         self.sort_functions = {
-            # 'sku': lambda: self.sort_by('sku', int),
             'unit': lambda: self.sort_by('unit', lambda x: str(x).lower()),
             'category': lambda: self.sort_by('category', lambda x: str(x).lower()),
             'brand': lambda: self.sort_by('brand', lambda x: str(x).lower()),
@@ -18,7 +17,6 @@ class ProductTable(ft.DataTable):
         }
         self.sort_order = {key: True for key in self.sort_functions.keys()}
         self.columns=[
-
             ft.DataColumn(ft.TextButton('UNIDAD', on_click=lambda event: self.sort_by_key('unit', event))),
             ft.DataColumn(ft.TextButton('CATEGORÍA', on_click=lambda event: self.sort_by_key('category', event))),
             ft.DataColumn(ft.TextButton('MARCA', on_click=lambda event: self.sort_by_key('brand', event))),
