@@ -11,6 +11,7 @@ class StockSection(ft.Column):
     # Responsable de formar la estructura de la sección de inventario
     def __init__(self):
         super().__init__()
+        self.expand = True
         self.scroll = ft.ScrollMode.AUTO
         self.controller = ProductController()
         products = self.controller.get_all()
