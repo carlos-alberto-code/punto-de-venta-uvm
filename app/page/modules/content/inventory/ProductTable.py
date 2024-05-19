@@ -1,4 +1,40 @@
 import flet as ft
+from enum import Enum
+
+
+class ColumnNames(Enum):
+    """
+    Represents the column names for the inventory table view.
+    """
+    UNIT = 'UNIDAD'
+    CATEGORY = 'CATEGORIA'
+    BRAND = 'MARCA'
+    QUANTITY = 'CANTIDAD'
+    COST_PRICE = 'PRECIO DE COMPRA'
+    SELLING_PRICE = 'PRECIO DE VENTA'
+    REORDER_LEVEL = 'NIVEL DE REORDEN'
+
+    def __iter__(self):
+        yield from self.__dict__.values()
+
+
+class ProductAttributes(Enum):
+    """
+    Represents the attributes of a product.
+    """
+    UNIT = 'unit'
+    CATEGORY = 'category'
+    BRAND = 'brand'
+    QUANTITY = 'quantity'
+    COST_PRICE = 'cost_price'
+    SELLING_PRICE = 'selling_price'
+    REORDER_LEVEL = 'reorder_level'
+
+    def __iter__(self):
+        yield from self.__dict__.values()
+    
+    def __len__(self):
+        return len(self.__dict__)
 
 
 class ProductTable(ft.DataTable):
