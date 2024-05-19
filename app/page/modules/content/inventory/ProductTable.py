@@ -52,14 +52,19 @@ column_to_attribute_map = {
 class ProductTable(ft.DataTable):
 
     def __init__(self, products: list):
-        super().__init__()
+        super().__init__(
+            columns=[
+                self._create_data_column(
+                    label=column_name.value,
+                    on_click=self.sort_products
+                ) for column_name in ColumnNames
+            ],
+            vertical_lines=ft.BorderSide(width=0.8, color=ft.colors.GREY_300),
+            horizontal_lines=ft.BorderSide(width=0.8, color=ft.colors.GREY_300),
+            border=ft.border.all(width=0.8, color=ft.colors.GREY_300),
+            border_radius=10,
+        )
         self._products = products
-        self.columns=[
-            self._create_data_column(
-                label=column_name.value,
-                on_click=self.sort_products
-            ) for column_name in ColumnNames
-        ]
         self.update_table()
     
     @property
@@ -86,14 +91,13 @@ class ProductTable(ft.DataTable):
     @staticmethod
     def _create_data_column(label: str, on_click):
         return ft.DataColumn(
-            label=ft.Text(value=label.capitalize()),
+            label=ft.Text(value=label.capitalize(), color='blue'),
             tooltip=f'Ordenar por {label.lower()}',
             on_sort=on_click
         )
     
     def update_table(self):
         self.rows = [self._create_data_row(product) for product in self._products]
-        self.update()
     
     def sort_products(self, event):
         column_name = event.control.label.value.upper()
@@ -104,3 +108,4 @@ class ProductTable(ft.DataTable):
             reverse=column_state_order[column_name]
         )
         self.update_table()
+        self.update()
