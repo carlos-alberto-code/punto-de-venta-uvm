@@ -37,30 +37,38 @@ class ProductAttributes(Enum):
         return len(self.__dict__)
 
 
+column_state_order = {
+    column_name.value: True 
+    for column_name in ColumnNames
+}
+
+column_to_attribute_map = {
+    column_name.value: product_attribute.value
+    for column_name, product_attribute 
+    in zip(ColumnNames, ProductAttributes)
+}
+
+
 class ProductTable(ft.DataTable):
 
     def __init__(self, products: list):
         super().__init__()
-        self.products = products
-        self.sort_functions = {
-            'unit': lambda: self._sort_by('unit', lambda x: str(x).lower()),
-            'category': lambda: self._sort_by('category', lambda x: str(x).lower()),
-            'brand': lambda: self._sort_by('brand', lambda x: str(x).lower()),
-            'quantity': lambda: self._sort_by('quantity', int),
-            'cost_price': lambda: self._sort_by('cost_price', float),
-            'selling_price': lambda: self._sort_by('selling_price', float),
-            'reorder_level': lambda: self._sort_by('reorder_level', int),
-        }
-        self.sort_order = {key: True for key in self.sort_functions.keys()}
+        self._products = products
         self.columns=[
-            ft.DataColumn(ft.TextButton('UNIDAD', on_click=lambda event: self._sort_by_key('unit', event))),
-            ft.DataColumn(ft.TextButton('CATEGORÍA', on_click=lambda event: self._sort_by_key('category', event))),
-            ft.DataColumn(ft.TextButton('MARCA', on_click=lambda event: self._sort_by_key('brand', event))),
-            ft.DataColumn(ft.TextButton('CANTIDAD', on_click=lambda event: self._sort_by_key('quantity', event))),
-            ft.DataColumn(ft.TextButton('PRECIO DE COMPRA', on_click=lambda event: self._sort_by_key('cost_price', event))),
-            ft.DataColumn(ft.TextButton('PRECIO DE VENTA', on_click=lambda event: self._sort_by_key('selling_price', event))),
-            ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=lambda event: self._sort_by_key('reorder_level', event))),
+            self._create_data_column(
+                label=column_name.value,
+                on_click=self.sort_products
+            ) for column_name in ColumnNames
         ]
+        self.update_table()
+    
+    @property
+    def products(self):
+        return self._products
+    
+    @products.setter
+    def products(self, products: list):
+        self._products = products
         self.update_table()
     
     @staticmethod
@@ -69,21 +77,30 @@ class ProductTable(ft.DataTable):
     
     def _create_data_row(self, product):
         return ft.DataRow(
-            cells=[self._create_data_cell(str(getattr(product, attr))) for attr in self.sort_functions.keys()]
+            cells=[
+                self._create_data_cell(value=getattr(product, attr.value))
+                for attr in ProductAttributes
+            ]
+        )
+    
+    @staticmethod
+    def _create_data_column(label: str, on_click):
+        return ft.DataColumn(
+            label=ft.Text(value=label.capitalize()),
+            tooltip=f'Ordenar por {label.lower()}',
+            on_sort=on_click
         )
     
     def update_table(self):
-        self.rows = [self._create_data_row(product) for product in self.products]
-
-    def create_data_column(self, label: str, on_click):
-        return ft.DataColumn(ft.TextButton(label, on_click=on_click))
-    
-    def _sort_by(self, attribute, type):
-        reverse_order = not self.sort_order[attribute]
-        self.products = sorted(self.products, key=lambda product: type(getattr(product, attribute)), reverse=reverse_order)
-        self.sort_order[attribute] = reverse_order
-        self.update_table()
-    
-    def _sort_by_key(self, key: str, event: ft.ControlEvent):
-        self.sort_functions[key]()
+        self.rows = [self._create_data_row(product) for product in self._products]
         self.update()
+    
+    def sort_products(self, event):
+        column_name = event.control.label.value.upper()
+        attr_name = column_to_attribute_map[column_name]
+        column_state_order[column_name] = not column_state_order[column_name]
+        self._products.sort(
+            key=lambda product: getattr(product, attr_name),
+            reverse=column_state_order[column_name]
+        )
+        self.update_table()

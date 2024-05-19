@@ -15,11 +15,13 @@ class StockSection(ft.Column):
         self.scroll = ft.ScrollMode.AUTO
         self.controller = ProductController()
         products = self.controller.get_all()
+        self.product_table = ProductTable(products)
         self.filter = SearchBarFilter(Categoria=CategoryFilter(), Marca=BrandFilter(), Unidad=UnitFilter())
         self.controls = [
             ft.Row( # SearchBarFilter, AddNewButton, ShareButton
                 [self.filter, ft.Row([ShareButton(), AddNewButton()])],
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             ),
-            ProductTable(products),
+            self.product_table,
         ]
+        
