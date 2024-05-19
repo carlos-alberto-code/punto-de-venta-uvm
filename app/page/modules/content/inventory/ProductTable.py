@@ -25,41 +25,29 @@ class ProductTable(ft.DataTable):
             ft.DataColumn(ft.TextButton('PRECIO DE VENTA', on_click=lambda event: self.sort_by_key('selling_price', event))),
             ft.DataColumn(ft.TextButton('STOCK MÍNIMO', on_click=lambda event: self.sort_by_key('reorder_level', event))),
         ]
-        self.rows=[
-            ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text(str(product.unit))),
-                ft.DataCell(ft.Text(str(product.category))),
-                ft.DataCell(ft.Text(str(product.brand))),
-                ft.DataCell(ft.Text(str(product.quantity))),
-                ft.DataCell(ft.Text(str(product.cost_price))),
-                ft.DataCell(ft.Text(str(product.selling_price))),
-                ft.DataCell(ft.Text(str(product.reorder_level))),
-            ],
-            ) for product in self.products
-            
-        ]
+        self.update_table()
+    
+    @staticmethod
+    def create_data_cell(value: str):
+        return ft.DataCell(ft.Text(value=value))
+    
+    def create_data_row(self, product):
+        return ft.DataRow(
+            cells=[self.create_data_cell(str(getattr(product, attr))) for attr in self.sort_functions.keys()]
+        )
+    
+    def update_table(self):
+        self.rows = [self.create_data_row(product) for product in self.products]
+
+    @staticmethod
+    def create_data_column(name: str):
+        return ft.DataColumn(ft.Text(name))
     
     def sort_by(self, attribute, type):
         reverse_order = not self.sort_order[attribute]
         self.products = sorted(self.products, key=lambda product: type(getattr(product, attribute)), reverse=reverse_order)
         self.sort_order[attribute] = reverse_order
         self.update_table()
-    
-    def update_table(self):
-        self.rows = [ # type: ignore
-            ft.DataRow(
-                cells=[
-                    ft.DataCell(ft.Text(str(product.unit))),
-                    ft.DataCell(ft.Text(str(product.category))),
-                    ft.DataCell(ft.Text(str(product.brand))),
-                    ft.DataCell(ft.Text(str(product.quantity))),
-                    ft.DataCell(ft.Text(str(product.cost_price))),
-                    ft.DataCell(ft.Text(str(product.selling_price))),
-                    ft.DataCell(ft.Text(str(product.reorder_level))),
-                ],
-            ) for product in self.products
-        ]
     
     def sort_by_key(self, key: str, event: ft.ControlEvent):
         self.sort_functions[key]()
