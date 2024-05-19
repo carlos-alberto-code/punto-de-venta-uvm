@@ -15,11 +15,10 @@ class SearchResult(ft.Card):
             border_radius=10,
             content=ft.Row(
                 [
-                    ft.Icon(str(ft.icons.ARROW_DROP_DOWN_CIRCLE_OUTLINED)),
+                    ft.Icon(str(ft.icons.ADS_CLICK)),
                     ft.Text(value=text), 
-                    ft.Icon(str(ft.icons.ARROW_DROP_DOWN_CIRCLE_OUTLINED)),
                 ],
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                alignment=ft.MainAxisAlignment.START
             ),
             on_click=lambda e: print(f'You clicked on {e.control.content.controls[1].value}'),
         )
@@ -35,6 +34,8 @@ class SearchBarFilter(ft.SearchBar):
     ) -> None:
         super().__init__()
         self.controllers = controllers
+        v = controllers.values()
+        v = list(v)[1]
         self.width = width
         self.height = height
         self.tooltip = tooltip
