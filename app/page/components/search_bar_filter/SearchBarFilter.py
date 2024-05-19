@@ -73,7 +73,7 @@ class SearchBarFilter(ft.SearchBar):
         ]
         self.controls = [
             *new_controls,
-            ft.ElevatedButton(text='Nueva', icon=ft.icons.ADD)
+            ft.ElevatedButton(text='Agregar nueva', icon=ft.icons.ADD)
         ]
         self.open_view()
     
