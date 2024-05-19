@@ -37,20 +37,20 @@ class ProductAttributes(Enum):
         return len(self.__dict__)
 
 
-class ProductAttributesTypes(Enum):
-    """
-    Represents the attribute types for a product.
-    """
-    UNIT = str
-    CATEGORY = str
-    BRAND = str
-    QUANTITY = int
-    COST_PRICE = float
-    SELLING_PRICE = float
-    REORDER_LEVEL = int
+# class ProductAttributesTypes(Enum):
+#     """
+#     Represents the attribute types for a product.
+#     """
+#     UNIT = str
+#     CATEGORY = str
+#     BRAND = str
+#     QUANTITY = int
+#     COST_PRICE = float
+#     SELLING_PRICE = float
+#     REORDER_LEVEL = int
 
-    def __iter__(self):
-        yield from self.__dict__.values()
+#     def __iter__(self):
+#         yield from self.__dict__.values()
 
 
 def create_column(label: str, on_sort: Optional[Callable] = None,) -> ft.DataColumn:
