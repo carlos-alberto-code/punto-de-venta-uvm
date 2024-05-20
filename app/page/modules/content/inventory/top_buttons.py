@@ -1,11 +1,10 @@
 import flet as ft
 
 
-class AddNewButton(ft.FilledButton):
+class AddNewButton(ft.IconButton):
     def __init__(self):
         super().__init__(
-            text='Nuevo producto',
-            icon='add',
+            icon=ft.icons.ADD,
             on_click=lambda _: print('Nuevo producto'),
         )
 
@@ -34,3 +33,11 @@ class FilterButton(ft.PopupMenuButton):
             ft.PopupMenuItem(text='Marca', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE),
             ft.PopupMenuItem(text='Unidad', icon=ft.icons.ARROW_DROP_DOWN_CIRCLE)
         ]
+
+
+class SearchButton(ft.IconButton):
+    def __init__(self):
+        super().__init__(
+            icon=ft.icons.SEARCH,
+            on_click=lambda _: print('Buscar'),
+        )

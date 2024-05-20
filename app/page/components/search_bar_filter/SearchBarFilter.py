@@ -10,12 +10,13 @@ class SearchResult(ft.Card):
         self.content = ft.Container(
             height=30,
             margin=3,
+            padding=ft.Padding(left=10, right=0, top=0, bottom=0),
             alignment=ft.alignment.center,
             ink=True,
             border_radius=10,
             content=ft.Row(
                 [
-                    ft.Icon(str(ft.icons.ADS_CLICK)),
+                    ft.Icon(str(ft.icons.CIRCLE), size=10),
                     ft.Text(value=text), 
                 ],
                 alignment=ft.MainAxisAlignment.START
