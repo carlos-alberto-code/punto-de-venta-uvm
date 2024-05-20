@@ -2,9 +2,9 @@ import flet as ft
 
 from controllers.products_controller import ProductController
 from page.modules.content.inventory.ProductTable import ProductTable
+from page.modules.content.inventory.top_buttons import MenuOptionsButton
 from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
 from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
-from page.modules.content.inventory.top_buttons import AddNewButton, ShareButton, FilterButton, SearchButton
 
 
 class StockSection(ft.Column):
@@ -23,14 +23,12 @@ class StockSection(ft.Column):
             # ft.Divider(),
             ft.Row( # SearchBarFilter, AddNewButton, ShareButton
                 [
-                    ft.Row(
-                        [ft.Container(width=45), AddNewButton(), ShareButton()]
-                    ),
-                    ft.Row(
-                        [self.filter, SearchButton(), ft.Container(width=45)]
-                    )
+                    # SearchButton(),
+                    self.filter,
+                    MenuOptionsButton(),
+                    ft.Container(width=45),
                 ],
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                alignment=ft.MainAxisAlignment.END,
             ),
             self.product_table,
         ]

@@ -59,8 +59,8 @@ class ProductTable(ft.DataTable):
                     on_click=self.sort_products
                 ) for column_name in ColumnNames
             ],
-            vertical_lines=ft.BorderSide(width=0.8, color=ft.colors.GREY_300),
-            horizontal_lines=ft.BorderSide(width=0.8, color=ft.colors.GREY_300),
+            # vertical_lines=ft.BorderSide(width=0.8, color=ft.colors.GREY_300),
+            # horizontal_lines=ft.BorderSide(width=0.8, color=ft.colors.GREY_300),
             border=ft.border.all(width=0.8, color=ft.colors.GREY_300),
             border_radius=10,
         )
