@@ -18,7 +18,13 @@ class StockSection(ft.Column):
         self.controller = ProductController()
         products = self.controller.get_all()
         self.product_table = ProductTable(products)
-        self.filter = SearchBarFilter(Categoria=CategoryFilter(), Marca=BrandFilter(), Unidad=UnitFilter())
+        self.filter = SearchBarFilter(
+            table=self.product_table,
+            product_controller=self.controller,
+            Categoria=CategoryFilter(),
+            Marca=BrandFilter(),
+            Unidad=UnitFilter()
+        )
         self.controls = [
             ft.Divider(),
             ft.Row( # SearchBarFilter, AddNewButton, ShareButton

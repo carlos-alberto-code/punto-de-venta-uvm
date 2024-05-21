@@ -1,4 +1,4 @@
-from sqlalchemy import desc as desc_order
+from sqlalchemy import desc as desc_order, or_
 
 from database.connection import get_db
 from database.models import Product, Category, Brand, Unit
@@ -34,20 +34,27 @@ class ProductController:
             .join(Category, Product.category_id == Category.id)\
             .join(Brand, Product.brand_id == Brand.id)
     
-    # def search_products(self, search_string, limit=10):
-    #     with get_db() as db:
-    #         return db.query(Product, Unit, Category, Brand)\
-    #             .join(Unit, Product.unit_id == Unit.id)\
-    #             .join(Category, Product.category_id == Category.id)\
-    #             .join(Brand, Product.brand_id == Brand.id)\
-    #             .filter(or_(
-    #                 Product.description.ilike(f'%{search_string}%'),
-    #                 Unit.name.ilike(f'%{search_string}%'),
-    #                 Category.name.ilike(f'%{search_string}%'),
-    #                 Brand.name.ilike(f'%{search_string}%')
-    #             ))\
-    #             .limit(limit)\
-    #             .all()
+    def search_products(self, search_string, limit=10):
+        with get_db() as db:
+            return db.query(
+                Product.sku,
+                Product.quantity,
+                Product.cost_price,
+                Product.selling_price,
+                Product.reorder_level,
+                Unit.name.label('unit'),
+                Category.name.label('category'),
+                Brand.name.label('brand')
+            ).join(Unit, Product.unit_id == Unit.id)\
+            .join(Category, Product.category_id == Category.id)\
+            .join(Brand, Product.brand_id == Brand.id)\
+            .filter(or_(
+                Unit.name.ilike(f'%{search_string}%'),
+                Category.name.ilike(f'%{search_string}%'),
+                Brand.name.ilike(f'%{search_string}%')
+            ))\
+            .limit(limit)\
+            .all()
     
     def get_all(self, order_by=None, desc=False):
         query = self._product_query()
