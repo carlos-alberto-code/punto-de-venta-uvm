@@ -26,10 +26,8 @@ class StockSection(ft.Column):
             Unidad=UnitFilter()
         )
         self.controls = [
-            ft.Divider(),
-            ft.Row( # SearchBarFilter, AddNewButton, ShareButton
+            ft.Row( # SearchBarFilter, MenuOptionsButton, Container
                 [
-                    # SearchButton(),
                     self.filter,
                     MenuOptionsButton(),
                     ft.Container(width=45),

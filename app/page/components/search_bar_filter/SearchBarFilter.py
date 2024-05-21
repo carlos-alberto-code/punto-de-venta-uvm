@@ -2,6 +2,7 @@ import attr
 import flet as ft
 from time import sleep
 
+from database.models import Unit, Category, Brand
 from controllers.products_controller import ProductController
 from page.modules.content.inventory.ProductTable import ProductTable
 
@@ -9,7 +10,7 @@ from .filter_interface import IFilter
 
 
 class SearchResult(ft.Card):
-    def __init__(self, text: str) -> None:
+    def __init__(self, id:int, text: str, on_click) -> None:
         super().__init__()
         self.content = ft.Container(
             height=30,
@@ -19,13 +20,14 @@ class SearchResult(ft.Card):
             ink=True,
             border_radius=10,
             content=ft.Row(
-                [
+                controls=[
                     ft.Icon(str(ft.icons.CIRCLE), size=10),
-                    ft.Text(value=text), 
+                    ft.Text(value=text),
+                    ft.Text(value=str(id), visible=False)
                 ],
                 alignment=ft.MainAxisAlignment.START
             ),
-            on_click=lambda e: print(f'You clicked on {text}'),
+            on_click=on_click,
         )
 
 ft.SearchBar()
@@ -36,13 +38,14 @@ class SearchBarFilter(ft.SearchBar):
             product_controller: ProductController,
             width: int = 350,
             height: int = 35,
-            tooltip: str = 'Da clic en el icono para seleccionar un filtro',
+            tooltip: str = 'Clic para resetear',
             **filter_controllers: IFilter
     ) -> None:
         super().__init__()
         self.table = table
         self.product_controller = product_controller
         self.filter_controllers = filter_controllers
+        self.model_clicked = ''
         self.width = width
         self.height = height
         self.tooltip = tooltip
@@ -62,8 +65,8 @@ class SearchBarFilter(ft.SearchBar):
             items=[self._create_popup_menu_item(key) for key in self.filter_controllers.keys()],
         )
 
-    def _create_popup_menu_item(self, key):
-        return ft.PopupMenuItem(text=key, icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher)
+    def _create_popup_menu_item(self, text):
+        return ft.PopupMenuItem(text=text, icon=ft.icons.ARROW_DROP_DOWN_CIRCLE, on_click=self.run_searcher)
 
     def do_nothing(self, event):
         self.close_view('')
@@ -72,12 +75,15 @@ class SearchBarFilter(ft.SearchBar):
     
     def run_searcher(self, event):
         self.close_view()
+        self.model_clicked = event.control.text
         self.contoller = self.filter_controllers[event.control.text]
         instances = self.filter_controllers[event.control.text].get_all()
         sleep(0.1)
         new_controls = [
             SearchResult(
+            id=instance.id,
             text=instance.name,
+            on_click=self.filter_products
             ) for instance in instances
         ]
         self.controls = [
@@ -92,7 +98,9 @@ class SearchBarFilter(ft.SearchBar):
         sleep(0.01)
         new_controls = [
             SearchResult(
-                text=result.name
+                id=result.id,
+                text=result.name,
+                on_click=self.filter_products
             ) for result in results
         ]
         self.controls = [
@@ -106,5 +114,17 @@ class SearchBarFilter(ft.SearchBar):
             self.table.products = self.product_controller.get_all()
             self.table.update()
         results = self.product_controller.search_products(event.data)
+        self.table.products = results
+        self.table.update()
+
+    def filter_products(self, event):
+        id_instance = event.control.content.controls[2].value
+        filter_models_map = {
+            'Categoria': Category,
+            'Marca': Brand,
+            'Unidad': Unit
+        }
+        model_clicked = filter_models_map[self.model_clicked]
+        results = self.product_controller.filter_by(model=model_clicked, id=id_instance)
         self.table.products = results
         self.table.update()
