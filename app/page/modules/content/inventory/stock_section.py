@@ -29,7 +29,7 @@ class StockSection(ft.Column):
             ft.Row( # SearchBarFilter, MenuOptionsButton, Container
                 [
                     self.filter,
-                    MenuOptionsButton(),
+                    MenuOptionsButton(self.controller),
                     ft.Container(width=45),
                 ],
                 alignment=ft.MainAxisAlignment.END,

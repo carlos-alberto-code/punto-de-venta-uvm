@@ -128,3 +128,4 @@ class SearchBarFilter(ft.SearchBar):
         results = self.product_controller.filter_by(model=model_clicked, id=id_instance)
         self.table.products = results
         self.table.update()
+        
