@@ -1,8 +1,8 @@
 import flet as ft
 
 from controllers.products_controller import ProductController
-from flet import PopupMenuItem
-
+from page.modules.content.inventory.ProductForm import ProductForm
+from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
 
 ft.PopupMenuItem()
 class AddNewButton(ft.PopupMenuItem):
@@ -10,45 +10,17 @@ class AddNewButton(ft.PopupMenuItem):
         super().__init__(
             text='Nuevo producto',
             icon=ft.icons.ADD,
-            on_click=self.open_form,
         )
+        self.product_form = ProductForm(
+            Categoria=CategoryFilter(),
+            Marca=BrandFilter(),
+            Unidad=UnitFilter(),
+        )
+        self.on_click = self.open_form
     
     def open_form(self, event):
-
-        def clear_form(event):
-            form.clean()
-            form.update()
-            event.page.update()
-        
-        def save_product(event):
-            pass
-
-        form = ft.AlertDialog(
-            title=ft.Text('Nuevo producto'),
-            icon=ft.Icon(str(ft.icons.BACKUP_TABLE_OUTLINED)),
-            content=ft.Container(
-                content=ft.Column(
-                    controls=[
-                        ft.TextField(label='Unidad'),
-                        ft.TextField(label='Categoria'),
-                        ft.TextField(label='Marca'),
-                        ft.TextField(label='Cantidad'),
-                        ft.TextField(label='Precio de compra'),
-                        ft.TextField(label='Precio de venta'),
-                        ft.TextField(label='Existenicas mínimas'),
-                    ],
-                    # scroll=ft.ScrollMode.AUTO,
-                )
-            ),
-            actions=[
-                ft.ElevatedButton(text='Limpiar', on_click=clear_form),
-                ft.ElevatedButton(text='Guardar', on_click=save_product),
-            ],
-            scrollable=True,
-        )
-        form.open = True
-        event.page.dialog = form
-        event.page.update()
+        self.product_form.open = True
+        event.page.add(self.product_form)
 
 
 class ShareButton(ft.PopupMenuItem):
