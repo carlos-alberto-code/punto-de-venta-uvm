@@ -4,8 +4,9 @@ import flet as ft
 from dataclasses import dataclass
 from typing import List
 
+from app.page.components import Counter
 from controller import FormModelController, ModelFields
-from app.page.components.counter import Counter, IntCounter, FloatCounter
+from app.page.components.counter import IntCounter, FloatCounter
 
 
 @dataclass

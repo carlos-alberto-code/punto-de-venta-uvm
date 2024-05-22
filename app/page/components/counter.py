@@ -1,99 +1,78 @@
-# TODO: Evitar la escritura de texto pero permitir puntos decimales.
-# TODO: En los valores flotantes solo debe permitir dos digitos
 import flet as ft
+from typing import Optional
 
 
-class _CounterStrategy:
-    def increment(self, value: str) -> str:
-        return str()
+class Counter(ft.Card):
 
-    def decrement(self, value: str) -> str:
-        return str()
-
-
-class IntCounter(_CounterStrategy):
-    def increment(self, value: str) -> str:
-        return str(int(value) + 1)
-
-    def decrement(self, value: str) -> str:
-        return str(int(value) - 1)
-
-
-class FloatCounter(_CounterStrategy):
-    def increment(self, value: str) -> str:
-        return str(float(value) + 1.0)
-
-    def decrement(self, value: str) -> str:
-        return str(float(value) - 1.0)
-
-
-class Counter(ft.UserControl):
     def __init__(
             self,
-            strategy: _CounterStrategy,
-            start_value: int = 0,
-            end_value: int = 1_000_000,
-            title_msg: str = 'No title',
-            msg: str = 'No message'
+            width: Optional[int] = 150,
+            elevation: Optional[int] = 0,
+            start_value: Optional[int] = 1,
+            end_value: Optional[int] = 100,
+            # step_increment: Optional[int] = 1,
+            # negative_values: Optional[bool] = False,
     ):
-        super().__init__()
-        self._strategy = strategy
-        self._start = start_value
-        self._end = end_value
-        self._msg_title = title_msg
-        self._msg = msg
-        self._remove_button = ft.IconButton(icon=ft.icons.REMOVE, on_click=self._decrement)
-        self._quantity_field = ft.TextField(
+        super().__init__(
+            width=width,
+            elevation=elevation,
+            # alignment=ft.alignment.center,      
+        )
+        self._start_value = start_value
+        self._end_value = end_value
+        # self._step_increment = step_increment
+        # self._negative_values = negative_values
+        self._txtfld = ft.TextField(
             border=ft.InputBorder.NONE,
-            width=50,
+            expand=True,
+            adaptive=True,
             value=str(start_value),
+            text_size=14,
             text_align=ft.TextAlign.CENTER,
             text_vertical_align=ft.VerticalAlignment.START,
             input_filter=ft.NumbersOnlyInputFilter()
         )
-        self._add_button = ft.IconButton(icon=ft.icons.ADD, on_click=self._increment)
-
+        self.content = ft.Row(
+            controls=[
+                ft.IconButton(
+                    icon=ft.icons.REMOVE,
+                    on_click=self.decrement,
+                    style=ft.ButtonStyle(
+                        shape=ft.RoundedRectangleBorder(radius=10)
+                    )
+                ),
+                self._txtfld,
+                ft.IconButton(
+                    icon=ft.icons.ADD,
+                    on_click=self.increment,
+                    style=ft.ButtonStyle(
+                        shape=ft.RoundedRectangleBorder(radius=10)
+                    )
+                )
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        )
+    
     @property
     def value(self):
-        return (
-            int(str(self._quantity_field.value))
-            if isinstance(self._strategy, IntCounter)
-            else float(str(self._quantity_field.value))
-        )
-
-    def _increment(self, e):
-        self._quantity_field.value = self._strategy.increment(str(self._quantity_field.value)) if int(str(self._quantity_field.value)) < self._end else str(self._end)
-        e.page.update()
-
-    def _decrement(self, e):
-        self._quantity_field.value = self._strategy.decrement(str(self._quantity_field.value)) if int(str(self._quantity_field.value)) > self._start else str(self._start)
-        e.page.dialog = Alert(
-            title=self._msg_title,
-            msg=self._msg
-        ).build()
-        e.page.update()
-
-    def build(self):
-        return ft.Row(
-            controls=[
-                self._remove_button,
-                self._quantity_field,
-                self._add_button
-            ]
-        )
-
-
-class Alert(ft.UserControl):
+        return str(self._txtfld.value)
     
-    def __init__(self, title: str, msg: str):
-        super().__init__()
-        self.title = title
-        self.msg = msg
-        self.alert = ft.AlertDialog(
-            open=True,
-            title=ft.Text(value=self.title),
-            content=ft.Text(value=self.msg)
-        )
+    @value.setter
+    def value(self, value: int):
+        self._txtfld.value = str(value)
 
-    def build(self):
-        return self.alert
+    def increment(self, event):
+        if self.value is not None and self._end_value is not None and int(self.value) < int(self._end_value):
+            self.value = int(self.value) + 1
+        else:
+            if self._end_value is not None:
+                self.value = int(self._end_value)
+        self._txtfld.update()
+
+    def decrement(self, event):
+        if self.value is not None and int(self.value) > 0:
+            self.value = int(self.value) - 1
+        if self.value is not None and self._end_value is not None and int(self.value) > int(self._end_value):
+            self.value = int(self._end_value)
+        self._txtfld.update()
