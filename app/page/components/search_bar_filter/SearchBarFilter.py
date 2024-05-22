@@ -55,7 +55,7 @@ class SearchBarFilter(ft.SearchBar):
         self.bar_trailing = [self._create_popup_menu_button()]
         self.view_trailing = [self._create_popup_menu_button(), ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda e: self.close_view())]
         self.on_tap = self.do_nothing
-        self.on_change = self.finding_products #self.update_results
+        self.on_change = self.update_results # self.finding_products
 
     def _create_popup_menu_button(self):
         return ft.PopupMenuButton(

@@ -1,37 +1,7 @@
 import flet as ft
 
+from page.components.Counter import Counter
 from page.components.search_bar_filter.filter_interface import IFilter
-
-
-class Counter(ft.Card):
-    def __init__(self, start_value: int) -> None:
-        super().__init__()
-        self.txt_value = ft.TextField(
-            value=str(start_value),
-            height=40,
-            expand=True,
-            border_radius=10,
-            text_align=ft.TextAlign.CENTER,
-            border=ft.InputBorder.NONE,
-        )
-        self.expand = True
-        self.content = ft.Row(
-            [
-                ft.IconButton(icon=ft.icons.REMOVE, on_click=lambda event: self.decrement(event)),
-                self.txt_value,
-                ft.IconButton(icon=ft.icons.ADD, on_click=lambda event: self.increment(event)),
-            ],
-        )
-    
-    def increment(self, event):
-        value = int(self.txt_value.value) if self.txt_value.value else 0
-        self.txt_value.value = str(value + 1)
-        self.txt_value.update()
-
-    def decrement(self, event):
-        value = int(self.txt_value.value) if self.txt_value.value else 0
-        self.txt_value.value = str(value - 1)
-        self.txt_value.update()
 
 
 
