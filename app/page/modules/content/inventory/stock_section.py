@@ -1,9 +1,10 @@
 import flet as ft
 
 from controllers.products_controller import ProductController
+from page.modules.content.inventory.top_buttons import AddNewButton, FilterButton, ShareButton
 from page.modules.content.inventory.ProductTable import ProductTable
-from page.modules.content.inventory.top_buttons import MenuOptionsButton
 from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
+from page.components.Searcher import Searcher
 from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
 
 
@@ -27,9 +28,14 @@ class StockSection(ft.Column):
         )
         self.controls = [
             ft.Row( # SearchBarFilter, MenuOptionsButton, Container
-                [
-                    self.filter,
-                    MenuOptionsButton(self.controller),
+                [   
+                    ft.Row(
+                        [ft.Container(width=45), ShareButton()],
+                        expand=True,
+                    ),
+                    Searcher('Productos', BrandFilter()),
+                    FilterButton(),
+                    AddNewButton(self.controller),
                     ft.Container(width=45),
                 ],
                 alignment=ft.MainAxisAlignment.END,

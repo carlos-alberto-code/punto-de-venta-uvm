@@ -4,9 +4,9 @@ from page.navigation.module import Module, Section
 
 # SECCIONES DEL MÓDULO DE COMPRAS
 
-from .content.purchases.purchase_section   import PurchaseSection
-from .content.purchases.suppliers_section  import ProvidersSection
-from .content.purchases.categories_section import CategoriesSection
+from page.modules.content.purchases.purchase_section   import PurchaseSection
+from page.modules.content.purchases.suppliers_section  import ProvidersSection
+from page.modules.content.purchases.categories_section import CategoriesSection
 
 Module(
     'Compras',
