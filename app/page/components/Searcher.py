@@ -1,34 +1,7 @@
-from time import sleep
 import flet as ft
-from abc import ABC, abstractmethod
-from page.components.search_bar_filter.filter_interface import IFilter
-
-
-# Interfaces de implementación para el patrón Observer
-
-
-class Observer(ABC):
-    @abstractmethod
-    def sync(self, subject: 'Subject'):
-        pass
-
-
-class Subject(ABC):
-    @abstractmethod
-    def attach(self, observer: Observer):
-        pass
-
-    @abstractmethod
-    def detach(self, observer: Observer):
-        pass
-
-    @abstractmethod
-    def notify(self):
-        pass
-
-
-# Implementaciones concretas
-
+from time import sleep
+from page.components.interfaces.observer_interface import Observer, Subject
+from page.components.interfaces.filter_interface import IFilter
 
 class SearcherResult(Subject, ft.Card):
 
@@ -70,8 +43,8 @@ class Searcher(Observer, ft.SearchBar):
     def __init__(self, name: str, model: IFilter):
         super().__init__()
         self.width = 300
-        self.height = 40
-        self.bar_leading = ft.Row([ft.Icon(str(ft.icons.ARROW_RIGHT)), ft.Text(f'{name}:')])
+        self.height = 30
+        self.bar_leading = ft.Row([ft.Icon(str(ft.icons.SEARCH)), ft.Text(f'{name}:')])
         self.view_leading = ft.Row([ft.Icon(str(ft.icons.ARROW_RIGHT)), ft.Text(f'{name}:')])
         self.view_trailing = [ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda _: self.close_view(''))]
         self.model = model

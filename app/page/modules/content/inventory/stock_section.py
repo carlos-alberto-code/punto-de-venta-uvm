@@ -1,7 +1,7 @@
 import flet as ft
 
 from controllers.products_controller import ProductController
-from page.modules.content.inventory.top_buttons import OptionsMenuButton
+from page.modules.content.inventory.top_buttons import OptionsMenuButton, SearchIconButton
 from page.modules.content.inventory.ProductTable import ProductTable
 from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
 from page.components.Searcher import Searcher
@@ -30,7 +30,8 @@ class StockSection(ft.Column):
             ft.Row( # SearchBarFilter, MenuOptionsButton, Container
                 [   
                     
-                    Searcher('Productos', BrandFilter()),
+                    # Searcher('Productos', BrandFilter()),
+                    SearchIconButton(),
                     OptionsMenuButton(),
                     ft.Container(width=45)
                 ],

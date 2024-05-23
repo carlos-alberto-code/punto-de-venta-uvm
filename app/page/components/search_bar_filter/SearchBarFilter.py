@@ -1,4 +1,3 @@
-import attr
 import flet as ft
 from time import sleep
 
@@ -6,7 +5,7 @@ from database.models import Unit, Category, Brand
 from controllers.products_controller import ProductController
 from page.modules.content.inventory.ProductTable import ProductTable
 
-from .filter_interface import IFilter
+from ..interfaces.filter_interface import IFilter
 
 
 class SearchResult(ft.Card):

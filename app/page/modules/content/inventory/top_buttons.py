@@ -4,10 +4,13 @@ from controllers.products_controller import ProductController
 from page.modules.content.inventory.ProductForm import ProductForm
 from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
 
-# Exportar
-# Agregar nuevo producto
-# Filtros
-# Busqueda general
+
+class SearchIconButton(ft.IconButton):
+    def __init__(self):
+        super().__init__()
+        self.icon = ft.icons.SEARCH
+
+
 
 class AddNewButton(ft.IconButton):
     def __init__(self, product_controller: ProductController):
@@ -36,7 +39,7 @@ class FilterButton(ft.PopupMenuButton):
         )
 
 
-class ShareButton(ft.PopupMenuButton):
+class ExportButton(ft.PopupMenuButton):
     def __init__(self):
         super().__init__()
         self.icon = ft.icons.FILE_DOWNLOAD_OUTLINED
