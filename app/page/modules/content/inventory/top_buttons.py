@@ -11,11 +11,7 @@ class AddNewButton(ft.PopupMenuItem):
             text='Nuevo producto',
             icon=ft.icons.ADD,
         )
-        self.product_form = ProductForm(
-            Categoria=CategoryFilter(),
-            Marca=BrandFilter(),
-            Unidad=UnitFilter(),
-        )
+        self.product_form = ProductForm()
         self.on_click = self.open_form
     
     def open_form(self, event):

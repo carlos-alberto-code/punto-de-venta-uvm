@@ -73,7 +73,6 @@ class Searcher(Observer, ft.SearchBar):
         self.height = 40
         self.bar_leading = ft.Row([ft.Icon(str(ft.icons.ARROW_RIGHT)), ft.Text(f'{name}:')])
         self.view_leading = ft.Row([ft.Icon(str(ft.icons.ARROW_RIGHT)), ft.Text(f'{name}:')])
-        # self.bar_trailing = [ft.Icon(str(ft.icons.ARROW_DROP_DOWN_CIRCLE))]
         self.view_trailing = [ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda _: self.close_view(''))]
         self.model = model
         self.current_model_instance_id = 0
