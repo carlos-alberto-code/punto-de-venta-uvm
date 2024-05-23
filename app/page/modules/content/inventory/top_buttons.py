@@ -17,10 +17,11 @@ class AddNewButton(ft.IconButton):
         )
         self.product_form = ProductForm()
         self.on_click = self.open_form
-    
+
     def open_form(self, event):
         self.product_form.open = True
         event.page.add(self.product_form)
+
 
 ft.PopupMenuButton()
 class FilterButton(ft.PopupMenuButton):
@@ -46,3 +47,13 @@ class ShareButton(ft.PopupMenuButton):
             ]
 
 
+class OptionsMenuButton(ft.PopupMenuButton):
+    
+    def __init__(self):
+        super().__init__()
+        self.icon = ft.icons.MORE_VERT
+        self.items = [
+            ft.PopupMenuItem(text='Filtar', icon=ft.icons.FILTER_LIST),
+            ft.PopupMenuItem(text='Agregar nuevo producto', icon=ft.icons.ADD),
+            ft.PopupMenuItem(text='Exportar', icon=ft.icons.FILE_DOWNLOAD_OUTLINED),
+        ]

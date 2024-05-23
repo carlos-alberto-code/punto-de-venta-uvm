@@ -1,7 +1,7 @@
 import flet as ft
 
 from controllers.products_controller import ProductController
-from page.modules.content.inventory.top_buttons import AddNewButton, FilterButton, ShareButton
+from page.modules.content.inventory.top_buttons import OptionsMenuButton
 from page.modules.content.inventory.ProductTable import ProductTable
 from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
 from page.components.Searcher import Searcher
@@ -13,7 +13,7 @@ class StockSection(ft.Column):
     def __init__(self):
         super().__init__(
             expand=True,
-            scroll=ft.ScrollMode.AUTO,
+            # scroll=ft.ScrollMode.AUTO,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
         self.controller = ProductController()
@@ -29,17 +29,19 @@ class StockSection(ft.Column):
         self.controls = [
             ft.Row( # SearchBarFilter, MenuOptionsButton, Container
                 [   
-                    ft.Row(
-                        [ft.Container(width=45), ShareButton()],
-                        expand=True,
-                    ),
+                    
                     Searcher('Productos', BrandFilter()),
-                    FilterButton(),
-                    AddNewButton(self.controller),
-                    ft.Container(width=45),
+                    OptionsMenuButton(),
+                    ft.Container(width=45)
                 ],
                 alignment=ft.MainAxisAlignment.END,
             ),
-            self.product_table,
+            ft.Column(
+                [
+                    self.product_table,
+                ],
+                scroll=ft.ScrollMode.AUTO,
+                expand=True,
+            )
         ]
         
