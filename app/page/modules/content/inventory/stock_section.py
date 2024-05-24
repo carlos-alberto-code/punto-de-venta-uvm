@@ -1,21 +1,9 @@
 import flet as ft
 
-from controllers.products_controller import ProductController
-from page.modules.content.inventory.top_buttons import OptionsMenuButton, SearchIconButton
+from page.components.ProductSearcher             import ProductSearcher
+from controllers.products_controller             import ProductController
 from page.modules.content.inventory.ProductTable import ProductTable
-from page.components.search_bar_filter.SearchBarFilter import SearchBarFilter
-from page.components.Searcher import Searcher
-from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
-
-
-
-class StockControls:
-    def __init__(self) -> None:
-        # self.product_searcher = Searcher('Buscar', )
-        pass
-
-
-
+from page.modules.content.inventory.top_buttons  import OptionsMenuButton
 
 
 class StockSection(ft.Column):
@@ -29,19 +17,13 @@ class StockSection(ft.Column):
         self.controller = ProductController()
         products = self.controller.get_all()
         self.product_table = ProductTable(products)
-        self.filter = SearchBarFilter(
-            table=self.product_table,
-            product_controller=self.controller,
-            Categoria=CategoryFilter(),
-            Marca=BrandFilter(),
-            Unidad=UnitFilter()
-        )
+        self.product_searcher = ProductSearcher(self.controller, self.product_table)
         self.controls = [
             ft.Row( # SearchBarFilter, MenuOptionsButton, Container
                 [   
                     
                     # Searcher('Productos', BrandFilter()),
-                    SearchIconButton(),
+                    self.product_searcher,
                     OptionsMenuButton(),
                     ft.Container(width=45)
                 ],
