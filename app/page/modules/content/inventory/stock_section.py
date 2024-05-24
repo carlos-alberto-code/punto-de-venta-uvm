@@ -8,6 +8,16 @@ from page.components.Searcher import Searcher
 from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
 
 
+
+class StockControls:
+    def __init__(self) -> None:
+        # self.product_searcher = Searcher('Buscar', )
+        pass
+
+
+
+
+
 class StockSection(ft.Column):
     # Responsable de formar la estructura de la sección de inventario
     def __init__(self):

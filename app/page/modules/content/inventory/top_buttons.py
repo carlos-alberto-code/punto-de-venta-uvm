@@ -1,14 +1,26 @@
 import flet as ft
 
 from controllers.products_controller import ProductController
+from page.components.Searcher import Searcher
 from page.modules.content.inventory.ProductForm import ProductForm
 from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
+
+
+def open_searcher(event):
+    f = ft.AlertDialog(
+        title=ft.Text('Buscar producto'),
+        content=Searcher('Productos', BrandFilter())
+    )
+    f.open = True
+    event.page.add(f)
 
 
 class SearchIconButton(ft.IconButton):
     def __init__(self):
         super().__init__()
         self.icon = ft.icons.SEARCH
+        self.tooltip = 'Buscar producto'
+        self.on_click = open_searcher
 
 
 

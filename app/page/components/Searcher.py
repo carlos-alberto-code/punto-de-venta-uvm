@@ -1,7 +1,8 @@
 import flet as ft
 from time import sleep
-from page.components.interfaces.observer_interface import Observer, Subject
 from page.components.interfaces.filter_interface import IFilter
+from page.components.interfaces.observer_interface import Observer, Subject
+
 
 class SearcherResult(Subject, ft.Card):
 
@@ -9,7 +10,7 @@ class SearcherResult(Subject, ft.Card):
         super().__init__()
         self._observers: list[Observer] = []
         self.attach(observer)
-        self.model_instance = model_instance
+        self._model_instance = model_instance
         self.content = ft.Container(
             height=30,
             margin=3,
@@ -56,9 +57,9 @@ class Searcher(Observer, ft.SearchBar):
         self.on_change = self.update_results
     
     def sync(self, subject: SearcherResult):
-        self.current_model_instance_id = subject.model_instance.id
+        self.current_model_instance_id = subject._model_instance.id
         self.bar_leading.controls[1].color = ft.colors.PRIMARY # type: ignore
-        self.close_view(str(subject.model_instance.name.capitalize()))
+        self.close_view(str(subject._model_instance.name.capitalize()))
     
     def update_results(self, event):
         self.close_view(event.data)
