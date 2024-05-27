@@ -1,7 +1,7 @@
 import flet as ft
 from time import sleep
-from page.components.interfaces.filter_interface import IFilter
-from page.components.interfaces.observer_interface import Observer, Subject
+from page.interfaces.filter_interface import IFilter
+from page.interfaces.observer_interface import Observer, Subject
 
 
 class SearcherResult(Subject, ft.Card):

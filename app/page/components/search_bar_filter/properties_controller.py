@@ -1,7 +1,7 @@
 from database.connection import get_db
 from database.models import Brand, Category, Unit
 from controllers.repository import Repository
-from ..interfaces.filter_interface import IFilter
+from page.interfaces.filter_interface import IFilter
 
 
 class BrandFilter(IFilter):
