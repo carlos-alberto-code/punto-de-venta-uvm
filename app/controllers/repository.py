@@ -67,5 +67,5 @@ class Repository:
                     setattr(instance, key, value)
             self.db.commit()
     
-    def search(self, search_term: str):
-        return self.db.query(self.model).filter_by()
+    # def search(self, search_term: str):
+    #     return self.db.query(self.model).filter_by()
