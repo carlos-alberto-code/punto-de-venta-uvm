@@ -8,17 +8,26 @@ class ControllerInterface(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def create(self, **kwargs):
+
+    def get_by_id(self, id: int):
         raise NotImplementedError
     
     @abstractmethod
-    def update(self, id: int, **kwargs):
+    def create(self, **data):
+        raise NotImplementedError
+    
+    @abstractmethod
+    def update(self, id: int, **data):
         raise NotImplementedError
     
     @abstractmethod
     def search(self, search_term: str):
         raise NotImplementedError
     
+    # @abstractmethod
+    # def delete(self, id: int):
+    #     raise NotImplementedError
+
 
 class FieldInterface(ABC):
 

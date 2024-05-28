@@ -1,11 +1,11 @@
 import flet as ft
 
-from naveasy.interfaces import ControllerInterface as ControllerInterface
+from interfaces.interfaces import ControllerInterface as Controller
 
 
-class Searcher(ft.SearchBar):
+class SimpleModelSearcher(ft.SearchBar):
 
-    def __init__(self, model_controler: ControllerInterface):
+    def __init__(self, model_controller: Controller):
         super().__init__(
             bar_hint_text='Selecciona una opción',
             bar_leading=ft.Icon(name=ft.icons.SEARCH, size=20),
@@ -15,4 +15,4 @@ class Searcher(ft.SearchBar):
                 ft.IconButton(icon=ft.icons.CLOSE, on_click=lambda e: self.close_view(e.data)),
             ]
         )
-        self.model_controler = model_controler
+        self.model_controler = model_controller

@@ -1,11 +1,12 @@
 import flet as ft
 
-from naveasy.interfaces import ControllerInterface as ControllerInterface, FieldInterface as Field
+from interfaces.interfaces import FieldInterface as Field
+from interfaces.interfaces import ControllerInterface as Controller
 
 
 class AlertForm(ft.AlertDialog):
 
-    def __init__(self, title: str, model_controller: ControllerInterface, **fields: Field):
+    def __init__(self, title: str, model_controller: Controller, **fields: Field):
         super().__init__(
             title=ft.Text(value=title),
             elevation=20,

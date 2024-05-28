@@ -1,7 +1,7 @@
 # Componentes
 from naveasy.forms import AlertForm
-from naveasy.counter import Counter
-from naveasy.searcher import Searcher
+from app.naveasy.components.counters import Counter
+from app.naveasy.components.searchers import SimpleModelSearcher
 # Interfaces
 from naveasy.interfaces import FieldInterface as Field
 from naveasy.interfaces import ControllerInterface as ControllerInterface
@@ -9,7 +9,7 @@ from naveasy.interfaces import ControllerInterface as ControllerInterface
 from inventory.inventory_controllers import ProductController, UnitController, BrandController, CategoryController
 
 
-class BrandSearcher(Field, Searcher):
+class BrandSearcher(Field, SimpleModelSearcher):
         
     def __init__(self, controller: ControllerInterface):
         super().__init__(controller)
@@ -19,7 +19,7 @@ class BrandSearcher(Field, Searcher):
         self.update()
 
 
-class UnitSearcher(Field, Searcher):
+class UnitSearcher(Field, SimpleModelSearcher):
     
     def __init__(self, controller: ControllerInterface):
         super().__init__(controller)
@@ -29,7 +29,7 @@ class UnitSearcher(Field, Searcher):
         self.update()
 
 
-class CategorySearcher(Field, Searcher):
+class CategorySearcher(Field, SimpleModelSearcher):
     
     def __init__(self, controller: ControllerInterface):
         super().__init__(controller)
