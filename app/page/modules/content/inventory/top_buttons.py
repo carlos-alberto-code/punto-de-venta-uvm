@@ -1,7 +1,7 @@
 import flet as ft
 
-from controllers.products_controller import ProductController
 from page.components.Searcher import Searcher
+from controllers.controllers import ProductController
 from page.modules.content.inventory.ProductForm import ProductForm
 from page.components.search_bar_filter.properties_controller import UnitFilter, CategoryFilter, BrandFilter
 
