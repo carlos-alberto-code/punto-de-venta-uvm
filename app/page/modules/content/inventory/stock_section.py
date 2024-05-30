@@ -1,9 +1,9 @@
 import flet as ft
 
-from page.components.ProductSearcher             import ProductSearcher
-from controllers.products_controller             import ProductController
-from page.modules.content.inventory.ProductTable import ProductTable
-from page.modules.content.inventory.top_buttons  import OptionsMenuButton
+from page.modules.content.inventory.ProductTable    import ProductTable
+from page.modules.content.inventory.ProductSearcher import ProductSearcher
+from page.modules.content.inventory.top_buttons     import OptionsMenuButton
+from controllers.controllers                        import ProductController
 
 
 class StockSection(ft.Column):

@@ -1,12 +1,12 @@
 import flet as ft
 
-from controllers.products_controller import ProductController
+from interfaces.interfaces import ControllerInterface as Controller
 from page.modules.content.inventory.ProductTable import ProductTable
 
 
 class ProductSearcher(ft.SearchBar):
 
-    def __init__(self, product_controller: ProductController, product_table: ProductTable):
+    def __init__(self, product_controller: Controller, product_table: ProductTable):
         super().__init__(
             width=300,
             height=40,
@@ -25,7 +25,7 @@ class ProductSearcher(ft.SearchBar):
         self.table.update()
 
     def update_table(self, event: ft.ControlEvent):
-        instances = self.controller.search_products(event.data)
+        instances = self.controller.search(event.data)
         self.table.products = instances
         self.table.update()
         

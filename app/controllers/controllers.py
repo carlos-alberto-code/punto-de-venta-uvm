@@ -15,7 +15,20 @@ class ProductController(ControllerInterface):
             self.repo = Repository(model=Product, session=db)
     
     def get_all(self):
-        return self.repo.get_all()
+        with get_db() as db:
+            return db.query(
+                Product.sku,
+                Product.quantity,
+                Product.cost_price,
+                Product.selling_price,
+                Product.reorder_level,
+                Unit.name.label('unit'),
+                Category.name.label('category'),
+                Brand.name.label('brand')
+            ).join(Unit, Product.unit_id == Unit.id)\
+            .join(Category, Product.category_id == Category.id)\
+            .join(Brand, Product.brand_id == Brand.id)\
+            .all()
 
     def get_by_id(self, id: int):
         return self.repo.get_by_id(id)
