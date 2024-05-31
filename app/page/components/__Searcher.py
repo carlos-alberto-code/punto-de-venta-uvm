@@ -1,3 +1,5 @@
+# NOTE: No está en uso
+
 import flet as ft
 from time import sleep
 from page.interfaces.filter_interface import IFilter

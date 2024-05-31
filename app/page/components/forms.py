@@ -38,6 +38,6 @@ class AlertForm(ft.AlertDialog):
             field.reset()
     
     def save(self, event):
-        unit_id=self.fields['Unidad'].data,
+        unit_id=self.fields['Unidad'].data # type: ignore
         print(unit_id)
         

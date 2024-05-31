@@ -1,7 +1,7 @@
 import flet as ft
 
 from page.modules.content.inventory.ProductTable    import ProductTable
-from page.modules.content.inventory.ProductSearcher import ProductSearcher
+from page.modules.content.inventory.searchers       import ProductSearcher
 from page.modules.content.inventory.top_buttons     import OptionsMenuButton
 from controllers.controllers                        import ProductController
 

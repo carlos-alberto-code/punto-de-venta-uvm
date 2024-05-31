@@ -1,7 +1,9 @@
-from time import sleep
 import flet as ft
+from time import sleep
 
 from interfaces.interfaces import ControllerInterface as Controller
+from page.modules.content.inventory.ProductTable import ProductTable
+
 
 class SearchResult(ft.Card):
     def __init__(
@@ -31,7 +33,6 @@ class SearchResult(ft.Card):
         )
         
 
-ft.SearchBar()
 class SimpleModelSearcher(ft.SearchBar):
 
     def __init__(self, model_controller: Controller):
@@ -49,6 +50,7 @@ class SimpleModelSearcher(ft.SearchBar):
             on_tap=self.handle_tap_event,
         )
         self.controls = self._create_search_results(model_controller.get_all())
+        self.controls.append(ft.ElevatedButton('Nuevo'))
         self.model_controler = model_controller
     
     def _create_search_results(self, intances: list) -> list[ft.Control]:
@@ -72,3 +74,30 @@ class SimpleModelSearcher(ft.SearchBar):
         self.close_view('')
         self.open_view()
         self.update()
+
+
+class ProductSearcher(ft.SearchBar):
+
+    def __init__(self, product_controller: Controller, product_table: ProductTable):
+        super().__init__(
+            width=300,
+            height=40,
+            bar_leading=ft.Icon(ft.icons.SEARCH, size=20),
+            bar_hint_text='Buscar producto',
+            tooltip='Clic para restaruar la tabla de productos',
+            on_tap=self.reset,
+            on_change=self.update_table,
+        )
+        self.table = product_table
+        self.controller = product_controller
+    
+    def reset(self, event: ft.ControlEvent):
+        self.close_view(event.data)
+        self.table.products = self.controller.get_all()
+        self.table.update()
+
+    def update_table(self, event: ft.ControlEvent):
+        instances = self.controller.search(event.data)
+        self.table.products = instances
+        self.table.update()
+        
