@@ -1,3 +1,5 @@
+# NOTE: La forma en la que se declaren los módulos y secciones, es el orden en que aparecerán.
+
 import flet as ft
 from page.navigation.module import Module, Section
 
@@ -19,16 +21,10 @@ Module(
 
 # SECCIONES DEL MÓDULO DE INVENTARIO
 
-from .content.inventory.stock_section import StockSection
+from page.modules.content.inventory.stock_section import StockSection
 
 Module(
-    'Inventario',
-    ft.icons.STORAGE,
-    Section(
-        label='Stock',
-        icon=ft.icons.ADD_BOX,
-        content=StockSection()
-    ),
+    'Inventario', ft.icons.STORAGE, Section('Stock', ft.icons.ADD_BOX, StockSection()),
 )
 
 # OTROS MÓDULOS...
