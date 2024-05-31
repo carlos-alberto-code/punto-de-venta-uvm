@@ -73,6 +73,7 @@ class ProductTable(ft.DataTable):
     def products(self, products: list):
         self._products = products
         self.update_table()
+        self.update()
     
     @staticmethod
     def _create_data_cell(value: str):

@@ -1,3 +1,4 @@
+from typing import Any, Optional
 import flet as ft
 from time import sleep
 
@@ -78,26 +79,14 @@ class SimpleModelSearcher(ft.SearchBar):
 
 class ProductSearcher(ft.SearchBar):
 
-    def __init__(self, product_controller: Controller, product_table: ProductTable):
+    def __init__(self, on_change: Optional[Any] = None, on_tap: Optional[Any] = None):
         super().__init__(
             width=300,
             height=40,
             bar_leading=ft.Icon(ft.icons.SEARCH, size=20),
             bar_hint_text='Buscar producto',
             tooltip='Clic para restaruar la tabla de productos',
-            on_tap=self.reset,
-            on_change=self.update_table,
+            on_tap=on_tap,
+            on_change=on_change,
         )
-        self.table = product_table
-        self.controller = product_controller
     
-    def reset(self, event: ft.ControlEvent):
-        self.close_view(event.data)
-        self.table.products = self.controller.get_all()
-        self.table.update()
-
-    def update_table(self, event: ft.ControlEvent):
-        instances = self.controller.search(event.data)
-        self.table.products = instances
-        self.table.update()
-        

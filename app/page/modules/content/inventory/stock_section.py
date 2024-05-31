@@ -7,17 +7,17 @@ from controllers.controllers                        import ProductController
 
 
 class StockSection(ft.Column):
-    # Responsable de formar la estructura de la sección de inventario
+    # Responsable de formar la estructura y el contexto de la sección de inventario
     def __init__(self):
         super().__init__(
             expand=True,
             # scroll=ft.ScrollMode.AUTO,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
-        self.controller = ProductController()
-        products = self.controller.get_all()
+        self.product_controller = ProductController()
+        products = self.product_controller.get_all()
         self.product_table = ProductTable(products)
-        self.product_searcher = ProductSearcher(self.controller, self.product_table)
+        self.product_searcher = ProductSearcher(on_change=self.handle_on_change_event, on_tap=self.handle_on_tap_event)
         self.controls = [
             ft.Row( # SearchBarFilter, MenuOptionsButton, Container
                 [   
@@ -37,4 +37,16 @@ class StockSection(ft.Column):
                 expand=True,
             )
         ]
+    
+    def handle_on_change_event(self, event: ft.ControlEvent):
+        control = event.control
+        search_term = control.value
+        results = self.product_controller.search(search_term)
+        self.product_table.products = results
+        
+    def handle_on_tap_event(self, event: ft.ControlEvent):
+        control = event.control
+        search_term = control.value
+        control.close_view()
+        self.product_table.products = self.product_controller.get_all()
         
