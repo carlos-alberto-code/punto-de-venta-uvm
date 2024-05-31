@@ -3,7 +3,7 @@
 import flet as ft
 from time import sleep
 from page.interfaces.filter_interface import IFilter
-from page.interfaces.observer_interface import Observer, Subject
+from app.interfaces.observer_interface import Observer, Subject
 
 
 class SearcherResult(Subject, ft.Card):
