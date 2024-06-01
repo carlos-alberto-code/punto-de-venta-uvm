@@ -9,10 +9,11 @@ ft.AlertDialog()
 class ProductForm(ft.AlertDialog):
 
     def __init__(self, on_save_click=None):
-        super().__init__()
-        self.title = ft.Text('Nuevo producto')
-        self.icon = ft.Icon(str(ft.icons.INVENTORY))
-        self.scrollable = True
+        super().__init__(
+            title=ft.Text('Nuevo producto'),
+            icon=ft.Icon(str(ft.icons.INVENTORY)),
+            scrollable=True,
+        )
         self.content = ft.Column(
             controls=[
                 Searcher(UnitController()),

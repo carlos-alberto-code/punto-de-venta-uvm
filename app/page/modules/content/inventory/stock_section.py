@@ -71,5 +71,16 @@ class StockSection(ft.Column):
     
     # Evento para guardar los datos del formulario
     def handler_on_click_save_product(self, event: ft.ControlEvent):
-        print(event.page.dialog.data)
+        form_data = event.page.dialog.data
+        if form_data:
+            self.product_controller.create(
+                unit_id=form_data['unit_id'],
+                category_id=form_data['category_id'],
+                brand_id=form_data['brand_id'],
+                quantity=form_data['quantity'],
+                cost_price=form_data['cost_price'],
+                selling_price=form_data['selling_price'],
+                reorder_level=form_data['reorder_level'],
+            )
+            self.product_table.products = self.product_controller.get_all() # se actualiza la tabla con el nuevo producto
         
