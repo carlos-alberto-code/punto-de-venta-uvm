@@ -149,3 +149,5 @@ test/
 test-filtering.py
 test_flet.py
 TODO.md
+testing.py
+testing/

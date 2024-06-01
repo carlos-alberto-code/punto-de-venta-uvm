@@ -3,7 +3,8 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 
 
 class Repository:
-
+    # TODO: Establecer comprobaciones y manejo de errores
+    
     def __init__(self, model: DeclarativeMeta, session: Session) -> None:
         self.model = model
         self.db = session    
@@ -66,6 +67,3 @@ class Repository:
                 if hasattr(instance, key):
                     setattr(instance, key, value)
             self.db.commit()
-    
-    # def search(self, search_term: str):
-    #     return self.db.query(self.model).filter_by()

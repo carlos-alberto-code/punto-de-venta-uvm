@@ -4,7 +4,6 @@ from database.connection import get_db
 from database.models import Product, Unit, Category, Brand
 
 from controllers.repository import Repository
-
 from interfaces.interfaces import ControllerInterface
 
 
