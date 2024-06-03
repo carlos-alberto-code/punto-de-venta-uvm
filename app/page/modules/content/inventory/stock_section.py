@@ -1,10 +1,14 @@
 import flet as ft
 
-from page.modules.content.inventory.ProductForm     import ProductForm
 from page.modules.content.inventory.ProductTable    import ProductTable
 from page.modules.content.inventory.searchers       import ProductSearcher
 from controllers.controllers                        import ProductController
 from page.modules.content.inventory.OptionButtons   import OptionsMenuButton, AddProductButton
+
+# Importaciones del Formulario de Producto
+from page.modules.content.inventory.form.ProductForm     import ProductForm
+from page.modules.content.inventory.form.FormEventHandler import FormEventHandler
+from page.modules.content.inventory.form.form_actions import SaveButton, CancelButton, CleanButton
 
 
 class StockSection(ft.Column):
@@ -15,18 +19,30 @@ class StockSection(ft.Column):
             # scroll=ft.ScrollMode.AUTO,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
+        
+        self.product_controller = ProductController()
+
+        # Definiendo el formulario de producto
+        self.form = ProductForm()
+        self.handler = FormEventHandler(
+            controller=self.product_controller,
+            form=self.form,
+        )
+        self.form.actions = [
+            CancelButton(on_click=self.handler.cancel),
+            CleanButton(on_click=self.handler.clean),
+            SaveButton(on_click=self.handler.save),
+        ]
+        
+
         # Delcaración de los botones opcionales
         self.add_product_button = AddProductButton(on_click=self.handler_on_click_add_product)
         self.options_menu_button = OptionsMenuButton(self.add_product_button)
 
         # Declaración de los componentes de la sección de inventario
         self.product_searcher = ProductSearcher(on_change=self.handle_on_change_event, on_tap=self.handle_on_tap_event)
-        self.product_form = ProductForm(
-            on_save_click=self.handler_on_click_save_product
-        )
 
 
-        self.product_controller = ProductController()
         products = self.product_controller.get_all()
         self.product_table = ProductTable(products)
         self.controls = [
@@ -65,22 +81,6 @@ class StockSection(ft.Column):
 
     # Evento para abrir el formulario de agregar producto
     def handler_on_click_add_product(self, event: ft.ControlEvent):
-        event.page.dialog = self.product_form
+        event.page.dialog = self.form
         event.page.dialog.open = True
         event.page.update()
-    
-    # Evento para guardar los datos del formulario
-    def handler_on_click_save_product(self, event: ft.ControlEvent):
-        form_data = event.page.dialog.data
-        if form_data:
-            self.product_controller.create(
-                unit_id=form_data['unit_id'],
-                category_id=form_data['category_id'],
-                brand_id=form_data['brand_id'],
-                quantity=form_data['quantity'],
-                cost_price=form_data['cost_price'],
-                selling_price=form_data['selling_price'],
-                reorder_level=form_data['reorder_level'],
-            )
-            self.product_table.products = self.product_controller.get_all() # se actualiza la tabla con el nuevo producto
-        

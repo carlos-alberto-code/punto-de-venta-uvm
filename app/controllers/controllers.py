@@ -32,7 +32,7 @@ class ProductController(ControllerInterface):
     def get_by_id(self, id: int):
         return self.repo.get_by_id(id)
     
-    def create(self, **data):
+    def insert(self, **data):
         return self.repo.create(**data)
     
     def update(self, id: int, **data):
@@ -73,7 +73,7 @@ class UnitController(ControllerInterface):
     def get_by_id(self, id):
         return self.repo.get_by_id(id)
     
-    def create(self, **data):
+    def insert(self, **data):
         return self.repo.create(**data)
     
     def update(self, id, **data):
@@ -96,7 +96,7 @@ class CategoryController(ControllerInterface):
     def get_by_id(self, id):
         return self.repo.get_by_id(id)
     
-    def create(self, **data):
+    def insert(self, **data):
         return self.repo.create(**data)
     
     def update(self, id, **data):
@@ -119,7 +119,7 @@ class BrandController(ControllerInterface):
     def get_by_id(self, id):
         return self.repo.get_by_id(id)
     
-    def create(self, **data):
+    def insert(self, **data):
         return self.repo.create(**data)
     
     def update(self, id, **data):

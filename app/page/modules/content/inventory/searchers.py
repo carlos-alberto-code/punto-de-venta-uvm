@@ -1,21 +1,25 @@
-from typing import Any, Optional
-import flet as ft
 from time import sleep
+from typing import Any, Optional
+
+import flet as ft
 
 from interfaces.interfaces import ControllerInterface as Controller
 from page.modules.content.inventory.ProductTable import ProductTable
 
 
 class SearchResult(ft.Card):
+    '''
+    Represents a search result in the search bar.
+    The id is the id of the record in the database, and the text is the name of the record.
+    It stores the id and the name in the data attribute of the control for later use.
+    '''
     def __init__(
             self,
             id:int,
             text: str,
             on_click=None
     ) -> None:
-        super().__init__(
-            show_border_on_foreground=True,
-        )
+        super().__init__()
         self.content = ft.Container(
             height=30,
             padding=ft.Padding(left=10, right=0, top=0, bottom=0),
@@ -25,18 +29,24 @@ class SearchResult(ft.Card):
             data={'id': id, 'name': text},
             content=ft.Row(
                 controls=[
-                    ft.Icon(str(ft.icons.HISTORY), size=20),
+                    ft.Icon(str(ft.icons.HISTORY), size=15),
                     ft.Text(value=text),
                 ],
                 alignment=ft.MainAxisAlignment.START
             ),
-            on_click=on_click if on_click else lambda e: print(e.control.data)
+            on_click=on_click,
         )
         
 
 class SimpleModelSearcher(ft.SearchBar):
 
-    def __init__(self, model_controller: Controller):
+    def __init__(
+            self,
+            model_controller: Controller,
+            on_change = None,
+            on_tap = None,
+            on_submit = None
+    ):
         super().__init__(
             width=300,
             height=40,
@@ -47,14 +57,26 @@ class SimpleModelSearcher(ft.SearchBar):
             view_trailing=[
                 ft.Icon(name=ft.icons.ARROW_DROP_DOWN_ROUNDED),
             ],
-            on_change=self.handle_change_event,
-            on_tap=self.handle_tap_event,
+            on_change=on_change,
+            on_tap=on_tap,
+            on_submit=on_submit,
         )
-        self.controls = self._create_search_results(model_controller.get_all())
-        self.controls.append(ft.ElevatedButton('Nuevo'))
-        self.model_controler = model_controller
+        self.controller = model_controller
+        self.controls = [
+            *self.create_search_results(self.controller.get_all()),
+            ft.ElevatedButton(
+                text='Nuevo',
+                on_click=self.handle_on_click_new,
+            ),
+        ]
     
-    def _create_search_results(self, intances: list) -> list[ft.Control]:
+    # Evento del botón 'Nuevo'
+    def handle_on_click_new(self, event):
+        event.page.bottom_sheet = ft.BottomSheet()
+        event.page.bottom_sheet.open = True
+        event.page.update()
+    
+    def create_search_results(self, intances: list) -> list[ft.Control]:
         return [
             SearchResult(id=instance.id, text=instance.name, on_click=self.handle_on_click_result)
             for instance in intances
@@ -67,8 +89,8 @@ class SimpleModelSearcher(ft.SearchBar):
     def handle_change_event(self, event):
         self.close_view(str(self.value))
         sleep(0.01)
-        results = self.model_controler.search(str(self.value))
-        self.controls = self._create_search_results(results)
+        results = self.controller.search(str(self.value))
+        self.controls = self.create_search_results(results)
         self.open_view()
     
     def handle_tap_event(self, event):
