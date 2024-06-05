@@ -43,9 +43,6 @@ class SimpleModelSearcher(ft.SearchBar):
     def __init__(
             self,
             model_controller: Controller,
-            on_change = None,
-            on_tap = None,
-            on_submit = None
     ):
         super().__init__(
             width=300,
@@ -57,58 +54,68 @@ class SimpleModelSearcher(ft.SearchBar):
             view_trailing=[
                 ft.Icon(name=ft.icons.ARROW_DROP_DOWN_ROUNDED),
             ],
-            on_change=on_change,
-            on_tap=on_tap,
-            on_submit=on_submit,
+            # on_change=self.hand,
+            on_tap=self.handler_on_tap,
+            # on_submit=on_submit,
         )
         self.controller = model_controller
         self.controls = [
             *self.create_search_results(self.controller.get_all()),
             ft.ElevatedButton(
                 text='Nuevo',
-                on_click=self.handle_on_click_new,
+                on_click=self._handle_on_click_new,
             ),
         ]
     
     # Evento del botón 'Nuevo'
-    def handle_on_click_new(self, event):
+    def _handle_on_click_new(self, event): #TODO: A la espera de refactorizar esta característica
         event.page.bottom_sheet = ft.BottomSheet()
         event.page.bottom_sheet.open = True
         event.page.update()
+        print('Se oprimió el botón nuevo')
     
-    def create_search_results(self, intances: list) -> list[ft.Control]:
+    def create_search_results(self, intances: list) -> list[ft.Control]: # Función útil dentro y fuera del contexto
         return [
             SearchResult(id=instance.id, text=instance.name, on_click=self.handle_on_click_result)
             for instance in intances
         ]
     
-    def handle_on_click_result(self, event):
-        self.data = event.control.data # Referencía a la tupla del control en donde se hizo click
+    def handle_on_click_result(self, event): # Funcióna para manejar los resultados internos
+        self.data = event.control.data # Referencía al diccionario del control en donde se hizo click
         self.close_view(event.control.data['name'])
 
-    def handle_change_event(self, event):
-        self.close_view(str(self.value))
-        sleep(0.01)
-        results = self.controller.search(str(self.value))
-        self.controls = self.create_search_results(results)
-        self.open_view()
-    
-    def handle_tap_event(self, event):
-        self.close_view('')
-        self.open_view()
+    def handler_on_tap(self, event: ft.ControlEvent):
+        self.data = ''
+        self.value = ''
         self.update()
+        sleep(1)
+    
+    # def handler_on_change(self, event: ft.ControlEvent):
+    #     self.update()
 
 
 class ProductSearcher(ft.SearchBar):
 
-    def __init__(self, on_change: Optional[Any] = None, on_tap: Optional[Any] = None):
+    def __init__(self, product_controller: Controller,  product_table: ProductTable) -> None:
         super().__init__(
             width=300,
             height=40,
             bar_leading=ft.Icon(ft.icons.SEARCH, size=20),
             bar_hint_text='Buscar producto',
             tooltip='Clic para restaruar la tabla de productos',
-            on_tap=on_tap,
-            on_change=on_change,
+            on_tap=self.handler_on_tap,
+            on_change=self.handler_on_change,
         )
+        self.controller = product_controller
+        self.table = product_table
+    
+    def handler_on_tap(self, event: ft.ControlEvent):
+        self.close_view()
+        self.table.products = self.controller.get_all()
+    
+    def handler_on_change(self, event: ft.ControlEvent):
+        val = str(self.value)
+        self.table.products = self.controller.search(val)
+    
+
     

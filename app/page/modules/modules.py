@@ -21,7 +21,7 @@ Module(
 
 # SECCIONES DEL MÓDULO DE INVENTARIO
 
-from page.modules.content.inventory.stock_section import StockSection
+from page.modules.content.inventory.view_section import ContentStockSectionShape as StockSection
 
 Module(
     'Inventario', ft.icons.STORAGE, Section('Stock', ft.icons.ADD_BOX, StockSection()),
