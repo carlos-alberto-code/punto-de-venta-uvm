@@ -1,5 +1,3 @@
-# Se abstrajo un nivel más el AlertDialog, para que el formulario sea más sencillo de definir
-# Se requiere implementar la interfaz FieldInterface en los campos inyectados para que el formulario tenga un comportamiento común para todos los campos
 import flet as ft
 
 from page.modules.content.inventory.counters import Counter
@@ -112,6 +110,7 @@ class ProductForm(ft.AlertDialog):
                 reorder_level=self.data['reorder_level'],
             )
             self._close_form(event)
+            self._reset_form()
             self._open_ok_snack_bar(event)
         else:
             self.show_error_snack_bar(event)
