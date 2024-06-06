@@ -1,6 +1,4 @@
 from time import sleep
-from typing import Any, Optional
-
 import flet as ft
 
 from interfaces.interfaces import ControllerInterface as Controller
@@ -54,25 +52,60 @@ class SimpleModelSearcher(ft.SearchBar):
             view_trailing=[
                 ft.Icon(name=ft.icons.ARROW_DROP_DOWN_ROUNDED),
             ],
-            # on_change=self.hand,
+            on_change=self.handler_on_change,
             on_tap=self.handler_on_tap,
-            # on_submit=on_submit,
+        )
+        self.add_button = ft.ElevatedButton(
+            text='Nuevo',
+            on_click=self._handle_on_click_new,
         )
         self.controller = model_controller
         self.controls = [
             *self.create_search_results(self.controller.get_all()),
-            ft.ElevatedButton(
-                text='Nuevo',
-                on_click=self._handle_on_click_new,
-            ),
+            self.add_button,
         ]
     
     # Evento del botón 'Nuevo'
     def _handle_on_click_new(self, event): #TODO: A la espera de refactorizar esta característica
-        event.page.bottom_sheet = ft.BottomSheet()
+        self.close_view()
+        txt_field = ft.TextField(label='Nombre de la instancia')
+
+        def update_search_results():
+            self.close_view()
+            self.controls = [
+                *self.create_search_results(self.controller.get_all()),
+                ft.ElevatedButton(
+                    text='Nuevo',
+                    on_click=self._handle_on_click_new,
+                ),
+            ]
+            self.open_view()
+            self.update()
+
+        def save_instance(event: ft.ControlEvent):
+            instance_name = txt_field.value
+            self.controller.insert(name=instance_name)
+            event.page.bottom_sheet.open = False
+            event.page.update()
+            update_search_results()
+
+        event.page.bottom_sheet = ft.BottomSheet(
+            content=ft.Column(
+                [
+                    ft.Container(height=20),
+                    txt_field,
+                    ft.ElevatedButton(
+                        text='Guardar',
+                        on_click=save_instance
+                    )
+                ],
+                width=250,
+                spacing=10,
+            ),
+            
+        )
         event.page.bottom_sheet.open = True
         event.page.update()
-        print('Se oprimió el botón nuevo')
     
     def create_search_results(self, intances: list) -> list[ft.Control]: # Función útil dentro y fuera del contexto
         return [
@@ -90,8 +123,16 @@ class SimpleModelSearcher(ft.SearchBar):
         self.update()
         sleep(1)
     
-    # def handler_on_change(self, event: ft.ControlEvent):
-    #     self.update()
+    def handler_on_change(self, event: ft.ControlEvent):
+        val = str(self.value)
+        self.close_view(val)
+        sleep(0.3)
+        self.controls = [
+            *self.create_search_results(self.controller.search(val)),
+            self.add_button,
+        ]
+        self.open_view()
+        self.update()
 
 
 class ProductSearcher(ft.SearchBar):
