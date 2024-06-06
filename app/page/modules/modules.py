@@ -24,19 +24,12 @@ Module(
 from page.modules.content.inventory.view_section import ContentStockSectionShape as StockSection
 
 Module(
-    'Inventario',
-    ft.icons.INVENTORY,
+    'Punto de venta',
+    ft.icons.POINT_OF_SALE,
+    Section('Tienda', ft.icons.STORE),
+    Section('Ventas y devoluciones', ft.icons.CHANGE_CIRCLE),
     Section('Inventario', ft.icons.STORAGE, StockSection()),
     Section('Reportes', ft.icons.ASSIGNMENT)
-)
-
-# SECCIONES DEL MÓDULO DE PUNTO DE VENTA
-
-Module(
-    'Punto de venta',
-    ft.icons.LOCAL_GROCERY_STORE,
-    Section('Tienda', ft.icons.STORE),
-    Section('Devoluciones', ft.icons.CHANGE_CIRCLE),
 )
 
 # OTROS MÓDULOS...
