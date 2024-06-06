@@ -4,7 +4,7 @@ from controllers.controllers import ProductController
 
 from page.modules.content.inventory.ProductForm import ProductForm
 from page.modules.content.inventory.ProductTable import ProductTable
-from page.modules.content.inventory.searchers import SimpleModelSearcher, ProductSearcher
+from page.modules.content.inventory.searchers import ProductSearcher
 
 
 prod_controller = ProductController() # Instancia del controlador de productos
