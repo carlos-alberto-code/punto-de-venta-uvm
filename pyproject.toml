@@ -10,6 +10,7 @@ python = "^3.10"
 sqlalchemy = "^2.0.30"
 mysql-connector-python = "^8.4.0"
 flet = "^0.22.1"
+alembic = "^1.13.1"
 
 
 [build-system]

@@ -1,0 +1,67 @@
+# Ignorar archivos y directorios generados automáticamente
+node_modules/
+dist/
+build/
+
+# Ignorar archivos de configuración local
+.env
+
+# Ignorar archivos de dependencias específicas del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de respaldo y temporales
+*.bak
+*.tmp
+*.swp
+
+# Ignorar archivos de registro
+*.log
+
+# Ignorar archivos de compilación y ejecutables
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignorar archivos de imágenes y videos
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.mp4
+*.avi
+
+# Ignorar archivos de documentos
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+
+# Ignorar archivos de datos sensibles
+secrets.txt
+credentials.json
+
+# Ignorar archivos de IDE y editores de texto
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+
+# Ignorar archivos de respaldo de Git
+*.orig
+*.bak
+*.tmp
+
+# Ignorar archivos de caché
+.cache/
+
+# Ignorar archivos de compilación
+*.class
+*.o
+*.pyc
+
+# Ignorar archivos de compilación de Python
+__pycache__/
