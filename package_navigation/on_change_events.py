@@ -2,8 +2,8 @@ from time import sleep
 
 import flet as ft
 
-from navigation.navigation_state_manager import NavigationStateManager
-from navigation.PageEvents import PageEvents
+from package_navigation.navigation_state_manager import NavigationStateManager
+from package_navigation.PageEvents import PageEvents
     
 
 state = NavigationStateManager()

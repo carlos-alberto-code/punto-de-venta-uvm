@@ -10,6 +10,7 @@ from database.models import Base
 
 load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./test.db')
+# NOTE: Si no existen modelos bien configurados a la base de datos, devolverá un archivo en la raíz del proyecto llamado test.db
 
 
 # Estableciendo el motor de la base de datos

@@ -1,6 +1,6 @@
 from typing import List
 
-from navigation.module import Module
+from package_navigation.Module import Module
 
 
 class NavigationStateManager:

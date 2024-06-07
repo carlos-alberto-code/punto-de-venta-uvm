@@ -1,8 +1,8 @@
 import flet as ft
 
-from navigation.navigation_state_manager import NavigationStateManager
-from navigation.on_change_events import update_module, update_content
-from navigation.initializer import Initializer
+from package_navigation.navigation_state_manager import NavigationStateManager
+from package_navigation.on_change_events import update_module, update_content
+from package_navigation.initializer import Initializer
 
 
 class NavigationStructureFactory:

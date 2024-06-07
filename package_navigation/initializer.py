@@ -2,7 +2,7 @@ from typing import List
 
 import flet as ft
 
-from navigation.module import Module
+from package_navigation.Module import Module
 
 
 class Initializer:
