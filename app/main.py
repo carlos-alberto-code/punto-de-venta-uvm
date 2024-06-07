@@ -1,3 +1,11 @@
+# Inicio de la variable de entorno de la aplicación
+from dotenv import load_dotenv
+import os
+dotenv_path = os.path.join(os.path.dirname(__file__), 'app', 'database', '.env')
+load_dotenv(dotenv_path)
+
+# Aplicación flet
+
 from time import sleep
 import flet as ft
 
