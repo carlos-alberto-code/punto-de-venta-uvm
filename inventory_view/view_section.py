@@ -2,9 +2,9 @@ import flet as ft
 
 from controllers.controllers import ProductController
 
-from inventory.ProductForm import ProductForm
-from inventory.ProductTable import ProductTable
-from inventory.searchers import ProductSearcher
+from inventory_view.ProductForm import ProductForm
+from inventory_view.ProductTable import ProductTable
+from inventory_view.searchers import ProductSearcher
 
 
 prod_controller = ProductController() # Instancia del controlador de productos

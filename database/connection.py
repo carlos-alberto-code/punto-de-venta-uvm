@@ -17,15 +17,15 @@ engine = create_engine(DATABASE_URL, echo=True)  # Cambia echo a False en produc
 
 # Migraciones automáticas con Alembic (opcional)
 # Este bloque puede ser opcional y solo para desarrollo. En producción, considera ejecutar las migraciones manualmente.
-from alembic.config import Config
-from alembic import command
+# from alembic.config import Config
+# from alembic import command
 
-def run_migrations():
-    alembic_cfg = Config("alembic.ini")
-    command.upgrade(alembic_cfg, "head")
+# def run_migrations():
+#     alembic_cfg = Config("alembic.ini")
+#     command.upgrade(alembic_cfg, "head")
 
-if os.getenv('ENV') != 'production':
-    run_migrations()
+# if os.getenv('ENV') != 'production':
+#     run_migrations()
 
 # Modelos y gestión del contexto de la base de datos
 from database.models import Base  # Asegúrate de que este import sea correcto

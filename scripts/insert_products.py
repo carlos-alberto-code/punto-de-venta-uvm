@@ -1,11 +1,6 @@
-import sys
-sys.path.append('app/')
-
 import random
 from database.connection import get_db
 from database.models import Product, Unit, Category, Brand
-
-
 
 
 # Comprobar si las tablas Unit, Category y Brand tienen registros para que este script pueda funcionar

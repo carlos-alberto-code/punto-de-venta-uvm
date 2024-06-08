@@ -1,7 +1,7 @@
 import flet as ft
 
-from inventory.counters import Counter
-from inventory.searchers import SimpleModelSearcher
+from inventory_view.counters import Counter
+from inventory_view.searchers import SimpleModelSearcher
 from controllers.controllers import UnitController, CategoryController, BrandController, ProductController
 
 

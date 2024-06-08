@@ -2,7 +2,7 @@ from time import sleep
 import flet as ft
 
 from interfaces.ControllerInterface import ControllerInterface as Controller
-from inventory.ProductTable import ProductTable
+from inventory_view.ProductTable import ProductTable
 
 
 class SearchResult(ft.Card):
