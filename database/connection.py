@@ -28,7 +28,7 @@ if os.getenv('ENV') != 'production':
     run_migrations()
 
 # Modelos y gestión del contexto de la base de datos
-from database.models import Base
+from database.models import Base  # Asegúrate de que este import sea correcto
 from contextlib import contextmanager
 
 # No llamamos a create_all, ya que las migraciones de Alembic deben manejar esto

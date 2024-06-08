@@ -13,7 +13,7 @@ Module(
 Module(
     'Punto de venta', # Module name
     icon.POINT_OF_SALE_SHARP, # Module icon
-    Section(label='Productos', icon=icon.INVENTORY, content=ProductSection()),
+    Section(label='Tienda', icon=icon.STOREFRONT),
+    Section(label='Inventario', icon=icon.INVENTORY, content=ProductSection()),
     Section(label='Ventas', icon=icon.SAILING_SHARP),
-    Section(label='Clientes', icon=icon.PEOPLE_ALT),
 )
