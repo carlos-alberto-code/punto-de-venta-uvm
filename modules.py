@@ -1,6 +1,6 @@
 from flet import icons as icon
 from package_navigation.Module import Module, Section
-from inventory.view_section import ContentStockSectionShape as ProductSection
+from inventory_view.view_section import ContentStockSectionShape as ProductSection
 
 
 Module(

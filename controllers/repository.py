@@ -67,3 +67,4 @@ class Repository:
                 if hasattr(instance, key):
                     setattr(instance, key, value)
             self.db.commit()
+            

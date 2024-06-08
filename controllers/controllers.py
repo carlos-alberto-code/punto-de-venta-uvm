@@ -128,3 +128,4 @@ class BrandController(ControllerInterface):
     def search(self, search_term: str):
         with get_db() as db:
             return db.query(Brand).filter(Brand.name.ilike(f'%{search_term}%')).limit(10).all()
+        
