@@ -1,25 +1,39 @@
-from contextlib import contextmanager
+# Variables de entorno
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
+HOST = os.getenv('HOST')
+USER = os.getenv('USER')
+PASSWORD = os.getenv('PASSWORD')
+DATABASE_NAME = os.getenv('DATABASE_NAME')
+
+# SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
+DATABASE_URL = f"mysql+mysqlconnector://{USER}:{PASSWORD}@{HOST}/{DATABASE_NAME}"
+engine = create_engine(DATABASE_URL, echo=True)  # Cambia echo a False en producción
+
+# Migraciones automáticas con Alembic (opcional)
+# Este bloque puede ser opcional y solo para desarrollo. En producción, considera ejecutar las migraciones manualmente.
+from alembic.config import Config
+from alembic import command
+
+def run_migrations():
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
+
+if os.getenv('ENV') != 'production':
+    run_migrations()
+
+# Modelos y gestión del contexto de la base de datos
 from database.models import Base
+from contextlib import contextmanager
 
+# No llamamos a create_all, ya que las migraciones de Alembic deben manejar esto
+# Base.metadata.create_all(bind=engine)
 
-load_dotenv()
-DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./test.db')
-# NOTE: Si no existen modelos bien configurados a la base de datos, devolverá un archivo en la raíz del proyecto llamado test.db
-
-
-# Estableciendo el motor de la base de datos
-engine = create_engine(DATABASE_URL)# echo=True)
-
-# Creando todas las tablas definidas en los modelos
-Base.metadata.create_all(bind=engine)
-
-# Creating a SessionLocal class which will be used as a factory to create new Session objects
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @contextmanager
