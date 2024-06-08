@@ -54,6 +54,7 @@ class Supplier(Base):
 
     id:    Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name:  Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    address: Mapped[str] = mapped_column(String(50), nullable=False)
     phone: Mapped[str] = mapped_column(CHAR(10), nullable=False, unique=True)
     email: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
 

@@ -1,7 +1,7 @@
 from sqlalchemy import or_
 
 from database.connection import get_db
-from database.models import Product, Unit, Category, Brand
+from database.models import Product, Unit, Category, Brand, Supplier
 
 from controllers.repository import Repository
 from interfaces.ControllerInterface import ControllerInterface
@@ -128,4 +128,26 @@ class BrandController(ControllerInterface):
     def search(self, search_term: str):
         with get_db() as db:
             return db.query(Brand).filter(Brand.name.ilike(f'%{search_term}%')).limit(10).all()
-        
+
+
+class SuplierController(ControllerInterface):
+
+    def __init__(self) -> None:
+        with get_db() as db:
+            self.repo = Repository(model=Supplier, session=db)
+    
+    def get_all(self):
+        return self.repo.get_all()
+
+    def get_by_id(self, id):
+        return self.repo.get_by_id(id)
+    
+    def insert(self, **data):
+        return self.repo.create(**data)
+    
+    def update(self, id, **data):
+        self.repo.update(id, **data)
+    
+    def search(self, search_term: str):
+        with get_db() as db:
+            return db.query(Supplier).filter(Supplier.name.ilike(f'%{search_term}%')).limit(10).all()
