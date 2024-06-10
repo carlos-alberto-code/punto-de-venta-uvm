@@ -1,7 +1,7 @@
 from time import sleep
 import flet as ft
 
-from interfaces.ControllerInterface import ControllerInterface as Controller
+from controllers.ControllerInterface import ControllerInterface as Controller
 from inventory_view.ProductTable import ProductTable
 
 

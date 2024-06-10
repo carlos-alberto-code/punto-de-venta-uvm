@@ -20,6 +20,5 @@ class ProductCard(ft.Card): # Es la capa de presentación gráfica de un product
                 trailing=ft.IconButton(ft.icons.ADD),
             ),
             width=300,
-            elevation=5,
         )
         

@@ -4,7 +4,7 @@ from database.connection import get_db
 from database.models import Product, Unit, Category, Brand, Supplier
 
 from controllers.repository import Repository
-from interfaces.ControllerInterface import ControllerInterface
+from controllers.ControllerInterface import ControllerInterface
 
 
 class ProductController(ControllerInterface):
@@ -151,3 +151,4 @@ class SuplierController(ControllerInterface):
     def search(self, search_term: str):
         with get_db() as db:
             return db.query(Supplier).filter(Supplier.name.ilike(f'%{search_term}%')).limit(10).all()
+        
