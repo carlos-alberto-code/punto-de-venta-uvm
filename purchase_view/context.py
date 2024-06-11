@@ -11,14 +11,14 @@ from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Objec
 def handle_on_tap(event: ft.ControlEvent): # Evento tap de la barra de búsqueda
     searcher.close_view()
     products = _wrap_productDTO_list(product_controller.get_all())
-    gird_view.controls = _create_GirdView_product_cards(products)
-    gird_view.update()
+    grid_view.controls = _create_GirdView_product_cards(products)
+    grid_view.update()
     
 def handle_on_change(event: ft.ControlEvent): # Evento de búsqueda en tiempo real
     results = product_controller.search(str(searcher.value))
     products = _wrap_productDTO_list(results)
-    gird_view.controls = _create_GirdView_product_cards(products)
-    gird_view.update()
+    grid_view.controls = _create_GirdView_product_cards(products)
+    grid_view.update()
 
 def handle_on_card_button_click(event: ft.ControlEvent): # Evento de click en el botón de la tarjeta
     button = event.control
@@ -70,7 +70,7 @@ searcher = ft.SearchBar( # Barra de búsqueda
     on_change=handle_on_change
 )
 
-gird_view = ft.GridView( # Vista de productos
+grid_view = ft.GridView( # Vista de productos
     controls=[
         *_create_GirdView_product_cards(_wrap_productDTO_list(product_controller.get_all()))
     ],
@@ -111,7 +111,7 @@ shape = ft.ResponsiveRow( # Capa general de la vista
                     # Abarca el resto de la pantalla
                     width=900,
                     height=800,
-                    content=gird_view,
+                    content=grid_view,
                 ),
             ],
             col=6,
