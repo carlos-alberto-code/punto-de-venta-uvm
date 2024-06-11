@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 DATABASE_URL = f"mysql+mysqlconnector://{USER}:{PASSWORD}@{HOST}/{DATABASE_NAME}"
-engine = create_engine(DATABASE_URL, echo=True)  # Cambia echo a False en producción
+engine = create_engine(DATABASE_URL)  # Cambia echo a False en producción
 
 # Migraciones automáticas con Alembic (opcional)
 # Este bloque puede ser opcional y solo para desarrollo. En producción, considera ejecutar las migraciones manualmente.

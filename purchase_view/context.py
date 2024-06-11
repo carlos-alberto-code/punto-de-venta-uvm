@@ -22,7 +22,14 @@ def handle_on_change(event: ft.ControlEvent): # Evento de búsqueda en tiempo re
 
 def handle_on_card_button_click(event: ft.ControlEvent): # Evento de click en el botón de la tarjeta
     button = event.control
-    # Transferir los datos del producto seleccionado al formulario de compra
+    form_items.append(button.data)
+    product_form.content = ft.Column(
+        [create_form_item(product) for product in form_items]
+    )
+    product_form.update()
+
+def create_form_item(product: Product): # Crea un item del formulario de compra
+    return ProductCard(product=product)
 
 
 # HELPER FUNCTIONS ------------------------------------------------------------
@@ -49,6 +56,8 @@ def _create_GirdView_product_cards(products: list[Product]) -> list[ft.Card]: # 
     ]
 
 
+# CONTEXT ----------------------------------------------------------------------
+
 product_controller = ProductController() # Controlador de productos
 
 products: list[Product] # Lista de productos en la vista
@@ -65,16 +74,51 @@ gird_view = ft.GridView( # Vista de productos
     controls=[
         *_create_GirdView_product_cards(_wrap_productDTO_list(product_controller.get_all()))
     ],
-    expand=1,
-    runs_count=3,
-    max_extent=420,
+    expand=2,
+    runs_count=2,
+    max_extent=500,
     child_aspect_ratio=5.5,
-    spacing=5,
-    run_spacing=5,
+    spacing=1,
+    run_spacing=1,
 )
 
+form_items = []
 product_form = ft.Card(
     width=350,
     height=600,
     elevation=10,
+)
+
+
+# SHAPE CONTENT-----------------------------------------------------------------
+
+shape = ft.Row( # Capa general de la vista
+    [
+        ft.Container( # Capa de formulario
+            width=350,
+            height=610,
+            content=product_form,
+        ),
+        ft.Column( # Capa de búsqueda y productos
+            [
+                ft.Container( # Capa de búsqueda
+                    width=900,
+                    height=50,
+                    content=searcher,
+                ),
+                ft.Container( # Capa de productos
+                    # Abarca el resto de la pantalla
+                    width=900,
+                    height=550,
+                    content=gird_view,
+                ),
+            ]
+        )
+    ]
+)
+
+s2 = ft.ResponsiveRow(
+    columns=1,
+    col=2,
+    controls=[shape]
 )

@@ -1,11 +1,11 @@
 import flet as ft
-
-from purchase_view.context import searcher, gird_view, product_form
+from purchase_view.context import shape
 
 
 def main(page: ft.Page):
-    page.theme_mode             = ft.ThemeMode.LIGHT
-    page.scroll = ft.ScrollMode.AUTO
-    page.add(product_form, searcher, gird_view)
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.add(shape)
 
-ft.app(target=main)
+ft.app(main)
