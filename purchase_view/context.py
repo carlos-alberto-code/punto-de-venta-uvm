@@ -92,12 +92,13 @@ product_form = ft.Card(
 
 # SHAPE CONTENT-----------------------------------------------------------------
 
-shape = ft.Row( # Capa general de la vista
+shape = ft.ResponsiveRow( # Capa general de la vista
     [
         ft.Container( # Capa de formulario
             width=350,
             height=610,
             content=product_form,
+            col=6,
         ),
         ft.Column( # Capa de búsqueda y productos
             [
@@ -109,10 +110,11 @@ shape = ft.Row( # Capa general de la vista
                 ft.Container( # Capa de productos
                     # Abarca el resto de la pantalla
                     width=900,
-                    height=550,
+                    height=800,
                     content=gird_view,
                 ),
-            ]
+            ],
+            col=6,
         )
     ]
 )
