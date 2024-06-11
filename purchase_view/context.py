@@ -72,3 +72,9 @@ gird_view = ft.GridView( # Vista de productos
     spacing=5,
     run_spacing=5,
 )
+
+product_form = ft.Card(
+    width=350,
+    height=600,
+    elevation=10,
+)
