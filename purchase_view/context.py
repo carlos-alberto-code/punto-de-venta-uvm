@@ -116,9 +116,3 @@ shape = ft.Row( # Capa general de la vista
         )
     ]
 )
-
-s2 = ft.ResponsiveRow(
-    columns=1,
-    col=2,
-    controls=[shape]
-)
