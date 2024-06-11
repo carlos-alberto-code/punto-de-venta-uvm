@@ -3,29 +3,44 @@
 import flet as ft
 from controllers.controllers import ProductController
 from purchase_view.ProductCard import ProductCard
+from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Object
 
 
 product_controller = ProductController() # Controlador de productos
+products: list[Product]
 
 # Eventos de la barra de búsqueda
 
 def handle_on_tap(event: ft.ControlEvent):
     searcher.close_view()
-    gird_view.controls = _create_product_cards(product_controller.get_all())
+    products = _wrap_productDTO_list(product_controller.get_all())
+    gird_view.controls = _create_GirdView_product_cards(products)
     gird_view.update()
     
-
 def handle_on_change(event: ft.ControlEvent):
     results = product_controller.search(str(searcher.value))
-    gird_view.controls = _create_product_cards(results)
+    products = _wrap_productDTO_list(results)
+    gird_view.controls = _create_GirdView_product_cards(products)
     gird_view.update()
 
-def _create_product_cards(results: list) -> list[ft.Card]:
+def _wrap_productDTO_list(results: list) -> list[Product]:
     return [
-        ProductCard(
-            product_description=product.unit + ' ' + product.category + ' ' + product.brand,
-            existences=product.quantity
+        Product(
+            product_id=product.sku,
+            unit_name=product.unit,
+            category_name=product.category,
+            brand_name=product.brand,
+            quantity=product.quantity,
+            cost_price=product.cost_price,
+            selling_price=product.selling_price,
+            reorder_level=product.reorder_level
         ) for product in results
+    ]
+
+def _create_GirdView_product_cards(products: list[Product]) -> list[ft.Card]:
+    return [
+        ProductCard(product=p)
+        for p in products
     ]
 
 
@@ -40,7 +55,7 @@ searcher = ft.SearchBar( # Barra de búsqueda
 
 gird_view = ft.GridView( # Vista de productos
     controls=[
-        *_create_product_cards(product_controller.get_all())
+        *_create_GirdView_product_cards(_wrap_productDTO_list(product_controller.get_all()))
     ],
     expand=1,
     runs_count=3,

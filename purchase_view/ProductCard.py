@@ -1,11 +1,11 @@
 import flet as ft
-from classes.Product import Product
+from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Object
 
 
 ft.Card()
 class ProductCard(ft.Card): # Es la capa de presentación gráfica de un producto
 
-    def __init__(self, product_description: str = 'None', existences: int = 0):
+    def __init__(self, product: Product, on_click=None):
         super().__init__(
             content=ft.ListTile(
                 leading=ft.Image(
@@ -15,12 +15,10 @@ class ProductCard(ft.Card): # Es la capa de presentación gráfica de un product
                     filter_quality=ft.FilterQuality.HIGH,
                     
                 ),
-                title=ft.Text(f'{product_description}', size=13),
-                subtitle=ft.Text(f'Existencias: {existences}', size=12),
-                trailing=ft.IconButton(ft.icons.ADD),
+                title=ft.Text(f'{product.name}', size=13),
+                subtitle=ft.Text(f'Existencias: {product.quantity}', size=12),
+                trailing=ft.IconButton(ft.icons.ADD, on_click=on_click, data=product),
                 height=100,
             ),
-            # width=300,
-            # height=100,
         )
         
