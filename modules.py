@@ -2,6 +2,7 @@ from flet import icons as icon
 from package_navigation.Module import Module, Section
 from inventory_view.view_section import ContentStockSectionShape as ProductSection
 from purchase_view.context import shape
+from store_view.context import StoreShape
 
 
 Module(
@@ -14,7 +15,7 @@ Module(
 Module(
     'Punto de venta', # Module name
     icon.POINT_OF_SALE_SHARP, # Module icon
-    Section(label='Tienda', icon=icon.STOREFRONT),
+    Section(label='Tienda', icon=icon.STOREFRONT,content=StoreShape),
     Section(label='Inventario', icon=icon.INVENTORY, content=ProductSection()),
     Section(label='Ventas', icon=icon.SAILING_SHARP),
 )
