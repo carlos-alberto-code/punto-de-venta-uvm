@@ -6,8 +6,7 @@ from purchase_view.ProductCard import ProductCard
 from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Object
 
 
-
-# Eventos de la barra de búsqueda
+# HANDLERS ---------------------------------------------------------------------
 
 def handle_on_tap(event: ft.ControlEvent): # Evento tap de la barra de búsqueda
     searcher.close_view()
@@ -20,6 +19,13 @@ def handle_on_change(event: ft.ControlEvent): # Evento de búsqueda en tiempo re
     products = _wrap_productDTO_list(results)
     gird_view.controls = _create_GirdView_product_cards(products)
     gird_view.update()
+
+def handle_on_card_button_click(event: ft.ControlEvent): # Evento de click en el botón de la tarjeta
+    button = event.control
+    # Transferir los datos del producto seleccionado al formulario de compra
+
+
+# HELPER FUNCTIONS ------------------------------------------------------------
 
 def _wrap_productDTO_list(results: list) -> list[Product]: # Envuelve las instancias en una lista de ProductDTO
     return [
@@ -35,9 +41,6 @@ def _wrap_productDTO_list(results: list) -> list[Product]: # Envuelve las instan
         ) for product in results
     ]
 
-def handle_on_card_button_click(event: ft.ControlEvent): # Evento de click en el botón de la tarjeta
-    button = event.control
-    # Transferir los datos del producto seleccionado al formulario de compra
 
 def _create_GirdView_product_cards(products: list[Product]) -> list[ft.Card]: # Crea las tarjetas de productos
     return [
