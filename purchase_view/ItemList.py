@@ -1,10 +1,28 @@
 import flet as ft
+from datetime import datetime as dt
+# from controllers.controllers import 
 from purchase_view.ProductDTO import ProductDTO as Product
+from purchase_view.ProviderSearcher import Searcher
 
 
-class ItemList(ft.Card):
+class ProductSet(set[Product]):
+    def __init__(self):
+        super().__init__()
+    
+    def add_product(self, product: Product):
+        self.add(product)
+    
+    def remove_product(self, product: Product):
+        self.remove(product)
+    
+    def clear_products(self):
+        self.clear()
 
-    products: list[Product] = []
+
+
+class ItemSet(ft.Card):
+
+    products: ProductSet = ProductSet()
 
     def __init__(self):
         super().__init__(
@@ -13,22 +31,22 @@ class ItemList(ft.Card):
             elevation=10,
         )
     
-    def add_item(self, item: Product):
-        self._add_product(product=item)
+    def add_item(self, product: Product):
+        ItemSet.products.add_product(product=product)
         self._update_items()
     
-    def delete_item(self, item: Product):
-        self._remove_product(item=item)
+    def remove_item(self, product: Product):
+        ItemSet.products.remove_product(product=product)
         self._update_items()
     
     def clear_items(self):
-        self._clear_products()
+        ItemSet.products.clear_products()
         self._update_items()
     
 
     # Evento de click en el botón de eliminar
     def handle_on_delete(self, event: ft.ControlEvent):
-        self.delete_item(event.control.data)
+        self.remove_item(event.control.data)
 
     # Estas funciones son para la capa de vista formulario
     
@@ -36,7 +54,7 @@ class ItemList(ft.Card):
         self.content = ft.Column(
             [
                 self._create_item(product)
-                for product in ItemList.products
+                for product in ItemSet.products
             ]
         )
         self.update()
@@ -62,15 +80,41 @@ class ItemList(ft.Card):
                 )
             )
         )
-    
-    # Las siguientes funciones sólo operan para la lista de productos y no para la capa de vista formulario
 
-    def _remove_product(self, item: Product):
-        if item in ItemList.products:
-            ItemList.products.remove(item)
-    
-    def _clear_products(self):
-        ItemList.products.clear()
 
-    def _add_product(self, product: Product):
-        ItemList.products.append(product)
+class WidgetItemSet(ft.ListView): # Capa para anidar productos (items)
+    
+        def __init__(self):
+            super().__init__(
+                controls=[
+                    ft.Text(f'Producto {i}')
+                    for i in range(10)
+                ],
+                # spacing=10,
+                # divider_thickness=4,
+                # padding=15,
+            )
+
+
+
+class WidgetPurchaseList(ft.Card): # Capa general para representar la lista de compras
+
+    def __init__(self):
+        super().__init__(
+            elevation=10,
+            expand=True,
+            width=350,
+        )
+        date = dt.now()
+        self.content=ft.ListView(
+            controls=[
+                # Texto para representar el título: Lista de compras
+                ft.Row([ft.Text('Lista de compras', size=25)], alignment=ft.MainAxisAlignment.CENTER),
+                # Texto para representar el día de hoy
+                ft.Row([ft.Text(f'{date.date()}', size=15)], alignment=ft.MainAxisAlignment.CENTER),
+                # Barra de búsqueda para buscar proveedores
+                Searcher(),
+            ],
+            spacing=15,
+            padding=15,
+        )
