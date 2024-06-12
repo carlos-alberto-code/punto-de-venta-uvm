@@ -1,120 +1,90 @@
 import flet as ft
 from datetime import datetime as dt
-# from controllers.controllers import 
-from purchase_view.ProductDTO import ProductDTO as Product
-from purchase_view.ProviderSearcher import Searcher
 
 
-class ProductSet(set[Product]):
+class WidgetItemCard(ft.Card): # Componente que muestra detalles de un producto
+    # Hay que diseñar para que se determine la implementación específica para cada WidgetItemList
     def __init__(self):
         super().__init__()
+        self.content = ft.Container(
+            content=ft.ListTile(
+
+            )
+        )
+
+
+class ItemsSet(set[WidgetItemCard]): # Gestiona los WidgetItem que se mostrarán en el WidgetItemList
+    # Se establece set para que no permita elementos duplicados
+
+    def __init__(self):
+        super().__init__()
+
+    def add_item(self, item: WidgetItemCard):
+        self.add(item)
     
-    def add_product(self, product: Product):
-        self.add(product)
+    def remove_item(self, item: WidgetItemCard):
+        self.remove(item)
     
-    def remove_product(self, product: Product):
-        self.remove(product)
-    
-    def clear_products(self):
+    def clear_items(self):
         self.clear()
 
 
+class WidgetItemList(ft.Card):
 
-class ItemSet(ft.Card):
+    def __init__(self, title: str):
+        super().__init__(elevation=10, expand=True, width=350,)
 
-    products: ProductSet = ProductSet()
+        self._title = ft.Row([ft.Text(title, size=21)], alignment=ft.MainAxisAlignment.CENTER)
+        self._date = ft.Row([ft.Text(f'{dt.now().date()}')], alignment=ft.MainAxisAlignment.CENTER)
+        self.top_controls = [self._title, self._date, ft.Divider()]
 
-    def __init__(self):
-        super().__init__(
-            width=350,
-            height=600,
-            elevation=10,
+        self._total_text = ft.Row(
+            [ft.Text(f'Total: ${0:,.2f} MXN', size=16)],
+            alignment=ft.MainAxisAlignment.CENTER
         )
-    
-    def add_item(self, product: Product):
-        ItemSet.products.add_product(product=product)
-        self._update_items()
-    
-    def remove_item(self, product: Product):
-        ItemSet.products.remove_product(product=product)
-        self._update_items()
-    
-    def clear_items(self):
-        ItemSet.products.clear_products()
-        self._update_items()
-    
+        self._action_buttons = ft.Row(
+            [ft.ElevatedButton('Limpiar'), ft.ElevatedButton('Procesar')], 
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
+        self.bottom_controls = [self._total_text, self._action_buttons]
 
-    # Evento de click en el botón de eliminar
-    def handle_on_delete(self, event: ft.ControlEvent):
-        self.remove_item(event.control.data)
+        self.item_set = ItemsSet()
+        self.middle_controls = [self._build_middle_controls()]
+        self.content = self._build_content()
 
-    # Estas funciones son para la capa de vista formulario
-    
-    def _update_items(self):
-        self.content = ft.Column(
-            [
-                self._create_item(product)
-                for product in ItemSet.products
-            ]
-        )
+    def add_widget_item(self, widget_item: WidgetItemCard):
+        self.item_set.add_item(widget_item)
+        self.content = self._build_content()
         self.update()
 
-    def _create_item(self, product: Product):
-        return ft.Card(
-            width=350,
-            height=70,
-            content=ft.ListTile(
-                leading=ft.Image(
-                    src='https://images.pexels.com/photos/1002649/pexels-photo-1002649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                    fit=ft.ImageFit.COVER,
-                    width=50,
-                    height=50,
-                    border_radius=10,
-                ),
-                title=ft.Text(value=product.name, size=15),
-                subtitle=ft.Text(value=f'Precio: ${product.cost_price}', size=12),
-                trailing=ft.IconButton(
-                    data=product,
-                    icon=ft.icons.DELETE,
-                    on_click=self.handle_on_delete,
-                )
-            )
-        )
+    def remove_widget_item(self, widget_item: WidgetItemCard):
+        self.item_set.remove_item(widget_item)
+        self.content = self._build_content()
+        self.update()
 
-
-class WidgetItemSet(ft.ListView): # Capa para anidar productos (items)
+    def clear_widget_items(self):
+        self.item_set.clear_items()
+        self.content = self._build_content()
+        self.update()
     
-        def __init__(self):
-            super().__init__(
-                controls=[
-                    ft.Text(f'Producto {i}')
-                    for i in range(10)
-                ],
-                # spacing=10,
-                # divider_thickness=4,
-                # padding=15,
-            )
-
-
-
-class WidgetPurchaseList(ft.Card): # Capa general para representar la lista de compras
-
-    def __init__(self):
-        super().__init__(
-            elevation=10,
-            expand=True,
-            width=350,
-        )
-        date = dt.now()
-        self.content=ft.ListView(
+    def _build_middle_controls(self):
+        return ft.ListView(
             controls=[
-                # Texto para representar el título: Lista de compras
-                ft.Row([ft.Text('Lista de compras', size=25)], alignment=ft.MainAxisAlignment.CENTER),
-                # Texto para representar el día de hoy
-                ft.Row([ft.Text(f'{date.date()}', size=15)], alignment=ft.MainAxisAlignment.CENTER),
-                # Barra de búsqueda para buscar proveedores
-                Searcher(),
+                *self.item_set,
             ],
-            spacing=15,
+            padding=10,
+            spacing=10,
+            expand=True
+        )
+    
+    def _build_content(self):
+        return ft.Container(
+            content=ft.Column(
+                [
+                    *self.top_controls,
+                    *self.middle_controls,
+                    *self.bottom_controls
+                ],
+            ),
             padding=15,
         )
+    
