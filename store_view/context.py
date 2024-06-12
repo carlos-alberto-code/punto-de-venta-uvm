@@ -2,8 +2,10 @@
 # Además se sigue un principio que es es cada componente se modifica en su contexto.
 import flet as ft
 from controllers.controllers import ProductController
-from purchase_view.ProductCard import ProductCard
-from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Object
+from store_view.ProductCard import ProductCard
+from store_view.ProductItem import ProductItem
+from store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
+
 
 
 # HANDLERS ---------------------------------------------------------------------
@@ -22,16 +24,28 @@ def handle_on_change(event: ft.ControlEvent): # Evento de búsqueda en tiempo re
 
 def handle_on_card_button_click(event: ft.ControlEvent): # Evento de click en el botón de la tarjeta
     button = event.control
-    form_items.append(button.data)
+    form_items.add(button.data)
     product_form.content = ft.Column(
-        [create_form_item(product) for product in form_items]
+        [create_form_item_cart(product) for product in form_items]
     )
     product_form.update()
 
 def create_form_item(product: Product): # Crea un item del formulario de compra
     return ProductCard(product=product)
 
+def create_form_item_cart(product: Product): # Crea un item del formulario de compra
+    return ProductItem(product=product,on_click=remove_form_item_cart)
 
+def remove_form_item_cart(event: ft.ControlEvent):
+    button = event.control
+    product = button.data
+    form_items.remove(product)
+    product_form.content = ft.Column(
+        [create_form_item_cart(product) for product in form_items]
+    )
+    product_form.update()
+
+    
 # HELPER FUNCTIONS ------------------------------------------------------------
 
 def _wrap_productDTO_list(results: list) -> list[Product]: # Envuelve las instancias en una lista de ProductDTO
@@ -82,7 +96,7 @@ gird_view = ft.GridView( # Vista de productos
     run_spacing=1,
 )
 
-form_items = []
+form_items = set()
 product_form = ft.Card(
     width=350,
     height=600,

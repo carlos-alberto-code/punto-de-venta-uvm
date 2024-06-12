@@ -1,6 +1,6 @@
 import flet as ft
-from purchase_view.ProductDTO import ProductDTO as Product
-
+from store_view.ProductDTO import ProductDTO as Product
+from components.counters import Counter
 
 class ItemList(ft.Card):
 
@@ -59,7 +59,7 @@ class ItemList(ft.Card):
                     data=product,
                     icon=ft.icons.DELETE,
                     on_click=self.handle_on_delete,
-                )
+                ),
             )
         )
     
