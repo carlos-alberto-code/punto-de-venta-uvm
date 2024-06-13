@@ -71,10 +71,10 @@ class WidgetItemCard(ft.Card):
                 ),
                 trailing=ft.IconButton(ft.icons.DELETE, on_click=on_delete, data=product),
             ),
+            elevation=0,
         )
     
     def handler_counter_click(self, event: ft.ControlEvent):
         counter_value = event.control.data
         self.total_product_text.set_data = float(counter_value) * float(self.product.cost_price)
-    
         
