@@ -109,7 +109,10 @@ class WidgetItemList(ft.Card):
             alignment=ft.MainAxisAlignment.CENTER
         )
         self._action_buttons = ft.Row(
-            [ft.ElevatedButton('Limpiar', expand=True), ft.ElevatedButton('Procesar', expand=True)], 
+            [
+                ft.ElevatedButton('Limpiar', expand=True, on_click=self.handle_on_clear_widgets),
+                ft.ElevatedButton('Procesar', expand=True)
+            ], 
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
         self.bottom_controls = [self._total_text, self._action_buttons]
 
@@ -117,6 +120,10 @@ class WidgetItemList(ft.Card):
         # self.widgets: list[WidgetItemCard] = []
         self.middle_controls = [self._build_middle_controls()]
         self.content = self._build_content()
+    
+    # Eventos
+    def handle_on_clear_widgets(self, event: ft.ControlEvent):
+        self._clear_widget_items()
 
     def add_product(self, product: Product):
         self._update_product_set_with(self.item_set.add_product, product)
@@ -124,7 +131,7 @@ class WidgetItemList(ft.Card):
     def remove_product(self, product: Product):
         self._update_product_set_with(self.item_set.remove_item, product)
 
-    def clear_widget_items(self):
+    def _clear_widget_items(self):
         self._update_product_set_with(self.item_set.clear_items)
 
     def _update_product_set_with(self, operation, product=None):
