@@ -120,15 +120,24 @@ class WidgetItemList(ft.Card):
         # self.widgets: list[WidgetItemCard] = []
         self.middle_controls = [self._build_middle_controls()]
         self.content = self._build_content()
-    
-    # Eventos
-    def handle_on_clear_widgets(self, event: ft.ControlEvent):
-        self._clear_widget_items()
+
+    # Metodos públicos
 
     def add_product(self, product: Product):
         self._update_product_set_with(self.item_set.add_product, product)
 
-    def remove_product(self, product: Product):
+    # Eventos
+
+    def handle_on_clear_widgets(self, event: ft.ControlEvent):
+        self._clear_widget_items()
+    
+    def handle_on_delete_product(self, event: ft.ControlEvent):
+        product = event.control.data
+        self._remove_product(product)
+
+    # Metodos privados
+
+    def _remove_product(self, product: Product):
         self._update_product_set_with(self.item_set.remove_item, product)
 
     def _clear_widget_items(self):
@@ -148,7 +157,7 @@ class WidgetItemList(ft.Card):
     
     def _build_widgets(self):
         return [
-            WidgetItemCard(product=product)
+            WidgetItemCard(product=product, on_delete=self.handle_on_delete_product)
             for product in self.item_set
         ]
     
