@@ -3,7 +3,7 @@
 import flet as ft
 from controllers.controllers import ProductController
 from purchase_view.ProductCard import ProductCard
-from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Object
+from business_classes.Product import Product as Product # Data Transfer Object
 
 
 # HANDLERS ---------------------------------------------------------------------

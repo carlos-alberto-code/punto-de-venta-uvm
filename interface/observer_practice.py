@@ -1,7 +1,7 @@
 import flet as ft
 from purchase_view.context import shape
 from purchase_view.ItemList import WidgetItemList
-from purchase_view.ProductDTO import ProductDTO as Product
+from business_classes.Product import Product as Product
 
 
 from interface.observer import Observer, Subject

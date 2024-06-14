@@ -1,5 +1,5 @@
 import flet as ft
-from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Object
+from business_classes.Product import Product as Product # Data Transfer Object
 
 
 ft.Card()

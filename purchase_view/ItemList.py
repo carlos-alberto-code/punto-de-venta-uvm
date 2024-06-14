@@ -1,92 +1,78 @@
+from typing import Optional
 import flet as ft
 from datetime import datetime as dt
 
 from components.counters import Counter
 from interface.observer import Observer, Subject
-from purchase_view.ProductDTO import ProductDTO as Product # Data Transfer Object
+from business_classes.Product import Product  # Data Transfer Object
 
 
-class TotalProductText(ft.Text, Subject):
-
-    def __init__(self, value: str = '0.00'):
+class ProductCard(ft.Card, ):
+    
+    def __init__(self, product: Product, on_delete = None):
         super().__init__()
-        Subject.__init__(self)
-        self.data: float = float(value)
-        self.value: str = f'${self.data:,.2f} MXN'
-    
-    def get_data(self):
-        return self.data
+        self._product = product
 
-    def set_data(self, value: float):
-        self.data = value
-        self.value = f'${self.data:,.2f} MXN'
-        self.update()
-    
-    def subscribe_observer(self, observer: Observer):
-        self.observers.append(observer)
-    
-    def unsubscribe_observer(self, observer: Observer):
-        self.observers.remove(observer)
-    
-    def inform_observers(self):
-        [observer.synchronize(self) for observer in self.observers]
+        self._quantity_counter_control: Counter = Counter(on_click=self._handler_on_quantity_change)
+        self._cost_text_field_control: ft.TextField = ft.TextField(value=f'{product.cost_price:,.2f}', on_change=self._handler_on_cost_change)
+        self._total_cost_text_control: ft.Text = ft.Text(f'Total: ${self._total_cost:,.2f} MXN')
 
-
-class TotalPurchaseText(ft.Text, Observer):
-
-    def __init__(self):
-        super().__init__()
-        self.value: str = 'Total: $0.00 MXN'
-        self.subjects: list[Subject] = []
-    
-    def synchronize(self, subject: Subject):
-        self.subjects.append(subject) if subject not in self.subjects else self.subjects
-        self.data = sum(float(sub.data) for sub in self.subjects) # type: ignore
-        self.value = f'Total: ${self.data:,.2f} MXN'
-        self.update()
-
-
-class WidgetItemCard(ft.Card):
-    
-    def __init__(self, product: Product, on_delete=None):
-        self.product = product
-        self.total_product_text = TotalProductText(value=str(product.cost_price))
-        super().__init__(
-            content=ft.ListTile(
-                leading=ft.Icon(ft.icons.SHOPPING_CART),
-                title=ft.Text(f'{product.name}', size=15),
-                subtitle=ft.Column(
-                    [
-                        ft.Row(
-                            [ft.Text(f'Cantidad:', size=15), Counter(on_click=self.handler_counter_click)],
-                            alignment=ft.MainAxisAlignment.START,
-                        ),
-                        ft.Row(
-                            [ft.Text('Costo:'), self.total_product_text],
-                            alignment=ft.MainAxisAlignment.START,
-                        )
-                    ]
-                ),
-                trailing=ft.IconButton(ft.icons.DELETE, on_click=on_delete, data=product),
+        self.content = ft.ListTile(
+            leading=ft.Icon(ft.icons.SHOPPING_CART),
+            title=ft.Text(product.name, size=13),
+            subtitle=ft.Column(
+                [
+                    ft.Row(
+                        [ft.Text(f'Cantidad:',), self._quantity_counter_control],
+                        alignment=ft.MainAxisAlignment.START,
+                    ),
+                    ft.Row(
+                        [ft.Text(f'Costo: $'), self._cost_text_field_control, ft.Text(' MXN')],
+                        alignment=ft.MainAxisAlignment.START,
+                    )
+                ],
             ),
-            elevation=0,
+            trailing=ft.IconButton(ft.icons.DELETE, on_click=on_delete, data=product),
         )
     
-    def handler_counter_click(self, event: ft.ControlEvent):
-        counter_value = event.control.data
-        self.total_product_text.set_data(float(counter_value) * float(self.product.cost_price))
-        self.total_product_text.update()
+    @property
+    def _quantity(self) -> int:
+        return int(self._quantity_counter_control.value or 0)
+    
+    @property
+    def _cost(self) -> float:
+        return float(self._cost_text_field_control.value or 0)
+    
+    @property
+    def _total_cost(self) -> float:
+        return float(self._quantity_counter_control.value or 0) * float(self._cost_text_field_control.value or 0)
+    
+    def _update_product_data(self):
+        self._product.cost_price = self._cost
+        self._product.quantity = self._quantity
+        self.data = self._product
+    
+    def _update_total_cost_control(self):
+        self._total_cost_text_control.value = f'Total: ${self._total_cost:,.2f} MXN'
+        self._total_cost_text_control.update()
+        self._update_product_data()
+    
+    # Eventos
+
+    def _handler_on_quantity_change(self, event: ft.ControlEvent):
+        self._update_total_cost_control()
+    
+    def _handler_on_cost_change(self, event: ft.ControlEvent):
+        self._update_total_cost_control()
 
 
 
 class ProductSet(set[Product]):
-
     def __init__(self):
         super().__init__()
 
     def add_product(self, product: Product):
         self.add(product)
-       
     
     def remove_item(self, product: Product):
         self.remove(product)
@@ -96,7 +82,6 @@ class ProductSet(set[Product]):
 
 
 class WidgetItemList(ft.Card):
-
     def __init__(self, title: str):
         super().__init__(elevation=10, expand=True, width=400)
 
@@ -104,29 +89,21 @@ class WidgetItemList(ft.Card):
         self._date = ft.Row([ft.Text(f'{dt.now().date()}')], alignment=ft.MainAxisAlignment.CENTER)
         self.top_controls = [self._title, self._date, ft.Divider()]
 
-        self._total_text = ft.Row(
-            [ft.Text(f'Total: ${0:,.2f} MXN', size=16)],
-            alignment=ft.MainAxisAlignment.CENTER
-        )
+        self._total_purchase_text = TotalPurchaseText() # Aquí se debe mostrar la actualización del total con el observer
         self._action_buttons = ft.Row(
             [
                 ft.ElevatedButton('Limpiar', expand=True, on_click=self.handle_on_clear_widgets),
                 ft.ElevatedButton('Procesar', expand=True)
             ], 
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
-        self.bottom_controls = [self._total_text, self._action_buttons]
+        self.bottom_controls = [self._total_purchase_text, self._action_buttons]
 
         self.item_set = ProductSet()
-        # self.widgets: list[WidgetItemCard] = []
         self.middle_controls = [self._build_middle_controls()]
         self.content = self._build_content()
 
-    # Metodos públicos
-
     def add_product(self, product: Product):
         self._update_product_set_with(self.item_set.add_product, product)
-
-    # Eventos
 
     def handle_on_clear_widgets(self, event: ft.ControlEvent):
         self._clear_widget_items()
@@ -134,8 +111,6 @@ class WidgetItemList(ft.Card):
     def handle_on_delete_product(self, event: ft.ControlEvent):
         product = event.control.data
         self._remove_product(product)
-
-    # Metodos privados
 
     def _remove_product(self, product: Product):
         self._update_product_set_with(self.item_set.remove_item, product)
@@ -157,7 +132,7 @@ class WidgetItemList(ft.Card):
     
     def _build_widgets(self):
         return [
-            WidgetItemCard(product=product, on_delete=self.handle_on_delete_product)
+            ProductCard(product=product, on_delete=self.handle_on_delete_product, total_purchase_text=self._total_purchase_text)
             for product in self.item_set
         ]
     
