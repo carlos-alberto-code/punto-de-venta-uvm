@@ -30,6 +30,3 @@ class ProductItem(ft.Card): # Es la capa de presentación gráfica de un product
                 trailing=ft.IconButton(ft.icons.DELETE, on_click=on_click, data=product),
                 height=100,
             )
-            
-
-        
