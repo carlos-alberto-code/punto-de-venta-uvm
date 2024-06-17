@@ -11,14 +11,14 @@ from business_classes.Product import Product as Product # Data Transfer Object
 def handle_on_tap(event: ft.ControlEvent): # Evento tap de la barra de búsqueda
     searcher.close_view()
     products = _wrap_productDTO_list(product_controller.get_all())
-    grid_view.controls = _create_GirdView_product_cards(products)
-    grid_view.update()
+    list_view.controls = _create_GirdView_product_cards(products)
+    list_view.update()
     
 def handle_on_change(event: ft.ControlEvent): # Evento de búsqueda en tiempo real
     results = product_controller.search(str(searcher.value))
     products = _wrap_productDTO_list(results)
-    grid_view.controls = _create_GirdView_product_cards(products)
-    grid_view.update()
+    list_view.controls = _create_GirdView_product_cards(products)
+    list_view.update()
 
 def handle_on_card_button_click(event: ft.ControlEvent): # Evento de click en el botón de la tarjeta
     button = event.control
@@ -70,51 +70,31 @@ searcher = ft.SearchBar( # Barra de búsqueda
     on_change=handle_on_change
 )
 
-grid_view = ft.GridView( # Vista de productos
+list_view = ft.ListView( # Vista de productos
     controls=[
         *_create_GirdView_product_cards(_wrap_productDTO_list(product_controller.get_all()))
     ],
-    expand=2,
-    runs_count=2,
-    max_extent=500,
-    child_aspect_ratio=5.5,
-    spacing=1,
-    run_spacing=1,
+    spacing=10,
 )
 
 form_items = []
 product_form = ft.Card(
-    width=350,
-    height=600,
+    width=400,
     elevation=10,
 )
 
 
 # SHAPE CONTENT-----------------------------------------------------------------
 
-shape = ft.ResponsiveRow( # Capa general de la vista
-    [
-        ft.Container( # Capa de formulario
-            width=350,
-            height=610,
-            content=product_form,
-            col=6,
-        ),
+shape = ft.Row( # Capa general de la vista
+    controls=[
+        product_form,
         ft.Column( # Capa de búsqueda y productos
             [
-                ft.Container( # Capa de búsqueda
-                    width=900,
-                    height=50,
-                    content=searcher,
-                ),
-                ft.Container( # Capa de productos
-                    # Abarca el resto de la pantalla
-                    width=900,
-                    height=800,
-                    content=grid_view,
-                ),
+                searcher,
+                list_view,
             ],
-            col=6,
+            expand=True
         )
     ]
 )

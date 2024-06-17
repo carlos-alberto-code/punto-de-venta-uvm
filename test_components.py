@@ -1,10 +1,26 @@
 import flet as ft
-from purchase_view.ItemList import ProductCard
+from purchase_view.purchase_form import ProductFormCard
+from business_classes.Product import Product # Data Transfer Object
 
 
 def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
 
-    # p = ProductCard(product=product, on_delete=lambda e: print("Delete"))
+    product = Product(
+        product_id=1,
+        unit_name='600 ml',
+        category_name='Bebida',
+        brand_name='Fuze Tea',
+        quantity=10,
+        cost_price=23.12,
+        selling_price=29.99,
+        reorder_level=5,
+    )
+
+    card = ProductFormCard(product)
+
+    page.add(
+        card
+    )
 
 ft.app(main)

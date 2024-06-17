@@ -2,7 +2,6 @@ import flet as ft
 from business_classes.Product import Product as Product # Data Transfer Object
 
 
-ft.Card()
 class ProductCard(ft.Card): # Es la capa de presentación gráfica de un producto
 
     def __init__(self, product: Product, on_click=None):
