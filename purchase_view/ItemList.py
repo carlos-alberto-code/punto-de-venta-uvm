@@ -102,7 +102,10 @@ class PurchaseList(ft.Card):
         )
     
     def _create_content(self):
-        self._supplier_searcher = SimpleModelSearcher(SuplierController())
+        self._supplier_searcher = SimpleModelSearcher(
+            SuplierController(),
+            bar_hint_text='Buscar proveedor',
+        )
         return ft.Container(
             content=ft.Column(
                 [
