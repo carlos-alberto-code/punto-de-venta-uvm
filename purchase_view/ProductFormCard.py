@@ -1,7 +1,6 @@
 import flet as ft
-from business_classes.Product import Product # Data Transfer Object
 from components.counters import Counter
-
+from business_classes.Product import Product # Data Transfer Object
 
 
 class ProductFormCard(ft.Card):
@@ -61,7 +60,7 @@ class ProductFormCard(ft.Card):
         return ft.TextField(value=str(value), text_size=12, text_vertical_align=ft.VerticalAlignment.START, border=ft.InputBorder.NONE, text_align=ft.TextAlign.END, expand=True)
 
     def create_icon_button(self):
-        return ft.IconButton(icon=ft.icons.DELETE)
+        return ft.IconButton(icon=ft.icons.DELETE, on_click=self.on_delete, data=self.product)
     
     def handle_on_counter_change(self, event:ft.ControlEvent):
         self.product.quantity = int(self.counter.value)
@@ -78,20 +77,3 @@ class ProductFormCard(ft.Card):
         self.selling_textfield.value = str(self.product.selling_price)
         self.selling_textfield.update()
         self.data = self.product
-
-
-class PurchaseForm(ft.Card):
-
-    def __init__(self):
-        super().__init__(
-            width=400,
-            elevation=10,
-        )
-        self.products: set[Product] = set()
-        self.content
-    
-    def add_item(self, product: Product):
-        pass
-    
-    def create_card(self, product: Product):
-        return ProductFormCard(product=product)

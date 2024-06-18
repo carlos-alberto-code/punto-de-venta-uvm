@@ -4,8 +4,18 @@ from controllers.ControllerInterface import ControllerInterface as Controller
 
 
 class Searcher(ft.SearchBar):
-    
-    def __init__(self,  controller: Optional[Controller] = None, on_change=None):
+    """
+    Clase que representa un buscador de proveedores.
+
+    Args:
+        controller (Optional[Controller]): El controlador asociado al buscador. (Default: None)
+        on_change (callable): Función que se ejecuta cuando cambia el texto del buscador.
+
+    Attributes:
+        controller (Controller): El controlador asociado al buscador.
+    """
+
+    def __init__(self, controller: Optional[Controller] = None, on_change=None):
         super().__init__(
             height=40,
             bar_hint_text='Proveedor',

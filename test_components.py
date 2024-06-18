@@ -1,5 +1,5 @@
 import flet as ft
-from purchase_view.purchase_form import PurchaseForm, ProductFormCard
+from purchase_view.ItemList import PurchaseList
 from business_classes.Product import Product # Data Transfer Object
 
 
@@ -17,13 +17,33 @@ def main(page: ft.Page):
         reorder_level=5,
     )
 
-    form = PurchaseForm()
-    card = ProductFormCard(product)
-
-    page.add(
-        card
+    p2 = Product(
+        product_id=2,
+        unit_name='600 ml',
+        category_name='Bebida',
+        brand_name='Fuze Tea',
+        quantity=10,
+        cost_price=23.12,
+        selling_price=29.99,
+        reorder_level=5,
     )
-    # form.add_item(product=product)
-    # page.update()
+
+    p3 = Product(
+        product_id=3,
+        unit_name='600 ml',
+        category_name='Bebida',
+        brand_name='Fuze Tea',
+        quantity=10,
+        cost_price=23.12,
+        selling_price=29.99,
+        reorder_level=5,
+    )
+
+    pruchase_list = PurchaseList(title='Lista de compras')
+    page.add(pruchase_list)
+
+    pruchase_list.add_product(product)
+    pruchase_list.add_product(p2)
+    pruchase_list.add_product(p3)
 
 ft.app(main)
