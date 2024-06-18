@@ -4,20 +4,6 @@ from business_classes.Product import Product  # Data Transfer Object
 from purchase_view.ProductFormCard import ProductFormCard
 
 
-class ProductSet(set[Product]):
-    def __init__(self):
-        super().__init__()
-
-    def add_product(self, product: Product):
-        self.add(product)
-    
-    def remove_item(self, product: Product):
-        self.remove(product)
-    
-    def clear_items(self):
-        self.clear()
-
-
 class PurchaseList(ft.Card):
     def __init__(self, title: str):
         super().__init__(elevation=10, expand=True, width=300)
@@ -38,12 +24,12 @@ class PurchaseList(ft.Card):
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
         self.bottom_controls = [self._total_purchase_text, self._action_buttons]
 
-        self.item_set = ProductSet()
-        self.middle_controls = [self._build_middle_controls()]
+        self.item_set: set[Product] = set()
+        self.middle_controls = [self._build_product_list_view()]
         self.content = self._build_content()
 
     def add_product(self, product: Product):
-        self._update_product_set_with(self.item_set.add_product, product)
+        self._update_product_set_and_controls(self.item_set.add, product)
 
     def handle_on_clear_widgets(self, event: ft.ControlEvent):
         self._clear_widget_items()
@@ -53,12 +39,12 @@ class PurchaseList(ft.Card):
         self._remove_product(product)
 
     def _remove_product(self, product: Product):
-        self._update_product_set_with(self.item_set.remove_item, product)
+        self._update_product_set_and_controls(self.item_set.remove, product)
 
     def _clear_widget_items(self):
-        self._update_product_set_with(self.item_set.clear_items)
+        self._update_product_set_and_controls(self.item_set.clear)
 
-    def _update_product_set_with(self, operation, product=None):
+    def _update_product_set_and_controls(self, operation, product=None):
         if product:
             operation(product)
         else:
@@ -66,7 +52,7 @@ class PurchaseList(ft.Card):
         self._update_controls_and_content()
 
     def _update_controls_and_content(self):
-        self.middle_controls = [self._build_middle_controls()]
+        self.middle_controls = [self._build_product_list_view()]
         self.content = self._build_content()
         self.update()
     
@@ -76,7 +62,7 @@ class PurchaseList(ft.Card):
             for product in self.item_set
         ]
     
-    def _build_middle_controls(self):
+    def _build_product_list_view(self):
         return ft.ListView(
             controls=[
                 *self._build_widgets()
