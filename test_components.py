@@ -1,5 +1,5 @@
 import flet as ft
-from purchase_view.purchase_form import ProductFormCard
+from purchase_view.purchase_form import PurchaseForm, ProductFormCard
 from business_classes.Product import Product # Data Transfer Object
 
 
@@ -17,10 +17,13 @@ def main(page: ft.Page):
         reorder_level=5,
     )
 
+    form = PurchaseForm()
     card = ProductFormCard(product)
 
     page.add(
         card
     )
+    # form.add_item(product=product)
+    # page.update()
 
 ft.app(main)

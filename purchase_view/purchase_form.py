@@ -7,16 +7,18 @@ from components.counters import Counter
 class ProductFormCard(ft.Card):
     def __init__(self, product: Product, on_delete=None):
         super().__init__(
-            width=300,
+            width=250,
         )
         self.product = product
         self.on_delete = on_delete
         
+        self.data: Product = product
+
         self.counter = Counter(on_click=self.handle_on_counter_change)
         self.cost_textfield = self.create_textfield(product.cost_price)
         self.cost_textfield.on_change = self.handle_on_cost_change
         self.selling_textfield = self.create_textfield(product.selling_price)
-        self.total_text = self.create_text(product.total)
+        self.total_text = self.create_text(product.total_cost)
 
         self.content = self.create_content()
 
@@ -34,6 +36,7 @@ class ProductFormCard(ft.Card):
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=5,
             ),
             padding=10,
         )
@@ -42,36 +45,39 @@ class ProductFormCard(ft.Card):
         return ft.Icon(ft.icons.SHOPPING_BAG, size=30)
 
     def create_text(self, value):
-        return ft.Text(value=str(value), size=15)
+        return ft.Text(value=str(value), size=12)
 
     def create_row(self, label, control):
         return ft.Row(
             controls=[
-                ft.Text(label),
+                ft.Text(label, size=12),
                 control
             ],
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
         )
 
     def create_textfield(self, value):
-        return ft.TextField(value=str(value), text_size=15, text_vertical_align=ft.VerticalAlignment.START, border=ft.InputBorder.NONE, text_align=ft.TextAlign.END, expand=True)
+        return ft.TextField(value=str(value), text_size=12, text_vertical_align=ft.VerticalAlignment.START, border=ft.InputBorder.NONE, text_align=ft.TextAlign.END, expand=True)
 
     def create_icon_button(self):
         return ft.IconButton(icon=ft.icons.DELETE)
     
     def handle_on_counter_change(self, event:ft.ControlEvent):
         self.product.quantity = int(self.counter.value)
-        self.total_text.value = str(self.product.total)
+        self.total_text.value = str(self.product.total_cost)
         self.total_text.update()
+        self.data = self.product
     
     def handle_on_cost_change(self, event: ft.ControlEvent):
         self.product.cost_price = float(self.cost_textfield.value or 0)
-        self.total_text.value = str(self.product.total)
+        self.total_text.value = str(self.product.total_cost)
         self.total_text.update()
         # Cambiar el precio de venta si el costo cambia (20% de ganancia)
         self.product.selling_price = round(self.product.cost_price * 1.2, 2)
         self.selling_textfield.value = str(self.product.selling_price)
         self.selling_textfield.update()
+        self.data = self.product
 
 
 class PurchaseForm(ft.Card):
@@ -81,7 +87,11 @@ class PurchaseForm(ft.Card):
             width=400,
             elevation=10,
         )
+        self.products: set[Product] = set()
+        self.content
     
     def add_item(self, product: Product):
         pass
-
+    
+    def create_card(self, product: Product):
+        return ProductFormCard(product=product)

@@ -28,8 +28,12 @@ class Product:
         return f'{self.brand_name} {self.unit_name}'
     
     @property
-    def total(self) -> float:
+    def total_cost(self) -> float:
         return round(self.quantity * self.cost_price, 2)
+    
+    @property
+    def total_selling(self) -> float:
+        return round(self.quantity * self.selling_price, 2)
 
     def __repr__(self) -> str:
         return f'Product(id={self.product_id}, name={self.name})'
