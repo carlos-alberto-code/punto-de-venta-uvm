@@ -6,7 +6,7 @@ from purchase_view.ProductFormCard import ProductFormCard
 
 class PurchaseList(ft.Card):
     def __init__(self, title: str):
-        super().__init__(elevation=10, expand=True, width=300)
+        super().__init__(elevation=10, expand=True, width=400)
 
         self._title = ft.Row([ft.Text(title, size=21)], alignment=ft.MainAxisAlignment.CENTER)
         self._date = ft.Row([ft.Text(f'{dt.now().date()}')], alignment=ft.MainAxisAlignment.CENTER)
@@ -19,7 +19,8 @@ class PurchaseList(ft.Card):
         self._action_buttons = ft.Row(
             [
                 ft.ElevatedButton('Limpiar', expand=True, on_click=self.handle_on_clear_widgets),
-                ft.ElevatedButton('Procesar', expand=True)
+                ft.ElevatedButton('Calcular', expand=True),
+                ft.ElevatedButton('Guardar', expand=True)
             ], 
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
         self.bottom_controls = [self._total_purchase_text, self._action_buttons]
