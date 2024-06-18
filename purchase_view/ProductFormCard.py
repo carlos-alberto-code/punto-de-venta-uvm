@@ -41,15 +41,15 @@ class ProductFormCard(ft.Card):
         )
 
     def create_icon(self):
-        return ft.Icon(ft.icons.SHOPPING_BAG, size=30)
+        return ft.Icon(ft.icons.SHOPPING_CART, size=30)
 
     def create_text(self, value):
-        return ft.Text(value=str(value), size=12)
+        return ft.Text(value=str(value), size=15)
 
     def create_row(self, label, control):
         return ft.Row(
             controls=[
-                ft.Text(label, size=12),
+                ft.Text(label, size=15),
                 control
             ],
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
@@ -57,7 +57,7 @@ class ProductFormCard(ft.Card):
         )
 
     def create_textfield(self, value):
-        return ft.TextField(value=str(value), text_size=12, text_vertical_align=ft.VerticalAlignment.START, border=ft.InputBorder.NONE, text_align=ft.TextAlign.END, expand=True)
+        return ft.TextField(value=str(value), text_size=15, text_vertical_align=ft.VerticalAlignment.START, border=ft.InputBorder.NONE, text_align=ft.TextAlign.END, expand=True)
 
     def create_icon_button(self):
         return ft.IconButton(icon=ft.icons.DELETE, on_click=self.on_delete, data=self.product)

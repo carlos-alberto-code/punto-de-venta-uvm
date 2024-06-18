@@ -31,7 +31,7 @@ class Counter(ft.Card):
             expand=True,
             adaptive=True,
             value=str(start_value),
-            text_size=12,
+            text_size=15,
             text_align=ft.TextAlign.CENTER,
             text_vertical_align=ft.VerticalAlignment.START,
             input_filter=ft.NumbersOnlyInputFilter(),

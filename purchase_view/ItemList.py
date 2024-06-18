@@ -12,18 +12,13 @@ class PurchaseList(ft.Card):
         self._date = ft.Row([ft.Text(f'{dt.now().date()}')], alignment=ft.MainAxisAlignment.CENTER)
         self.top_controls = [self._title, self._date, ft.Divider()]
 
-        self._total_purchase_text = ft.Row(
-            [ft.Text('Total de compra: $0.00 MXN')],
-            alignment=ft.MainAxisAlignment.CENTER
-        )
         self._action_buttons = ft.Row(
             [
                 ft.ElevatedButton('Limpiar', expand=True, on_click=self.handle_on_clear_widgets),
-                ft.ElevatedButton('Calcular', expand=True),
                 ft.ElevatedButton('Guardar', expand=True)
             ], 
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
-        self.bottom_controls = [self._total_purchase_text, self._action_buttons]
+        self.bottom_controls = [self._action_buttons]
 
         self.item_set: set[Product] = set()
         self.middle_controls = [self._create_product_list_view()]
