@@ -17,7 +17,7 @@ class ProductFormCard(ft.Card):
         self.cost_textfield = self.create_textfield(product.cost_price)
         self.cost_textfield.on_change = self.handle_on_cost_change
         self.selling_textfield = self.create_textfield(product.selling_price)
-        self.total_text = self.create_text(product.total_cost)
+        self.total_text = self.create_text(product.cost_price)
 
         self.content = self.create_content()
 
