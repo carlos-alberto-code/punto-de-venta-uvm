@@ -1,3 +1,4 @@
+from decimal import Decimal
 import flet as ft
 from datetime import datetime as dt
 from business_classes.Product import Product  # Data Transfer Object
@@ -5,6 +6,7 @@ from purchase_view.ProductFormCard import ProductFormCard
 
 from components.searchers import SimpleModelSearcher
 from controllers.controllers import SuplierController
+from controllers.controllers import PurchaseDetailController
 
 
 class PurchaseList(ft.Card):
@@ -25,14 +27,14 @@ class PurchaseList(ft.Card):
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
         self.bottom_controls = [self._action_buttons]
 
-        self.item_set: set[Product] = set()
+        self.product_set: set[Product] = set()
         self.middle_controls = [self._create_product_list_view()]
         self.content = self._create_content()
 
     # Public methods ----------------------------------------------------------
 
     def add_product(self, product: Product):
-        self._update_product_set_and_controls(self.item_set.add, product)
+        self._update_product_set_and_controls(self.product_set.add, product)
 
     # Event handlers ----------------------------------------------------------
 
@@ -45,21 +47,30 @@ class PurchaseList(ft.Card):
 
     def handle_on_save(self, event: ft.ControlEvent):
         if self._supplier_searcher.data:
-            self.data = {
-                'date': str(self.date),
-                'supplier': self._supplier_searcher.data,
-                'products': [product for product in self.item_set],
-                'total_purchase': round(sum([product.total_cost for product in self.item_set]), 2)
+            purchase_detail_controller = PurchaseDetailController()
+            purchase_detail = [
+                {
+                    'product_id': product.product_id,
+                    'quantity': product.quantity,
+                    'unit_purchase_price': product.cost_price,
+                    'total_unit_price': product.total_cost,
+
+                } for product in self.product_set
+            ]
+            purchase = {
+                'supplier_id': self._supplier_searcher.data['id'],
+                'date': self.date,
+                'total': sum([product.total_cost for product in self.product_set]),
             }
-        print(self.data)
+            purchase_detail_controller.create_with_details(purchase_detail, **purchase)
 
     # Private methods ---------------------------------------------------------
 
     def _remove_product(self, product: Product):
-        self._update_product_set_and_controls(self.item_set.remove, product)
+        self._update_product_set_and_controls(self.product_set.remove, product)
 
     def _clear_product_cards(self):
-        self._update_product_set_and_controls(self.item_set.clear)
+        self._update_product_set_and_controls(self.product_set.clear)
 
     def _update_product_set_and_controls(self, operation, product=None):
         if product:
@@ -78,7 +89,7 @@ class PurchaseList(ft.Card):
     def _create_product_widgets(self):
         return [
             ProductFormCard(product=product, on_delete=self.handle_on_delete_product)
-            for product in self.item_set
+            for product in self.product_set
         ]
     
     def _create_product_list_view(self):
