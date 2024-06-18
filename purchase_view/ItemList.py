@@ -63,6 +63,7 @@ class PurchaseList(ft.Card):
                 'total': sum([product.total_cost for product in self.product_set]),
             }
             purchase_detail_controller.create_with_details(purchase_detail, **purchase)
+            self._clear_list_and_send_feedback(event)
 
     # Private methods ---------------------------------------------------------
 
@@ -114,3 +115,14 @@ class PurchaseList(ft.Card):
             padding=20,
         )
     
+    def _clear_list_and_send_feedback(self, event: ft.ControlEvent):
+        self._clear_product_cards()
+        self._open_ok_snack_bar(event)
+
+    def _open_ok_snack_bar(self, event: ft.ControlEvent):
+        event.page.snack_bar = ft.SnackBar(
+            bgcolor=ft.colors.BLUE,
+            content=ft.Text(value='Compra guardada con éxito'),
+        )
+        event.page.snack_bar.open = True
+        event.page.update()
