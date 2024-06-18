@@ -77,7 +77,13 @@ class ProductTable(ft.DataTable):
     
     @staticmethod
     def _create_data_cell(value: str):
-        return ft.DataCell(ft.Text(value=value))
+        return ft.DataCell(ft.Text(value=value), on_tap=ProductTable.handle_on_tap_cell)
+
+    @staticmethod
+    def handle_on_tap_cell(event: ft.ControlEvent):
+        cell = event.control
+        cell.content = ft.TextField(label='Nuevo valor')
+        cell.update()
     
     def _create_data_row(self, product):
         return ft.DataRow(
@@ -92,7 +98,7 @@ class ProductTable(ft.DataTable):
         return ft.DataColumn(
             label=ft.Text(value=label.capitalize(), color='blue'),
             tooltip=f'Ordenar por {label.lower()}',
-            on_sort=on_click
+            on_sort=on_click,
         )
     
     def update_table(self):
