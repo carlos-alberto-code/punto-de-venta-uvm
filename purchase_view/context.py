@@ -21,6 +21,11 @@ def handle_on_change(event: ft.ControlEvent): # Evento de búsqueda en tiempo re
     list_view.controls = _create_list_view_product_cards(products)
     list_view.update()
 
+def handle_on_add(event: ft.ControlEvent): # Evento de añadir producto a la lista de compras
+    product = event.control.data
+    purchase_list.add_product(product)
+    purchase_list.update()
+
 
 
 # HELPER FUNCTIONS ------------------------------------------------------------
@@ -42,7 +47,7 @@ def _wrap_productDTO_list(results: list) -> list[Product]: # Envuelve las instan
 
 def _create_list_view_product_cards(products: list[Product]) -> list[ft.Card]: # Crea las tarjetas de productos
     return [
-        ProductViewCard(product=product)
+        ProductViewCard(product=product, on_add=handle_on_add)
         for product in products
     ]
 

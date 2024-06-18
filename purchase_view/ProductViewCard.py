@@ -16,5 +16,5 @@ class ProductViewCard(ft.Card):
             leading=ft.Icon(ft.icons.SHOPPING_CART, size=30),
             title=ft.Text(self.product.name),
             subtitle=ft.Text(f'Existencias: {self.product.quantity}'),
-            trailing=ft.IconButton(icon=ft.icons.ADD, on_click=self.on_add),
+            trailing=ft.IconButton(icon=ft.icons.ADD, on_click=self.on_add, data=self.product),
         )
