@@ -2,7 +2,8 @@
 # Además se sigue un principio que es es cada componente se modifica en su contexto.
 import flet as ft
 from controllers.controllers import ProductController
-from purchase_view.ProductCard import ProductCard
+from purchase_view.ProductViewCard import ProductViewCard
+from purchase_view.ItemList import PurchaseList
 from business_classes.Product import Product as Product # Data Transfer Object
 
 
@@ -11,25 +12,15 @@ from business_classes.Product import Product as Product # Data Transfer Object
 def handle_on_tap(event: ft.ControlEvent): # Evento tap de la barra de búsqueda
     searcher.close_view()
     products = _wrap_productDTO_list(product_controller.get_all())
-    list_view.controls = _create_GirdView_product_cards(products)
+    list_view.controls = _create_list_view_product_cards(products)
     list_view.update()
     
 def handle_on_change(event: ft.ControlEvent): # Evento de búsqueda en tiempo real
     results = product_controller.search(str(searcher.value))
     products = _wrap_productDTO_list(results)
-    list_view.controls = _create_GirdView_product_cards(products)
+    list_view.controls = _create_list_view_product_cards(products)
     list_view.update()
 
-def handle_on_card_button_click(event: ft.ControlEvent): # Evento de click en el botón de la tarjeta
-    button = event.control
-    form_items.append(button.data)
-    product_form.content = ft.Column(
-        [create_form_item(product) for product in form_items]
-    )
-    product_form.update()
-
-def create_form_item(product: Product): # Crea un item del formulario de compra
-    return ProductCard(product=product)
 
 
 # HELPER FUNCTIONS ------------------------------------------------------------
@@ -49,9 +40,9 @@ def _wrap_productDTO_list(results: list) -> list[Product]: # Envuelve las instan
     ]
 
 
-def _create_GirdView_product_cards(products: list[Product]) -> list[ft.Card]: # Crea las tarjetas de productos
+def _create_list_view_product_cards(products: list[Product]) -> list[ft.Card]: # Crea las tarjetas de productos
     return [
-        ProductCard(product=product, on_click=handle_on_card_button_click)
+        ProductViewCard(product=product)
         for product in products
     ]
 
@@ -72,29 +63,26 @@ searcher = ft.SearchBar( # Barra de búsqueda
 
 list_view = ft.ListView( # Vista de productos
     controls=[
-        *_create_GirdView_product_cards(_wrap_productDTO_list(product_controller.get_all()))
+        *_create_list_view_product_cards(_wrap_productDTO_list(product_controller.get_all()))
     ],
     spacing=10,
 )
 
-form_items = []
-product_form = ft.Card(
-    width=400,
-    elevation=10,
-)
+purchase_list = PurchaseList(title='Lista de compras')
 
 
 # SHAPE CONTENT-----------------------------------------------------------------
 
 shape = ft.Row( # Capa general de la vista
     controls=[
-        product_form,
+        purchase_list,
         ft.Column( # Capa de búsqueda y productos
             [
                 searcher,
-                list_view,
+                list_view
             ],
-            expand=True
+            expand=True,
         )
-    ]
+    ],
+    expand=2,
 )

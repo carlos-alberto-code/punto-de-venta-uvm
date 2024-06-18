@@ -1,5 +1,5 @@
 import flet as ft
-from purchase_view.ItemList import PurchaseList
+from purchase_view.ProductViewCard import ProductViewCard
 from business_classes.Product import Product # Data Transfer Object
 
 
@@ -39,12 +39,11 @@ def main(page: ft.Page):
         reorder_level=5,
     )
 
-    pruchase_list = PurchaseList(title='Lista de compras')
-    page.add(pruchase_list)
+    pv1 = ProductViewCard(product)
+    pv2 = ProductViewCard(p2)
+    pv3 = ProductViewCard(p3)
+    page.add(pv1, pv2, pv3)
 
-    pruchase_list.add_product(product)
-    pruchase_list.add_product(p2)
-    pruchase_list.add_product(p3)
 
 
 
