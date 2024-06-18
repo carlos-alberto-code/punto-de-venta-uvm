@@ -46,4 +46,6 @@ def main(page: ft.Page):
     pruchase_list.add_product(p2)
     pruchase_list.add_product(p3)
 
+
+
 ft.app(main)

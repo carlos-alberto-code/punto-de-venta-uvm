@@ -1,5 +1,9 @@
+from decimal import Decimal
+from typing import Dict, List, Union
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import DeclarativeMeta
+
+from database.models import PurchaseDetail
 
 
 class Repository:
@@ -67,4 +71,26 @@ class Repository:
                 if hasattr(instance, key):
                     setattr(instance, key, value)
             self.db.commit()
-            
+
+
+class PurchaseRepository(Repository):
+    
+    def create_with_details(self, details: List[Dict[str, Union[int, Decimal]]], **kwargs):
+        """
+        Creates a purchase record in the database, along with its associated purchase details.
+        Executes necessary validations through decorators to ensure data integrity.
+
+        Args:
+            details: A list of dictionaries, each containing the product ID and quantity.
+            **kwargs: The field names and their corresponding values for the new purchase.
+
+        Returns:
+            None
+        """
+        instance = self.model(**kwargs)
+        self.db.add(instance)
+        self.db.flush()
+        for detail in details:
+            detail_instance = PurchaseDetail(purchase_id=instance.id, **detail)
+            self.db.add(detail_instance)
+        self.db.commit()

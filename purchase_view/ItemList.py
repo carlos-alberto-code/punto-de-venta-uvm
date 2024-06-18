@@ -2,6 +2,8 @@ import flet as ft
 from datetime import datetime as dt
 from business_classes.Product import Product  # Data Transfer Object
 from purchase_view.ProductFormCard import ProductFormCard
+
+from components.searchers import SimpleModelSearcher
 from controllers.controllers import SuplierController
 
 
@@ -12,12 +14,8 @@ class PurchaseList(ft.Card):
         self._title = ft.Row([ft.Text(title, size=21)], alignment=ft.MainAxisAlignment.CENTER)
         self.date = dt.now().date()
         self._date_row = ft.Row([ft.Text(f'{self.date}')], alignment=ft.MainAxisAlignment.CENTER)
-        self._supplier_field = ft.TextField(
-            label='Proveedor',
-            border_radius=15,
-            height=45,
-        )
-        self.top_controls = [self._title, self._date_row, ft.Divider(), self._supplier_field]
+        
+        self.top_controls = [self._title, self._date_row, ft.Divider()]
 
         self._action_buttons = ft.Row(
             [
@@ -46,10 +44,10 @@ class PurchaseList(ft.Card):
         self._remove_product(product)
 
     def handle_on_save(self, event: ft.ControlEvent):
-        if self._supplier_field.value:
+        if self._supplier_searcher.data:
             self.data = {
                 'date': str(self.date),
-                'supplier': self._supplier_field.value,
+                'supplier': self._supplier_searcher.data,
                 'products': [product for product in self.item_set],
                 'total_purchase': round(sum([product.total_cost for product in self.item_set]), 2)
             }
@@ -92,10 +90,12 @@ class PurchaseList(ft.Card):
         )
     
     def _create_content(self):
+        self._supplier_searcher = SimpleModelSearcher(SuplierController())
         return ft.Container(
             content=ft.Column(
                 [
                     *self.top_controls,
+                    self._supplier_searcher,
                     *self.middle_controls,
                     *self.bottom_controls
                 ],

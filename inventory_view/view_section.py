@@ -4,7 +4,7 @@ from controllers.controllers import ProductController
 
 from inventory_view.ProductForm import ProductForm
 from inventory_view.ProductTable import ProductTable
-from inventory_view.searchers import ProductSearcher
+from components.searchers import ProductSearcher
 
 
 prod_controller = ProductController() # Instancia del controlador de productos

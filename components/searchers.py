@@ -1,4 +1,5 @@
 from time import sleep
+from typing import Optional
 import flet as ft
 
 from controllers.ControllerInterface import ControllerInterface as Controller
@@ -41,11 +42,13 @@ class SimpleModelSearcher(ft.SearchBar):
     def __init__(
             self,
             model_controller: Controller,
+            bar_hint_text: str = 'Buscar',
+            width: Optional[int] = None,
     ):
         super().__init__(
-            width=300,
+            width=width,
             height=40,
-            bar_hint_text='Selecciona una opción',
+            bar_hint_text=bar_hint_text,
             bar_leading=ft.Icon(name=ft.icons.SEARCH, size=20),
             view_leading=ft.Icon(name=ft.icons.SEARCH, size=20),
             bar_trailing=[ft.Icon(name=ft.icons.ARROW_DROP_DOWN_ROUNDED),],

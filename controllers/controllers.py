@@ -1,9 +1,11 @@
+from decimal import Decimal
+from typing import Dict, List, Union
 from sqlalchemy import or_
 
 from database.connection import get_db
-from database.models import Product, Unit, Category, Brand, Supplier
+from database.models import Product, Unit, Category, Brand, Supplier, Purchase
 
-from controllers.repository import Repository
+from controllers.repository import Repository, PurchaseRepository
 from controllers.ControllerInterface import ControllerInterface
 
 
@@ -151,4 +153,14 @@ class SuplierController(ControllerInterface):
     def search(self, search_term: str):
         with get_db() as db:
             return db.query(Supplier).filter(Supplier.name.ilike(f'%{search_term}%')).limit(10).all()
-        
+
+
+class PurchaseDetailController:
+
+    def __init__(self) -> None:
+        with get_db() as db:
+            self.repo = PurchaseRepository(model=Purchase, session=db)
+    
+    def create_with_details(self, details: List[Dict[str, Union[int, Decimal]]], **kwargs):
+        return self.repo.create_with_details(details, **kwargs)
+    
