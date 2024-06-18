@@ -99,7 +99,7 @@ gird_view = ft.GridView( # Vista de productos
 form_items = set()
 product_form = ft.Card(
     width=350,
-    height=600,
+    height=800,
     elevation=10,
 )
 
