@@ -2,6 +2,7 @@ import flet as ft
 from datetime import datetime as dt
 from business_classes.Product import Product  # Data Transfer Object
 from purchase_view.ProductFormCard import ProductFormCard
+from controllers.controllers import SuplierController
 
 
 class PurchaseList(ft.Card):
@@ -9,13 +10,19 @@ class PurchaseList(ft.Card):
         super().__init__(elevation=10, expand=True, width=400)
 
         self._title = ft.Row([ft.Text(title, size=21)], alignment=ft.MainAxisAlignment.CENTER)
-        self._date = ft.Row([ft.Text(f'{dt.now().date()}')], alignment=ft.MainAxisAlignment.CENTER)
-        self.top_controls = [self._title, self._date, ft.Divider()]
+        self.date = dt.now().date()
+        self._date_row = ft.Row([ft.Text(f'{self.date}')], alignment=ft.MainAxisAlignment.CENTER)
+        self._supplier_field = ft.TextField(
+            label='Proveedor',
+            border_radius=15,
+            height=45,
+        )
+        self.top_controls = [self._title, self._date_row, ft.Divider(), self._supplier_field]
 
         self._action_buttons = ft.Row(
             [
                 ft.ElevatedButton('Limpiar', expand=True, on_click=self.handle_on_clear_widgets),
-                ft.ElevatedButton('Guardar', expand=True)
+                ft.ElevatedButton('Guardar', expand=True, on_click=self.handle_on_save)
             ], 
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
         self.bottom_controls = [self._action_buttons]
@@ -37,6 +44,16 @@ class PurchaseList(ft.Card):
     def handle_on_delete_product(self, event: ft.ControlEvent):
         product = event.control.data
         self._remove_product(product)
+
+    def handle_on_save(self, event: ft.ControlEvent):
+        if self._supplier_field.value:
+            self.data = {
+                'date': str(self.date),
+                'supplier': self._supplier_field.value,
+                'products': [product for product in self.item_set],
+                'total_purchase': round(sum([product.total_cost for product in self.item_set]), 2)
+            }
+        print(self.data)
 
     # Private methods ---------------------------------------------------------
 
