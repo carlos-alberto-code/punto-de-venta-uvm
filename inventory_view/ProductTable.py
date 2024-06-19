@@ -96,3 +96,11 @@ class ProductTable(ft.DataTable):
         prod_id = self.__selected_cell.data['product'].sku
         atrr = self.__selected_cell.data['column'][1]
         self.__product_controller.update(prod_id, **{atrr: float(new_content.value)})
+        self.products = self.__product_controller.get_all()
+        self.__show_snack_bar(self.page)
+
+    def __show_snack_bar(self, page):
+        snack_bar = ft.SnackBar(content=ft.Text(value='Producto actualizado correctamente'), bgcolor='blue')
+        page.snack_bar = snack_bar
+        snack_bar.open = True
+        page.update()
