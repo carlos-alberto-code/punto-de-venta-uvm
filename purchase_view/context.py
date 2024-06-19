@@ -78,15 +78,28 @@ purchase_list = PurchaseList(title='Lista de compras')
 
 # SHAPE CONTENT-----------------------------------------------------------------
 
-shape = ft.Row( # Capa general de la vista
+shape = ft.ResponsiveRow( # Capa general de la vista
     controls=[
-        purchase_list,
+        ft.Column(
+            [purchase_list,],
+            col=4
+        ),
         ft.Column( # Capa de búsqueda y productos
-            [
-                searcher,
-                list_view
+            [   
+                ft.Container(
+                    height=50,
+                    content=searcher,
+                ),
+                ft.Container(
+                    content=ft.Column(
+                        [list_view],
+                        #scroll=ft.ScrollMode.ALWAYS
+                    ),
+                ),
             ],
             expand=True,
+            col=8,
+            scroll=ft.ScrollMode.ALWAYS
         )
     ],
     expand=2,

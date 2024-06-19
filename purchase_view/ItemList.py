@@ -11,7 +11,7 @@ from controllers.controllers import PurchaseDetailController
 
 class PurchaseList(ft.Card):
     def __init__(self, title: str):
-        super().__init__(elevation=10, expand=True, width=400)
+        super().__init__(elevation=10, expand=True)
 
         self._title = ft.Row([ft.Text(title, size=21)], alignment=ft.MainAxisAlignment.CENTER)
         self.date = dt.now().date()
