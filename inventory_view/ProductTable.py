@@ -1,5 +1,6 @@
 import flet as ft
 from enum import Enum
+from controllers.controllers import ProductController
 
 
 class Column(Enum):
@@ -31,6 +32,8 @@ class ProductTable(ft.DataTable):
         self.__update_table()
 
         self.__non_editable_columns = [Column.UNIT.value[0], Column.CATEGORY.value[0], Column.BRAND.value[0]]
+
+        self.__product_controller = ProductController()
         
     @property
     def products(self):
@@ -55,7 +58,7 @@ class ProductTable(ft.DataTable):
     def __create_data_row(self, product):
         return ft.DataRow(
             cells=[
-                self.__create_data_cell(value=getattr(product, column.value[1]), product_reference=product, column_reference=column.value[0])
+                self.__create_data_cell(value=getattr(product, column.value[1]), product_reference=product, column_reference=column.value)
                 for column in Column
             ]
         )
@@ -76,7 +79,7 @@ class ProductTable(ft.DataTable):
 
     def __handle_on_tap_cell(self, event: ft.ControlEvent):
         cell: ft.DataCell = event.control
-        if cell.data['column'] not in self.__non_editable_columns:
+        if cell.data['column'][0] not in self.__non_editable_columns:
             self.__convert_to_text_field(event)
     
     def __convert_to_text_field(self, event: ft.ControlEvent):
@@ -90,3 +93,6 @@ class ProductTable(ft.DataTable):
     def __update_cell_content(self, new_content):
         self.__selected_cell.content = new_content
         self.__selected_cell.update()
+        prod_id = self.__selected_cell.data['product'].sku
+        atrr = self.__selected_cell.data['column'][1]
+        self.__product_controller.update(prod_id, **{atrr: float(new_content.value)})
