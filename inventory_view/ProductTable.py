@@ -82,10 +82,11 @@ class ProductTable(ft.DataTable):
         self.convert_to_text_field(event)
         
         
+        
     # Funcion para habilitar la edicion de la celda
     def convert_to_text_field(self, event: ft.ControlEvent):
         self.selected_cell = event.control
-        self.selected_cell.content = ft.TextField(label='Modifica', autofocus=True, expand=True, on_submit=self.convert_to_text)
+        self.selected_cell.content = ft.TextField(label='Modifica', autofocus=True, on_submit=self.convert_to_text)
         self.selected_cell.update()
     
     # Funcion para convertir el TextField a Text
