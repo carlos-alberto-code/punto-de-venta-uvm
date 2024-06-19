@@ -75,15 +75,40 @@ class ProductTable(ft.DataTable):
         self.update_table()
         self.update()
     
-    @staticmethod
-    def _create_data_cell(value: str):
-        return ft.DataCell(ft.Text(value=value), on_tap=ProductTable.handle_on_tap_cell)
+    def _create_data_cell(self, value: str):
+        return ft.DataCell(ft.Text(value=value), on_tap=self.handle_on_tap_cell)
 
-    @staticmethod
-    def handle_on_tap_cell(event: ft.ControlEvent):
+    def handle_on_tap_cell(self, event: ft.ControlEvent):
         cell = event.control
-        cell.content = ft.TextField(label='Nuevo valor')
-        cell.update()
+        self.open_bottom_sheet(cell, event)
+        print('\n', '_'*20)
+        for row in self.rows:
+            for cell in row.cells:
+                print(cell.content.value)
+        
+    # Funciones para mostrar el bottom sheet
+    def open_bottom_sheet(self, cell, event: ft.ControlEvent):
+        
+        def handle_on_submit(bottom_shet, event: ft.ControlEvent):
+            txt_field = event.control
+            bottom_shet.open = False
+            event.page.update()
+            cell.content = ft.Text(value=txt_field.value)
+            cell.update()
+
+        page = event.page
+        page.bottom_sheet = ft.BottomSheet(
+            content=ft.Container(
+                content=ft.TextField(
+                    label='Ingresa el nuevo valor',
+                    on_submit=lambda e: handle_on_submit(page.bottom_sheet, e),
+                    autofocus=True,
+                ),
+                padding=20,
+            )
+        )
+        page.bottom_sheet.open = True
+        page.update()
     
     def _create_data_row(self, product):
         return ft.DataRow(
@@ -93,8 +118,7 @@ class ProductTable(ft.DataTable):
             ]
         )
     
-    @staticmethod
-    def _create_data_column(label: str, on_click):
+    def _create_data_column(self, label: str, on_click):
         return ft.DataColumn(
             label=ft.Text(value=label.capitalize(), color='blue'),
             tooltip=f'Ordenar por {label.lower()}',
