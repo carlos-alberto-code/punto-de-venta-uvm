@@ -79,37 +79,22 @@ class ProductTable(ft.DataTable):
         return ft.DataCell(ft.Text(value=value), on_tap=self.handle_on_tap_cell)
 
     def handle_on_tap_cell(self, event: ft.ControlEvent):
-        cell = event.control
-        self.open_bottom_sheet(cell, event)
-        print('\n', '_'*20)
-        for row in self.rows:
-            for cell in row.cells:
-                print(cell.content.value)
+        self.convert_to_text_field(event)
         
-    # Funciones para mostrar el bottom sheet
-    def open_bottom_sheet(self, cell, event: ft.ControlEvent):
         
-        def handle_on_submit(bottom_shet, event: ft.ControlEvent):
-            txt_field = event.control
-            bottom_shet.open = False
-            event.page.update()
-            cell.content = ft.Text(value=txt_field.value)
-            cell.update()
-
-        page = event.page
-        page.bottom_sheet = ft.BottomSheet(
-            content=ft.Container(
-                content=ft.TextField(
-                    label='Ingresa el nuevo valor',
-                    on_submit=lambda e: handle_on_submit(page.bottom_sheet, e),
-                    autofocus=True,
-                ),
-                padding=20,
-            )
-        )
-        page.bottom_sheet.open = True
-        page.update()
+    # Funcion para habilitar la edicion de la celda
+    def convert_to_text_field(self, event: ft.ControlEvent):
+        self.selected_cell = event.control
+        self.selected_cell.content = ft.TextField(label='Modifica', autofocus=True, expand=True, on_submit=self.convert_to_text)
+        self.selected_cell.update()
     
+    # Funcion para convertir el TextField a Text
+    def convert_to_text(self, event: ft.ControlEvent):
+        self.selected_txt_field = event.control
+        field_value = self.selected_txt_field.value
+        self.selected_cell.content = ft.Text(value=field_value)
+        self.selected_cell.update()
+        
     def _create_data_row(self, product):
         return ft.DataRow(
             cells=[
