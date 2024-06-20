@@ -34,14 +34,30 @@ def main(page: ft.Page):
             if i == index:
                 shape.controls[1] = module.content
                 shape.update()
+                appbar.title = ft.Text(module.name)
+                appbar.update()
                 break
         
+
+    user = carlos
 
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window.maximized = True
     page.padding = 0
 
-    user = carlos
+    appbar = ft.AppBar(
+        center_title=True,
+        actions=[
+            ft.IconButton(icon='dark_mode', tooltip='Cambiar tema'),
+            ft.Container(width=10),
+            ft.IconButton(icon='settings', tooltip='Configuración'),
+            ft.Container(width=10),
+            ft.IconButton(icon='logout', tooltip='Cerrar sesión', on_click=lambda e: page.window.close()),
+            ft.Container(width=10),
+        ]
+    )
+    page.appbar = appbar
+
 
     rail = ft.NavigationRail(
         col=1.20,
