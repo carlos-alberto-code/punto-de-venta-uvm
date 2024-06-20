@@ -43,17 +43,21 @@ def main(page: ft.Page):
 
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window.maximized = True
+    page.window.frameless = True
     page.padding = 0
 
     appbar = ft.AppBar(
         center_title=True,
         actions=[
             ft.IconButton(icon='dark_mode', tooltip='Cambiar tema'),
-            ft.Container(width=10),
-            ft.IconButton(icon='settings', tooltip='Configuración'),
-            ft.Container(width=10),
-            ft.IconButton(icon='logout', tooltip='Cerrar sesión', on_click=lambda e: page.window.close()),
-            ft.Container(width=10),
+            ft.PopupMenuButton(
+                icon=ft.icons.MORE_VERT,
+                items=[
+                    ft.PopupMenuItem(text='Perfil de usuario', icon='person'),
+                    ft.PopupMenuItem(text='Configuración', icon='settings'),
+                    ft.PopupMenuItem(text='Cerrar sesión', icon='logout', on_click=lambda e: page.window.close()),
+                ]
+            )
         ]
     )
     page.appbar = appbar
@@ -62,7 +66,7 @@ def main(page: ft.Page):
     rail = ft.NavigationRail(
         col=1.20,
         elevation=30,
-        group_alignment=-0.9,
+        group_alignment=-1,
         destinations=[*user.modules],
         on_change=handle_on_change,
     )
