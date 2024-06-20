@@ -121,13 +121,13 @@ StoreShape = ft.ResponsiveRow( # Capa general de la vista
                     content=gird_view,
                 ),
             ],
-            col=6,
+            col=8,
         ),
         ft.Container( # Capa de formulario
             width=350,
-            height=610,
+            height=900,
             content=product_form,
-            col=6,
+            col=4,
         ),
     ]
 )
