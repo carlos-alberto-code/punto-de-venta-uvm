@@ -1,9 +1,18 @@
 import flet as ft
 from modules import Module
 from roles.user import User
-from home_content import home
+from home_content import HomeContent
 
-carlos = User(username='carlos', password='1234', modules=[Module.repo['Tienda']])
+carlos = User(
+    username='carlos',
+    password='1234',
+    modules=[
+        Module.repo['Tienda'],
+        Module.repo['Productos'],
+        Module.repo['Compras'],
+        Module.repo['Proveedores'],
+    ]
+)
 yael = User(
     username='yael',
     password='1234',
@@ -32,7 +41,7 @@ def main(page: ft.Page):
     page.window.maximized = True
     page.padding = 0
 
-    user = yael
+    user = carlos
 
     rail = ft.NavigationRail(
         col=1.20,
@@ -45,7 +54,7 @@ def main(page: ft.Page):
     shape = ft.ResponsiveRow(
             controls=[
                 rail,
-                home,
+                HomeContent(user=user.username),
             ],
             expand=True,
             col=12,
