@@ -13,7 +13,6 @@ class HomeContent(ft.Container):
                         repeat=False,
                         reverse=False,
                         animate=True,
-                        background_loading=True,
                     ),
                     ft.Text(value=f'Bienvenido a la App {user.title()}', size=30),
                     ft.Rive(
