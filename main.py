@@ -1,35 +1,56 @@
-from time import sleep
 import flet as ft
+from modules import Module
+from roles.user import User
+from home_content import home
 
-import modules
-from package_navigation.initializer import Initializer
-from package_navigation.AppbarActions import AppbarActions
-from package_navigation.navigation_structures import NavigationStructureFactory
+carlos = User(username='carlos', password='1234', modules=[Module.repo['Tienda']])
+yael = User(
+    username='yael',
+    password='1234',
+    modules=[
+        Module.repo['Tienda'],
+        Module.repo['Productos'],
+        Module.repo['Compras'],
+        Module.repo['Proveedores'],
+    ]
+)
 
 
 def main(page: ft.Page):
 
-    mods    = modules.Module.all_modules
-    init    = Initializer(modules=mods, navbar_index=1, drawer_index=0)
-    struct  = NavigationStructureFactory(initializer=init)
+    def handle_on_change(event: ft.ControlEvent):
+        index = event.control.selected_index
+        modules = user.modules
+        for i, module in enumerate(modules):
+            if i == index:
+                shape.controls[1] = module.content
+                shape.update()
+                break
+        
 
-    page.window_maximized       = True
-    # page.scroll                 = ft.ScrollMode.AUTO
-    page.theme_mode             = ft.ThemeMode.LIGHT
-    # page.vertical_alignment     = ft.MainAxisAlignment.CENTER
-    # page.horizontal_alignment   = ft.CrossAxisAlignment.CENTER
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.window.maximized = True
+    page.padding = 0
 
-    content = init.initial_drawer_section_content
-    page.add(content)
+    user = yael
 
-    page.navigation_bar = struct.navbar
-    page.drawer         = struct.drawer
-    page.appbar         = struct.appbar(AppbarActions().controls)
-    page.update()
+    rail = ft.NavigationRail(
+        col=1.20,
+        elevation=30,
+        group_alignment=-0.9,
+        destinations=[*user.modules],
+        on_change=handle_on_change,
+    )
 
-    sleep(1.5)
-    page.drawer.open = False
-    page.update()
+    shape = ft.ResponsiveRow(
+            controls=[
+                rail,
+                home,
+            ],
+            expand=True,
+            col=12,
+        )
+   
+    page.add(shape)
 
-
-ft.app(target=main)
+ft.app(main)

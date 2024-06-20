@@ -1,22 +1,32 @@
-from flet import icons as icon
-from package_navigation.Module import Module, Section
-from inventory_view.view_section import ContentStockSectionShape as ProductSection
-from suppliers_view.view_section import ContentStockSectionShape as SupplierSection
-from purchase_view.context import shape
-from store_view.context import StoreShape
+import flet as ft
+
+from naveasey.naveasey           import Module
+from purchase_view.context       import shape
+from store_view.context          import StoreShape
+from inventory_view.view_section import ContentStockSectionShape
+from suppliers_view.view_section import ContentStockSectionShape as SupplierContent
 
 
 Module(
-    'Compras',
-    icon.SHOPPING_CART,
-    Section(label='Proveedores', icon=icon.PEOPLE, content=SupplierSection()),
-    Section(label='Compras', icon=icon.SHOPPING_BAG, content=shape),
+    name='Tienda',
+    icon=ft.icons.POINT_OF_SALE,
+    content=StoreShape
 )
 
 Module(
-    'Punto de venta', # Module name
-    icon.POINT_OF_SALE_SHARP, # Module icon
-    Section(label='Tienda', icon=icon.STOREFRONT,content=StoreShape),
-    Section(label='Inventario', icon=icon.INVENTORY, content=ProductSection()),
-    Section(label='Ventas', icon=icon.SAILING_SHARP),
+    name='Productos',
+    icon=ft.icons.INVENTORY,
+    content=ContentStockSectionShape()
+)
+
+Module(
+    name='Compras',
+    icon=ft.icons.SHOPPING_CART,
+    content=shape
+)
+
+Module(
+    name='Proveedores',
+    icon=ft.icons.PEOPLE,
+    content=SupplierContent()
 )

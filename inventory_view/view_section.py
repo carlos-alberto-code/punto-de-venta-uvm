@@ -42,7 +42,6 @@ class ContentStockSectionShape(ft.Column): # Capa de sección del inventario
 
     def __init__(self):
         super().__init__(
-            expand=True,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             controls=[
                 ft.Row( # Fila de controles: Buscador de productos, botón de opciones, contenedor

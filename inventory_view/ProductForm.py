@@ -116,10 +116,10 @@ class ProductForm(ft.AlertDialog):
             self.show_error_snack_bar(event)
     
     def _open_ok_snack_bar(self, event: ft.ControlEvent):
-        event.page.snack_bar = ft.SnackBar(
+        event.page.overlay.append(ft.SnackBar(
             bgcolor=ft.colors.BLUE,
             content=ft.Text(value='Producto guardado con éxito'),
-        )
+        ))
         event.page.snack_bar.open = True
         event.page.update()
     
