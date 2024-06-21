@@ -1,17 +1,17 @@
 import flet as ft
 
 from business_classes.user  import User
-from roles.app_view         import AppView
-from theme.theme_config     import LightTheme
+from views.AppView         import AppView
+from theme.theme_config     import LightTheme, DarkTheme
 from roles.authenticator    import Autenticator
 
 
-class Login(ft.View):
+class LoginView(ft.View):
 
     def __init__(self, page: ft.Page):
         super().__init__()
         self.route = 'login/'
-        self.__view = page
+        self.__app_view = AppView(page)
         self.txt_field_username = ft.TextField(
             label='Nombre de usuario',
             icon='person',
@@ -72,7 +72,7 @@ class Login(ft.View):
                             # reverse=False,
                             animate=True,
                         ),
-                        ft.Text('Inicio de sesión', size=24, weight=ft.FontWeight.BOLD),
+                        ft.Text('Inicio de sesión', size=24, weight=ft.FontWeight.BOLD, color=DarkTheme.primary_color),
                         ft.Text('Ingresa tus credenciales de acceso.', size=13,),
                         self.txt_field_username,
                         self.txt_field_password,
@@ -126,12 +126,6 @@ class Login(ft.View):
         authenticator = Autenticator(username=user['username'], password=user['password'])
         result = authenticator.authenticate()
         if isinstance(result, User):
-            self.__view.views.clear()
-            app = AppView(self.__view, user=result)
-            self.__view.views.append(app)
-            self.__view.go(app.route)
-            self.__view.update()
-            print(self.__view.route)
-            
+            self.__app_view.user = result
         else:
             self.show_not_found_user_msg(msg=str(result), event=event)
