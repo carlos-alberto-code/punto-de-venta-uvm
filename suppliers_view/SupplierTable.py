@@ -1,5 +1,6 @@
 import flet as ft
 from enum import Enum
+from theme.theme_config import DarkTheme, LightTheme
 
 
 class ColumnNames(Enum):
@@ -84,7 +85,7 @@ class SupplierTable(ft.DataTable):
     @staticmethod
     def _create_data_column(label: str, on_click):
         return ft.DataColumn(
-            label=ft.Text(value=label.capitalize(), color='blue'),
+            label=ft.Text(value=label.capitalize(), color='#D9525E'),
             tooltip=f'Ordenar por {label.lower()}',
             on_sort=on_click
         )

@@ -8,14 +8,14 @@ import flet as ft
 class _LightColorPalette:
     #Paleta de colores basada en azul
     # Colores principales para tema claro
-    primary:                str = field(default='#2196F3')  # azul
+    primary:                str = field(default='#D9525E')  # bright red-orange
     on_primary:             str = field(default='#FFFFFF')  # blanco
     primary_container:      str = field(default='#BBDEFB')  # azul claro
     on_primary_container:   str = field(default='#0D47A1')  # azul oscuro
     secondary:              str = field(default='#03A9F4')  # cian
     on_secondary:           str = field(default='#FFFFFF')  # blanco
-    secondary_container:    str = field(default='#B3E5FC')  # cian claro
-    on_secondary_container: str = field(default='#01579B')  # cian oscuro
+    secondary_container:    str = field(default='#D9525E')  # cian claro
+    on_secondary_container: str = field(default='#181D26')  # cian oscuro
     tertiary:               str = field(default='#FFC107')  # ámbar
     on_tertiary:            str = field(default='#000000')  # negro
     tertiary_container:     str = field(default='#FFECB3')  # ámbar claro
@@ -297,9 +297,9 @@ class _DarkColorPalette:
     on_error_container:     str = field(default='#D9525E')  # bright red-orange
 
     background:             str = field(default='#181D26')  # darker gray-blue
-    on_background:          str = field(default='#D9525E')  # bright red-orange
+    on_background:          str = field(default='#FFFFFF')  # bright red-orange
     surface:                str = field(default='#181D26')  # darker gray-blue
-    on_surface:             str = field(default='#D9525E')  # bright red-orange
+    on_surface:             str = field(default='#FFFFFF')  # bright red-orange
     surface_variant:        str = field(default='#282E40')  # dark gray-blue
     on_surface_variant:     str = field(default='#F2F2F2')  # light gray
 
@@ -324,8 +324,8 @@ _light_text_theme = ft.TextTheme(
 
 
 _dark_text_theme = ft.TextTheme(
-    title_large=ft.TextStyle(size=21, font_family="Roboto", color=_DarkColorPalette.on_surface_variant),
-    body_medium=ft.TextStyle(size=14, font_family="Lato", color=_DarkColorPalette.on_surface_variant),
+    title_large=ft.TextStyle(size=21, font_family="Roboto", color=_DarkColorPalette.on_background),
+    body_medium=ft.TextStyle(size=14, font_family="Lato", color=_DarkColorPalette.on_background),
 )
 
 
