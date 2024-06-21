@@ -12,9 +12,9 @@ carlos = User(
     password='1234',
     modules=[
         Module.repo['Tienda'],
-        Module.repo['Productos'],
-        Module.repo['Compras'],
-        Module.repo['Proveedores'],
+        # Module.repo['Productos'],
+        # Module.repo['Compras'],
+        # Module.repo['Proveedores'],
     ]
 )
 yael = User(
@@ -45,7 +45,7 @@ def main(page: ft.Page):
         
     
 
-    user = carlos
+    user = yael
 
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = LightTheme

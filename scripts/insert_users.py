@@ -19,5 +19,19 @@ def insert_users():
             username='jose',
             password='yei',
         )
+        user_controller.insert(
+            full_name='Abigail Mercado Ramírez',
+            age=30,
+            whatsapp='1234567890',
+            username='abi',
+            password='abi123',
+        )
+        user_controller.insert(
+            full_name='Abigail Mercado Ramírez',
+            age=30,
+            whatsapp='0987654321',
+            username='abigail',
+            password='abigail123',
+        )
 
 insert_users()

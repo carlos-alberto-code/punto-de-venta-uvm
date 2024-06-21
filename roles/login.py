@@ -128,3 +128,8 @@ class Login(ft.View):
             print('Usuario autenticado')
         else:
             self.show_not_found_user_msg(msg=str(result), event=event)
+
+"""
+Contexto de donde me quedé:
+    Estuve divagando en la idea de quitar la variable modules de la clase User y colocar un objeto Session, la sesión tendrá referencia a los módulos que se han asignado a ese usuario. Esta información debe cargarse de un archivo JSON que contenga los módulos y los permisos que tiene cada usuario, así como el tema en el que se quedó el usuario. En Login se recibe el User ya con la sesión inyectada en la clase Authenticator. 
+"""

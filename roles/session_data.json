@@ -8,5 +8,15 @@
         "role": "propietario",
         "modules": ["Productos", "Compras", "Ventas", "Clientes", "Proveedores", "Empleados"],
         "theme_mode": "light"
+    },
+    "abigail": {
+        "role": "administrador",
+        "modules": ["Productos", "Compras", "Ventas", "Clientes", "Proveedores"],
+        "theme_mode": "dark"
+    },
+    "abi": {
+        "role": "empleado",
+        "modules": ["Productos", "Productos"],
+        "theme_mode": "light"
     }
 }
