@@ -1,6 +1,6 @@
 import flet as ft
 
-from components.counters import Counter
+from components.counters import IntCounter
 from components.searchers import SimpleModelSearcher
 from controllers.controllers import UnitController, CategoryController, BrandController, ProductController, SuplierController
 

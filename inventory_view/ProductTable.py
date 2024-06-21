@@ -47,7 +47,7 @@ class ProductTable(ft.DataTable):
 
     def __create_data_column(self, label: str, on_click):
         return ft.DataColumn(
-            label=ft.Text(value=label.capitalize(), color='blue'),
+            label=ft.Text(value=label.capitalize(), color='#D9525E'),
             tooltip=f'Ordenar por {label.lower()}',
             on_sort=on_click,
         )
