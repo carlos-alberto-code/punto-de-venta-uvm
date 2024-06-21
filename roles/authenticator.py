@@ -12,13 +12,10 @@ class Autenticator:
 
     def authenticate(self):
         if self.__is_authenticated():
-            user_session_data = Session(self.__username).get_data_session()
             return User(
                 username=self.__username,
                 password=self.__password,
-                modules=[]
             )
-            return f'Usuario "{self.__username}" autenticado!'
         else:
             if not self.__user_controller.username_exists(self.__username):
                 return f'El usuario "{self.__username}" no existe!'

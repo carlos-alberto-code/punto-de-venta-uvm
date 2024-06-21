@@ -125,7 +125,7 @@ class Login(ft.View):
         result = authenticator.authenticate()
         if isinstance(result, User):
             # Ejecución de la lógica de autenticación con éxito
-            print('Usuario autenticado')
+            print(result)
         else:
             self.show_not_found_user_msg(msg=str(result), event=event)
 
