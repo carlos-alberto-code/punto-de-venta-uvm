@@ -1,6 +1,8 @@
 import flet as ft
 from roles.session import Session
 from naveasey.naveasey import Module
+from modules.modules import Module as Rail
+
 
 
 class User:
@@ -12,7 +14,8 @@ class User:
         self.password                = password
         self.__session: Session      = Session(username=username)
         self.__role: str             = self.__session.user_data['role']
-        self.__modules: list[Module] = self.__session.user_data['modules']
+        self.__module_names: list[Module] = self.__session.user_data['modules']
+        self.__modules: list[Module] = [module for module_name, module in Rail.repo.items() if module_name in self.__module_names]
         self.__theme_mode: str       = self.__session.user_data['theme_mode']
         User.users[username]         = self
     

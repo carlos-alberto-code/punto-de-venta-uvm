@@ -1,5 +1,5 @@
 import flet as ft
-from modules import Module
+from modules.modules import Module
 from business_classes.user import User
 from home_content import HomeContent
 from views.LoginView import LoginView
