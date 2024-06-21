@@ -15,7 +15,8 @@ def main(page: ft.Page):
 
     page.window_maximized       = True
     # page.scroll                 = ft.ScrollMode.AUTO
-    page.theme_mode             = ft.ThemeMode.LIGHT
+    #page.theme_mode             = ft.ThemeMode.LIGHT
+    page.theme = ft.Theme(color_scheme_seed="blue")
     # page.vertical_alignment     = ft.MainAxisAlignment.CENTER
     # page.horizontal_alignment   = ft.CrossAxisAlignment.CENTER
 
