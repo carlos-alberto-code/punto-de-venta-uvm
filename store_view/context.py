@@ -110,24 +110,24 @@ StoreShape = ft.ResponsiveRow( # Capa general de la vista
         ft.Column( # Capa de búsqueda y productos
             [
                 ft.Container( # Capa de búsqueda
-                    width=900,
+                    #width=900,
                     height=50,
                     content=searcher,
                 ),
                 ft.Container( # Capa de productos
                     # Abarca el resto de la pantalla
-                    width=900,
+                    #width=900,
                     height=800,
                     content=gird_view,
                 ),
             ],
-            col=6,
+            col=8,
         ),
         ft.Container( # Capa de formulario
-            width=350,
-            height=610,
+            #width=350,
+            height=900,
             content=product_form,
-            col=6,
+            col=4,
         ),
     ]
 )

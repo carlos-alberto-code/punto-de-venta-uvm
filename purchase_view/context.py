@@ -93,7 +93,7 @@ shape = ft.ResponsiveRow( # Capa general de la vista
                 ft.Container(
                     content=ft.Column(
                         [list_view],
-                        #scroll=ft.ScrollMode.ALWAYS
+                        scroll=ft.ScrollMode.ALWAYS
                     ),
                 ),
             ],
