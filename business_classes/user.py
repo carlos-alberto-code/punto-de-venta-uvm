@@ -1,5 +1,6 @@
-from naveasey.naveasey import Module
+import flet as ft
 from roles.session import Session
+from naveasey.naveasey import Module
 
 
 class User:
@@ -26,6 +27,10 @@ class User:
     @property
     def modules(self):
         return self.__modules
+    
+    @property
+    def theme_mode(self):
+        return self.__theme_mode
     
     def add_module(self, module: Module):
         self.__modules.append(module)

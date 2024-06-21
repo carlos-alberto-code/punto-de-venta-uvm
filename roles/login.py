@@ -1,6 +1,7 @@
 import flet as ft
 
 from business_classes.user  import User
+from roles.app_view         import AppView
 from theme.theme_config     import LightTheme
 from roles.authenticator    import Autenticator
 
@@ -9,7 +10,8 @@ class Login(ft.View):
 
     def __init__(self, page: ft.Page):
         super().__init__()
-        self.__page = page
+        self.route = 'login/'
+        self.__view = page
         self.txt_field_username = ft.TextField(
             label='Nombre de usuario',
             icon='person',
@@ -124,12 +126,12 @@ class Login(ft.View):
         authenticator = Autenticator(username=user['username'], password=user['password'])
         result = authenticator.authenticate()
         if isinstance(result, User):
-            # Ejecución de la lógica de autenticación con éxito
-            print(result)
+            self.__view.views.clear()
+            app = AppView(self.__view, user=result)
+            self.__view.views.append(app)
+            self.__view.go(app.route)
+            self.__view.update()
+            print(self.__view.route)
+            
         else:
             self.show_not_found_user_msg(msg=str(result), event=event)
-
-"""
-Contexto de donde me quedé:
-    Estuve divagando en la idea de quitar la variable modules de la clase User y colocar un objeto Session, la sesión tendrá referencia a los módulos que se han asignado a ese usuario. Esta información debe cargarse de un archivo JSON que contenga los módulos y los permisos que tiene cada usuario, así como el tema en el que se quedó el usuario. En Login se recibe el User ya con la sesión inyectada en la clase Authenticator. 
-"""
