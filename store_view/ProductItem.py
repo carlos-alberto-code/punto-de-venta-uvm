@@ -1,6 +1,6 @@
 import flet as ft
 from store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
-from components.counters import Counter
+from components.counters import IntCounter
 
 
 ft.Card()
@@ -10,7 +10,7 @@ class ProductItem(ft.Card): # Es la capa de presentación gráfica de un product
         super().__init__(
 
         )
-        self.counter = Counter()
+        self.counter = IntCounter()
         self.content=ft.ListTile(
                 leading=ft.Image(
                     src='https://images.pexels.com/photos/2983100/pexels-photo-2983100.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
