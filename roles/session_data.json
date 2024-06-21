@@ -16,7 +16,7 @@
     },
     "abi": {
         "role": "empleado",
-        "modules": ["Productos", "Productos"],
+        "modules": ["Productos", "Compras"],
         "theme_mode": "light"
     }
 }
