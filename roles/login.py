@@ -15,8 +15,7 @@ class Login(ft.View):
             icon='person',
             width=300,
             height=50,
-            autofocus=True,
-            border=ft.InputBorder.UNDERLINE,
+            border=ft.InputBorder.NONE,
             input_filter=ft.InputFilter(
                 # Sólo permitir letras minusculas y números, pero no caracteres especiales
                 regex_string=r'^[a-z0-9]*$',
@@ -30,7 +29,7 @@ class Login(ft.View):
             height=50,
             password=True,
             can_reveal_password=True,
-            border=ft.InputBorder.UNDERLINE,
+            border=ft.InputBorder.NONE,
             input_filter=ft.InputFilter(
                 # Sólo permitir letras minusculas y números, pero no caracteres especiales
                 regex_string=r'^[a-z0-9]*$',
@@ -122,7 +121,7 @@ class Login(ft.View):
     
     def handle_on_login_click(self, event: ft.ControlEvent):
         user = self._get_txt_fields_values()
-        authenticator = Autenticator(user['username'], user['password'])
+        authenticator = Autenticator(username=user['username'], password=user['password'])
         result = authenticator.authenticate()
         if isinstance(result, User):
             # Ejecución de la lógica de autenticación con éxito
