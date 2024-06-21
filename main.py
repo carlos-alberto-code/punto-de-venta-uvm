@@ -3,6 +3,8 @@ from modules import Module
 from roles.user import User
 from home_content import HomeContent
 from roles.login import Login
+from theme.theme_config import LightTheme, DarkTheme
+from theme.change_theme import change_theme
 
 
 carlos = User(
@@ -47,6 +49,7 @@ def main(page: ft.Page):
     user = carlos
 
     page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme = LightTheme
     page.window.maximized = True
     page.window.frameless = True
     page.padding = 0
@@ -54,7 +57,7 @@ def main(page: ft.Page):
     appbar = ft.AppBar(
         center_title=True,
         actions=[
-            ft.IconButton(icon='dark_mode', tooltip='Cambiar tema'),
+            ft.IconButton(icon='dark_mode', tooltip='Cambiar tema', on_click=change_theme),
             ft.PopupMenuButton(
                 icon=ft.icons.MORE_VERT,
                 items=[
