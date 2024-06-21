@@ -4,6 +4,7 @@ from controllers.controllers    import UserController
 
 
 class Autenticator:
+
     def __init__(self, username: str, password: str):
         self.__username         = username
         self.__password         = password
@@ -11,13 +12,10 @@ class Autenticator:
 
     def authenticate(self):
         if self.__is_authenticated():
-            # user_session_data = Session(self.__username).get_data_session()
-            # return User(
-            #     username=self.__username,
-            #     password=self.__password,
-            #     modules=[]
-            # )
-            print('Usuario autenticado')
+            return User(
+                username=self.__username,
+                password=self.__password,
+            )
         else:
             if not self.__user_controller.username_exists(self.__username):
                 return f'El usuario "{self.__username}" no existe!'

@@ -1,8 +1,8 @@
 import flet as ft
-from modules import Module
+from modules.modules import Module
 from business_classes.user import User
 from home_content import HomeContent
-from roles.login import Login
+from views.LoginView import LoginView
 from theme.theme_config import LightTheme, DarkTheme
 from theme.change_theme import change_theme
 
@@ -12,9 +12,9 @@ carlos = User(
     password='1234',
     modules=[
         Module.repo['Tienda'],
-        Module.repo['Productos'],
-        Module.repo['Compras'],
-        Module.repo['Proveedores'],
+        # Module.repo['Productos'],
+        # Module.repo['Compras'],
+        # Module.repo['Proveedores'],
     ]
 )
 yael = User(
@@ -45,7 +45,7 @@ def main(page: ft.Page):
         
     
 
-    user = carlos
+    user = yael
 
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = LightTheme

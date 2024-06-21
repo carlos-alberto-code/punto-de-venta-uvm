@@ -1,10 +1,11 @@
+from time import sleep
 import flet as ft
-from roles.login import Login
-
+from views.LoginView import LoginView
 
 
 def main(page: ft.Page):
     
-    Login(page)
+    login_view  = LoginView(page)
+
 
 ft.app(main)

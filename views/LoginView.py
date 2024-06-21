@@ -1,22 +1,23 @@
 import flet as ft
 
 from business_classes.user  import User
-from theme.theme_config     import LightTheme
+from views.AppView          import AppView
 from roles.authenticator    import Autenticator
+from theme.theme_config     import LightTheme, DarkTheme
 
 
-class Login(ft.View):
+class LoginView(ft.View):
 
     def __init__(self, page: ft.Page):
         super().__init__()
-        self.__page = page
+        self.route = 'login/'
+        self.__app_view = AppView(page)
         self.txt_field_username = ft.TextField(
             label='Nombre de usuario',
             icon='person',
             width=300,
             height=50,
-            autofocus=True,
-            border=ft.InputBorder.UNDERLINE,
+            border=ft.InputBorder.NONE,
             input_filter=ft.InputFilter(
                 # Sólo permitir letras minusculas y números, pero no caracteres especiales
                 regex_string=r'^[a-z0-9]*$',
@@ -30,7 +31,7 @@ class Login(ft.View):
             height=50,
             password=True,
             can_reveal_password=True,
-            border=ft.InputBorder.UNDERLINE,
+            border=ft.InputBorder.NONE,
             input_filter=ft.InputFilter(
                 # Sólo permitir letras minusculas y números, pero no caracteres especiales
                 regex_string=r'^[a-z0-9]*$',
@@ -71,7 +72,7 @@ class Login(ft.View):
                             # reverse=False,
                             animate=True,
                         ),
-                        ft.Text('Inicio de sesión', size=24, weight=ft.FontWeight.BOLD),
+                        ft.Text('Inicio de sesión', size=24, weight=ft.FontWeight.BOLD, color=DarkTheme.primary_color),
                         ft.Text('Ingresa tus credenciales de acceso.', size=13,),
                         self.txt_field_username,
                         self.txt_field_password,
@@ -122,10 +123,9 @@ class Login(ft.View):
     
     def handle_on_login_click(self, event: ft.ControlEvent):
         user = self._get_txt_fields_values()
-        authenticator = Autenticator(user['username'], user['password'])
+        authenticator = Autenticator(username=user['username'], password=user['password'])
         result = authenticator.authenticate()
         if isinstance(result, User):
-            # Ejecución de la lógica de autenticación con éxito
-            print('Usuario autenticado')
+            self.__app_view.user = result
         else:
             self.show_not_found_user_msg(msg=str(result), event=event)

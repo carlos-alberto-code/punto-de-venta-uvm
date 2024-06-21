@@ -10,7 +10,7 @@ class HomeContent(ft.Container):
                 [
                     ft.Lottie(
                         src='https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',
-                        repeat=False,
+                        repeat=True,
                         reverse=False,
                         animate=True,
                     ),
