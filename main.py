@@ -1,6 +1,6 @@
 import flet as ft
 from modules import Module
-from roles.user import User
+from business_classes.user import User
 from home_content import HomeContent
 from roles.login import Login
 from theme.theme_config import LightTheme, DarkTheme
@@ -30,7 +30,6 @@ yael = User(
 
 def main(page: ft.Page):
 
-    # page.add(Login(page))
 
 
     def handle_on_change(event: ft.ControlEvent):
