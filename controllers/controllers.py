@@ -4,7 +4,7 @@ from sqlalchemy import or_
 
 from database.connection import get_db
 from database.models import (
-    Product, Unit, Category, Brand, Supplier, Purchase, User, Role
+    Product, Unit, Category, Brand, Supplier, Purchase, User
 )
 
 from controllers.repository import Repository, PurchaseRepository

@@ -147,15 +147,3 @@ class User(Base):
     whatsapp:  Mapped[str] = mapped_column(CHAR(10), nullable=False, unique=True)
     username:  Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     password:  Mapped[str] = mapped_column(String(50), nullable=False)
-    role_id:   Mapped[int] = mapped_column(Integer, ForeignKey('roles.id'), nullable=False)
-
-    role = relationship("Role", back_populates="users")
-
-
-class Role(Base):
-    __tablename__ = 'roles'
-
-    id:   Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
-
-    users = relationship("User", back_populates="role")
