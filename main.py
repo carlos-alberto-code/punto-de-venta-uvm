@@ -1,8 +1,8 @@
 import flet as ft
 from modules import Module
-from roles.user import User
+from business_classes.user import User
 from home_content import HomeContent
-from roles.Login import Login
+from roles.login import Login
 from theme.theme_config import LightTheme, DarkTheme
 from theme.change_theme import change_theme
 
