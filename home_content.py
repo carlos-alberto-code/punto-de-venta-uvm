@@ -14,7 +14,7 @@ class HomeContent(ft.Container):
                         reverse=False,
                         animate=True,
                     ),
-                    ft.Text(value=f'Bienvenido a la App {user.title()}', size=30),
+                    ft.Text(value=f'Hola {user.title()}', size=30),
                     ft.Rive(
                         'rive/w_solana_hero.riv',
                         placeholder=ft.ProgressBar(),

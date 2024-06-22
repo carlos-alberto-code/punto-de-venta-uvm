@@ -1,11 +1,10 @@
-from time import sleep
 import flet as ft
-from views.LoginView import LoginView
+from components.searchers import SearcherTapLess
 
 
 def main(page: ft.Page):
     
-    login_view  = LoginView(page)
+    page.add(SearcherTapLess())
 
 
 ft.app(main)

@@ -162,4 +162,25 @@ class ProductSearcher(ft.SearchBar):
         self.table.products = self.controller.search(val)
     
 
+class SearcherTapLess(ft.TextField):
+    # Características: No tiene evento on_tap, sólo tiene evento on_change y on_focus
+    # - Debe poder expandisrse tanto cómo el control superior esté configurado
+    # - Debe tener un hint text
+    # - Debe tener un icono de búsqueda a la izquierda
+    # - Debe tener un icono de limpieza a la derecha (opcional)
+    # - Debe poder alterar la lista, tabla o vista de items (no los resultados de la búsqueda)
+    def __init__(self):
+        super().__init__(
+            height=40,
+            label='Buscar',
+            prefix_icon=ft.icons.SEARCH,
+            suffix_icon=ft.icons.CLEAR,
+            on_change=self.handler_on_change,
+            on_focus=self.handler_on_focus,
+        )
     
+    def handler_on_change(self, event: ft.ControlEvent):
+        pass
+
+    def handler_on_focus(self, event: ft.ControlEvent):
+        pass
