@@ -35,14 +35,14 @@ class Product(Base):
         CheckConstraint('reorder_level >= 0'),
     )
 
-    sku:            Mapped[int]     = mapped_column(Integer, primary_key=True, autoincrement=True)
-    unit_id:        Mapped[int]     = mapped_column(Integer, ForeignKey('units.id'), nullable=False)
-    category_id:    Mapped[int]     = mapped_column(Integer, ForeignKey('categories.id'), nullable=False)
-    brand_id:       Mapped[int]     = mapped_column(Integer, ForeignKey('brands.id'), nullable=False)
-    quantity:       Mapped[int]     = mapped_column(Integer, nullable=False)
-    cost_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
-    selling_price:     Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
-    reorder_level:  Mapped[int]     = mapped_column(Integer, nullable=False, default=1)
+    sku: Mapped[int]               = mapped_column(Integer, primary_key=True, autoincrement=True)
+    unit_id: Mapped[int]           = mapped_column(Integer, ForeignKey('units.id'), nullable=False)
+    category_id: Mapped[int]       = mapped_column(Integer, ForeignKey('categories.id'), nullable=False)
+    brand_id: Mapped[int]          = mapped_column(Integer, ForeignKey('brands.id'), nullable=False)
+    quantity: Mapped[int]          = mapped_column(Integer, nullable=False)
+    cost_price: Mapped[DECIMAL]    = mapped_column(DECIMAL(10, 2), nullable=False)
+    selling_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
+    reorder_level:  Mapped[int]    = mapped_column(Integer, nullable=False, default=1)
 
     unit     = relationship("Unit", backref="products")
     brand    = relationship("Brand", backref="products")
