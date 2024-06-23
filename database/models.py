@@ -132,18 +132,3 @@ class SaleDetail(Base):
 
     sale    = relationship("Sale", backref="sale_details")
     product = relationship("Product", backref="sale_details")
-
-
-# Se agregan dos tablas para el manejo de usuarios y roles
-class User(Base):
-    __tablename__ = 'users'
-    __table_args__ = (
-        CheckConstraint('age >= 18'),
-    )
-
-    id:        Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    full_name: Mapped[str] = mapped_column(String(50), nullable=False)
-    age:       Mapped[int] = mapped_column(Integer, nullable=False)
-    whatsapp:  Mapped[str] = mapped_column(CHAR(10), nullable=False, unique=True)
-    username:  Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
-    password:  Mapped[str] = mapped_column(String(50), nullable=False)
