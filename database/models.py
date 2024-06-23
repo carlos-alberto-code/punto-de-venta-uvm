@@ -35,14 +35,14 @@ class Product(Base):
         CheckConstraint('reorder_level >= 0'),
     )
 
-    sku:            Mapped[int]     = mapped_column(Integer, primary_key=True, autoincrement=True)
-    unit_id:        Mapped[int]     = mapped_column(Integer, ForeignKey('units.id'), nullable=False)
-    category_id:    Mapped[int]     = mapped_column(Integer, ForeignKey('categories.id'), nullable=False)
-    brand_id:       Mapped[int]     = mapped_column(Integer, ForeignKey('brands.id'), nullable=False)
-    quantity:       Mapped[int]     = mapped_column(Integer, nullable=False)
-    cost_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
-    selling_price:     Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
-    reorder_level:  Mapped[int]     = mapped_column(Integer, nullable=False, default=1)
+    sku: Mapped[int]               = mapped_column(Integer, primary_key=True, autoincrement=True)
+    unit_id: Mapped[int]           = mapped_column(Integer, ForeignKey('units.id'), nullable=False)
+    category_id: Mapped[int]       = mapped_column(Integer, ForeignKey('categories.id'), nullable=False)
+    brand_id: Mapped[int]          = mapped_column(Integer, ForeignKey('brands.id'), nullable=False)
+    quantity: Mapped[int]          = mapped_column(Integer, nullable=False)
+    cost_price: Mapped[DECIMAL]    = mapped_column(DECIMAL(10, 2), nullable=False)
+    selling_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
+    reorder_level:  Mapped[int]    = mapped_column(Integer, nullable=False, default=1)
 
     unit     = relationship("Unit", backref="products")
     brand    = relationship("Brand", backref="products")
@@ -133,17 +133,53 @@ class SaleDetail(Base):
     sale    = relationship("Sale", backref="sale_details")
     product = relationship("Product", backref="sale_details")
 
+# Modelos para la gestion de usuarios y roles
 
-# Se agregan dos tablas para el manejo de usuarios y roles
+class ThemeMode(Base):
+    __tablename__ = 'theme_modes'
+
+    id:   Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(10), nullable=False, unique=True)
+
+
+class Role(Base):
+    __tablename__ = 'roles'
+
+    id:   Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+
+
+class Modules(Base):
+    __tablename__ = 'modules'
+
+    id:   Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+
+
 class User(Base):
     __tablename__ = 'users'
     __table_args__ = (
         CheckConstraint('age >= 18'),
     )
 
-    id:        Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    full_name: Mapped[str] = mapped_column(String(50), nullable=False)
-    age:       Mapped[int] = mapped_column(Integer, nullable=False)
-    whatsapp:  Mapped[str] = mapped_column(CHAR(10), nullable=False, unique=True)
-    username:  Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
-    password:  Mapped[str] = mapped_column(String(50), nullable=False)
+    id:            Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    full_name:     Mapped[str] = mapped_column(String(50), nullable=False)
+    age:           Mapped[int] = mapped_column(Integer, nullable=False)
+    whatsapp:      Mapped[str] = mapped_column(CHAR(10), nullable=False, unique=True)
+    username:      Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    password:      Mapped[str] = mapped_column(String(50), nullable=False)
+    role_id:       Mapped[int] = mapped_column(Integer, ForeignKey('roles.id'), nullable=False, default=0)
+    theme_mode_id: Mapped[int] = mapped_column(Integer, ForeignKey('theme_modes.id'), nullable=False, default=0)
+
+    role       = relationship("Role", backref="users")
+    theme_mode = relationship("ThemeMode", backref="users")
+
+
+class RoleModule(Base):
+    __tablename__ = 'roles_modules'
+
+    role_id:    Mapped[int] = mapped_column(Integer, ForeignKey('roles.id'), primary_key=True, nullable=False)
+    module_id:  Mapped[int] = mapped_column(Integer, ForeignKey('modules.id'), primary_key=True, nullable=False)
+
+    role   = relationship("Role", backref="roles_modules")
+    module = relationship("Modules", backref="roles_modules")
