@@ -65,3 +65,6 @@ credentials.json
 
 # Ignorar archivos de compilación de Python
 __pycache__/
+
+# Necesito ignorar todos los archivos en la raíz del proyecto que empiecen con "test"
+/test*
