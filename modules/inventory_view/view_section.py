@@ -2,8 +2,8 @@ import flet as ft
 
 from controllers.controllers import ProductController
 
-from inventory_view.ProductForm import ProductForm
-from inventory_view.ProductTable import ProductTable
+from modules.inventory_view.ProductForm import ProductForm
+from modules.inventory_view.ProductTable import ProductTable
 from components.searchers import ProductSearcher
 
 

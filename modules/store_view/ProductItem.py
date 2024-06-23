@@ -1,5 +1,5 @@
 import flet as ft
-from store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
+from modules.store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
 from components.counters import IntCounter
 
 

@@ -2,9 +2,9 @@ import flet as ft
 
 from controllers.controllers import SuplierController
 
-from suppliers_view.SupplierForm import SupplierForm
-from suppliers_view.SupplierTable import SupplierTable
-from suppliers_view.searchers import SupplierSearcher
+from modules.suppliers_view.SupplierForm import SupplierForm
+from modules.suppliers_view.SupplierTable import SupplierTable
+from modules.suppliers_view.searchers import SupplierSearcher
 
 
 supplier_controller = SuplierController() # Instancia del controlador de proveedores

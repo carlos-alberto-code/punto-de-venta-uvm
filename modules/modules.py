@@ -1,10 +1,10 @@
 import flet as ft
 
-from naveasey.naveasey           import Module
-from purchase_view.context       import shape
-from store_view.context          import StoreShape
-from inventory_view.view_section import ContentStockSectionShape
-from suppliers_view.view_section import ContentStockSectionShape as SupplierContent
+from naveasey.naveasey                   import Module
+from modules.purchase_view.context       import shape
+from modules.store_view.context          import StoreShape
+from modules.inventory_view.view_section import ContentStockSectionShape
+from modules.suppliers_view.view_section import ContentStockSectionShape as SupplierContent
 
 
 Module(

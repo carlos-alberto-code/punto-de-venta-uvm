@@ -2,9 +2,9 @@
 # Además se sigue un principio que es es cada componente se modifica en su contexto.
 import flet as ft
 from controllers.controllers import ProductController
-from store_view.ProductCard import ProductCard
-from store_view.ProductItem import ProductItem
-from store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
+from modules.store_view.ProductCard import ProductCard
+from modules.store_view.ProductItem import ProductItem
+from modules.store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
 
 
 

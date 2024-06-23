@@ -3,7 +3,7 @@ from typing import Optional
 import flet as ft
 
 from controllers.ControllerInterface import ControllerInterface as Controller
-from inventory_view.ProductTable import ProductTable
+from modules.inventory_view.ProductTable import ProductTable
 
 
 class SearchResult(ft.Card):

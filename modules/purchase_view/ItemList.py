@@ -2,7 +2,7 @@ from decimal import Decimal
 import flet as ft
 from datetime import datetime as dt
 from business_classes.Product import Product  # Data Transfer Object
-from purchase_view.ProductFormCard import ProductFormCard
+from modules.purchase_view.ProductFormCard import ProductFormCard
 
 from components.searchers import SimpleModelSearcher
 from controllers.controllers import SuplierController

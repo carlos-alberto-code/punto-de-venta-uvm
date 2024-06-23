@@ -1,5 +1,5 @@
 import flet as ft
-from store_view.ProductDTO import ProductDTO as Product
+from modules.store_view.ProductDTO import ProductDTO as Product
 from components.counters import IntCounter
 
 class ItemList(ft.Card):
