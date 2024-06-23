@@ -1,10 +1,10 @@
 import flet as ft
 from typing import Optional
-from business_classes.user  import User
-from theme.change_theme import change_theme
 
-from home_content import HomeContent
-from naveasey.naveasey import Module
+from business_classes.user  import User
+from naveasey.naveasey      import Module
+from modules.home_content           import HomeContent
+from theme.change_theme     import change_theme
 
 
 class AppView(ft.View):
@@ -27,10 +27,12 @@ class AppView(ft.View):
         
     def build_view(self):
         if self.__user:
-            if self.__user.theme_mode == 'light':
+            if self.__user.theme_mode == ft.ThemeMode.LIGHT:
                 self.__screen.theme_mode = ft.ThemeMode.LIGHT
-            else:
+                # TODO: Lógica para cambiar el tema a claro
+            if self.__user.theme_mode == ft.ThemeMode.DARK:
                 self.__screen.theme_mode = ft.ThemeMode.DARK
+                # TODO: Lógica para cambiar el tema a oscuro
             
             self.__set_page_config()
             self.__appbar = self.__create_appbar()
