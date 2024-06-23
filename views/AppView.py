@@ -35,7 +35,6 @@ class AppView(ft.View):
             self.__set_page_config()
             self.__appbar = self.__create_appbar()
             self.__screen.appbar = self.__appbar
-            print(self.__user.modules)
             self.rail = self.__create_navigation_rail(self.__user.modules)
             self.shape = self.__create_shape(rail=self.rail, home_content=HomeContent(user=self.__user.username), user=self.__user)
             self.__screen.add(self.shape)

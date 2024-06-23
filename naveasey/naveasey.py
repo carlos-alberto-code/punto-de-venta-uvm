@@ -34,7 +34,7 @@ class Module(ft.NavigationRailDestination):
             self,
             name: str,
             icon: str,
-            content: ft.Control
+            content: ft.ResponsiveRow | ft.Column | ft.Row
     ):
         super().__init__(
             label_content=ft.Text(value=name, size=12),
