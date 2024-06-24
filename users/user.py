@@ -14,14 +14,14 @@ class User:
         self.username = username
         self.password = password
         self.__session: Session = Session(username=username)
-        self.__role: str = self.__session.user_data['role']
-        self.__module_names: list[str] = self.__session.user_data['modules']
+        self.__role: str = self.__session.data['role']
+        self.__module_names: list[str] = self.__session.data['modules']
         self.__modules: list[Module] = [
             module for module_name, module 
             in Rail.repo.items() 
             if module_name in self.__module_names
         ]
-        self.__theme_mode: str = self.__session.user_data['theme_mode']
+        self.__theme_mode: str = self.__session.data['theme_mode']
         User.users[username] = self
     
     @property
