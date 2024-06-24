@@ -1,8 +1,8 @@
 import flet as ft
 
-from business_classes.user  import User
+from users.user  import User
 from views.AppView          import AppView
-from roles.authenticator    import Autenticator
+from users.authenticator    import Autenticator
 from theme.theme_config     import LightTheme, DarkTheme
 
 

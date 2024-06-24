@@ -1,7 +1,7 @@
 import flet as ft
 from typing import Optional
 
-from business_classes.user  import User
+from users.user  import User
 from naveasey.naveasey      import Module
 from modules.home_content           import HomeContent
 from theme.change_theme     import change_theme
