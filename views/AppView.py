@@ -1,5 +1,5 @@
 import flet as ft
-from typing import Dict, Any, Union
+from typing import Dict, Any, Optional, Union
 
 from modules.modules      import Module
 from modules.home_content import HomeContent
@@ -20,6 +20,7 @@ class AppView(ft.View):
             in self._modules.items() 
             if module.name in self.__user['modules']
         ]
+        self.current_index: Optional[int] = None
 
         page.window.maximized = True
         page.window.frameless = True
@@ -62,14 +63,16 @@ class AppView(ft.View):
     
     def handler_on_change(self, event: ft.ControlEvent):
         index: int = event.control.selected_index
-        for i, module in enumerate(self._user_modules):
-            print(i, module.name)
-            if i == index:
-                self.content_page = module.content
-                self.controls = [self.create_controls(module.content)]
-                self.change_appbar_title(module.name)
-                self.update()
-                break
+        if index != self.current_index:
+            self.current_index = index
+            for i, module in enumerate(self._user_modules):
+                print(i, module.name)
+                if i == index:
+                    self.content_page = module.content
+                    self.controls = [self.create_controls(module.content)]
+                    self.change_appbar_title(module.name)
+                    self.update()
+                    break
     
     def change_appbar_title(self, title: str):
         self.appbar.title = ft.Text(title) # type: ignore
