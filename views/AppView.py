@@ -11,14 +11,14 @@ class AppView(ft.View):
     def __init__(self, page: ft.Page, user: Union[Dict[str, Any], str]):
         super().__init__()
         self.route: str = 'app/'
-        self.__user = user if isinstance(user, dict) else {}
-        if not self.__user:
+        self._user = user if isinstance(user, dict) else {}
+        if not self._user:
             raise ValueError('No existe un usuario para mostrar la vista.')
         self._modules = Module.repo
         self._user_modules = [
             module for module_name, module 
             in self._modules.items() 
-            if module.name in self.__user['modules']
+            if module_name in self._user['modules']
         ]
         self.current_index: Optional[int] = None
 
@@ -58,7 +58,7 @@ class AppView(ft.View):
                 ft.Container(width=15),
             ]
         )
-        self.controls = [self.create_controls(HomeContent(self.__user['username']))]
+        self.controls = [self.create_controls(HomeContent(self._user['username']))]
         
     
     def handler_on_change(self, event: ft.ControlEvent):
@@ -66,7 +66,6 @@ class AppView(ft.View):
         if index != self.current_index:
             self.current_index = index
             for i, module in enumerate(self._user_modules):
-                print(i, module.name)
                 if i == index:
                     self.content_page = module.content
                     self.controls = [self.create_controls(module.content)]
@@ -86,12 +85,13 @@ class AppView(ft.View):
                     label=module.name,
                 ) for module in self._user_modules
             ],
-            col=1.20,
+            col=1.10,
+            group_alignment=0.0,
             on_change=self.handler_on_change,
         )
 
     def create_controls(self, content: ft.Container) -> ft.ResponsiveRow:
-        content.col = 10.80
+        content.col = 10.90
         return ft.ResponsiveRow(
             controls=[
                 self.create_rail(),
