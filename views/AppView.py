@@ -58,43 +58,55 @@ class AppView(ft.View):
                 ft.Container(width=15),
             ]
         )
-        self.controls = [self.create_controls(HomeContent(self._user['username']))]
+
+        self.rail = ft.NavigationRail(
+            destinations=[
+                ft.NavigationRailDestination(
+                    label=module.name,
+                    icon=module.icon,
+                    padding=10,
+                ) for module in self._user_modules
+            ],
+            col=1.10,
+            group_alignment=0.0,
+            selected_index=0,
+            on_change=self.handler_on_change,
+        )
+        self.content_page = HomeContent(user=self._user['username'])
+        self.controls = [
+            ft.ResponsiveRow(
+                controls=[
+                    self.rail,
+                    self.content_page
+                ],
+                col=12,
+                expand=True,
+            )
+        ]
+
         
     
     def handler_on_change(self, event: ft.ControlEvent):
         index: int = event.control.selected_index
         if index != self.current_index:
             self.current_index = index
+            
             for i, module in enumerate(self._user_modules):
                 if i == index:
                     self.content_page = module.content
-                    self.controls = [self.create_controls(module.content)]
+                    self.controls = [self.update_view(module.content)]
                     self.change_appbar_title(module.name)
                     self.update()
                     break
     
     def change_appbar_title(self, title: str):
         self.appbar.title = ft.Text(title) # type: ignore
-    
-    def create_rail(self) -> ft.NavigationRail:
-        return ft.NavigationRail(
-            destinations=[
-                ft.NavigationRailDestination(
-                    icon=module.icon,
-                    selected_icon=module.selected_icon,
-                    label=module.name,
-                ) for module in self._user_modules
-            ],
-            col=1.10,
-            group_alignment=0.0,
-            on_change=self.handler_on_change,
-        )
 
-    def create_controls(self, content: ft.Container) -> ft.ResponsiveRow:
+    def update_view(self, content: ft.Container) -> ft.ResponsiveRow:
         content.col = 10.90
         return ft.ResponsiveRow(
             controls=[
-                self.create_rail(),
+                self.rail,
                 content,
             ],
             col=12,
