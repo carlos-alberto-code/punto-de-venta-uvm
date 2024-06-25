@@ -9,11 +9,7 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme      = LightTheme
     
-    loging_view = LoginView(page)
-    page.views.append(loging_view)
-    page.go(loging_view.route)
-    
-
-
+    page.views.append(LoginView(page))
+    page.go('login/')
     
 ft.app(main)
