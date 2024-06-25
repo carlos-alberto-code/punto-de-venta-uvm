@@ -34,11 +34,6 @@ class AppView(ft.View):
             automatically_imply_leading=False,
             toolbar_height=70,
             actions=[
-                # ft.IconButton(
-                #     icon='dark_mode',
-                #     tooltip='Cambiar tema',
-                #     on_click=change_theme
-                # ),
                 ft.PopupMenuButton(
                     icon=ft.icons.PERSON,
                     items=[
