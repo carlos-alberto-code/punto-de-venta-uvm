@@ -1,8 +1,7 @@
 import flet as ft
-from typing import Optional, Dict, Any, Union
+from typing import Dict, Any, Union
 
-from users.user           import User
-from naveasey.naveasey    import Module
+from modules.modules      import Module
 from modules.home_content import HomeContent
 from theme.change_theme   import change_theme
 
@@ -12,90 +11,121 @@ class AppView(ft.View):
     def __init__(self, page: ft.Page, user: Union[Dict[str, Any], str]):
         super().__init__()
         self.route: str = 'app/'
-        self.user = user if isinstance(user, dict) else {}
-        if not self.user:
+        self.__user = user if isinstance(user, dict) else {}
+        if not self.__user:
             raise ValueError('No existe un usuario para mostrar la vista.')
-        self.__screen = page
-        
-        
-    
-    @property
-    def user(self):
-        return self.__user
-    
-    @user.setter
-    def user(self, user: Union[User, Dict[str, Any]]):
-        if isinstance(user, User):
-            self.__user = user
-        else:
-            self.__user = User(**user)
-        self.build_view()
-        
-    def build_view(self):
-        if self.__user:
-            if self.__user.theme_mode == ft.ThemeMode.LIGHT:
-                self.__screen.theme_mode = ft.ThemeMode.LIGHT
-                # TODO: Lógica para cambiar el tema a claro
-            if self.__user.theme_mode == ft.ThemeMode.DARK:
-                self.__screen.theme_mode = ft.ThemeMode.DARK
-                # TODO: Lógica para cambiar el tema a oscuro
-            
-            self.__set_page_config()
-            self.__appbar = self.__create_appbar()
-            self.__screen.appbar = self.__appbar
-            self.rail = self.__create_navigation_rail(self.__user.modules)
-            self.shape = self.__create_shape(rail=self.rail, home_content=HomeContent(user=self.__user.username), user=self.__user)
-            self.__screen.add(self.shape)
-            
-    def __set_page_config(self):
-        self.__screen.window.maximized = True
-        self.__screen.window.frameless = True
-        self.__screen.padding = 0
-        self.__screen.clean()
-    
-    def __create_appbar(self):
-        return ft.AppBar(
+        self._modules = Module.repo
+        self._user_modules = [
+            module for module_name, module 
+            in self._modules.items() 
+            if module.name in self.__user['modules']
+        ]
+
+        page.window.maximized = True
+        page.window.frameless = True
+        page.padding = 0
+
+        self.appbar_actions = []
+
+        self.appbar = ft.AppBar(
+            title=ft.Text('Inicio'),
             center_title=True,
+            elevation=30,
+            automatically_imply_leading=False,
+            toolbar_height=70,
             actions=[
-                ft.IconButton(icon='dark_mode', tooltip='Cambiar tema', on_click=change_theme),
+                # ft.IconButton(
+                #     icon='dark_mode',
+                #     tooltip='Cambiar tema',
+                #     on_click=change_theme
+                # ),
                 ft.PopupMenuButton(
-                    icon=ft.icons.MORE_VERT,
+                    icon=ft.icons.PERSON,
                     items=[
-                        ft.PopupMenuItem(text='Perfil de usuario', icon='person'),
-                        ft.PopupMenuItem(text='Configuración', icon='settings'),
-                        ft.PopupMenuItem(text='Cerrar sesión', icon='logout', on_click=lambda e: self.__screen.window.close()),
+                        ft.PopupMenuItem(
+                            text='Perfil de usuario',
+                            icon='person'
+                        ),
+                        ft.PopupMenuItem(
+                            text='Cambiar tema',
+                            icon='dark_mode',
+                            on_click=change_theme
+                        ),
+                        ft.PopupMenuItem(
+                            text='Configuración',
+                            icon='settings'
+                        ),
+                        ft.PopupMenuItem(
+                            text='Cerrar sesión',
+                            icon='logout',
+                            on_click=lambda e: page.window.close()
+                        ),
                     ]
-                )
+                ),
+                ft.Container(width=20),
             ]
         )
 
-    def __create_navigation_rail(self, modules: list[Module]):
-        return ft.NavigationRail(
-            col=1.20,
-            elevation=30,
-            group_alignment=-1,
-            destinations=[*modules],
-            on_change=self.handle_on_change,
+        self.rail = ft.NavigationRail(
+
         )
+        self.controls = [
+        ]
+
     
-    def __create_shape(self, rail: ft.NavigationRail, home_content: HomeContent, user: User):
-        return ft.ResponsiveRow(
-            controls=[
-                rail,
-                HomeContent(user=user.username),
-            ],
-            expand=True,
-            col=12,
-        )
+    # def build_view(self):
+            
+    #         self.__appbar = self.__create_appbar()
+    #         self.__screen.appbar = self.__appbar
+    #         self.rail = self.__create_navigation_rail(self.__user.modules)
+    #         self.shape = self.__create_shape(rail=self.rail, home_content=HomeContent(user=self.__user.username), user=self.__user)
+    #         self.__screen.add(self.shape)
+            
+        
     
-    def handle_on_change(self, event: ft.ControlEvent):
-        index = event.control.selected_index
-        if self.user:
-            modules = self.user.modules
-            for i, module in enumerate(modules):
-                if i == index:
-                    self.shape.controls[1] = module.content
-                    self.shape.update()
-                    self.__appbar.title = ft.Text(module.name)
-                    self.__appbar.update()
-                    break
+    # def __create_appbar(self):
+    #     return ft.AppBar(
+    #         center_title=True,
+    #         actions=[
+    #             ft.IconButton(icon='dark_mode', tooltip='Cambiar tema', on_click=change_theme),
+    #             ft.PopupMenuButton(
+    #                 icon=ft.icons.MORE_VERT,
+    #                 items=[
+    #                     ft.PopupMenuItem(text='Perfil de usuario', icon='person'),
+    #                     ft.PopupMenuItem(text='Configuración', icon='settings'),
+    #                     ft.PopupMenuItem(text='Cerrar sesión', icon='logout', on_click=lambda e: self.__screen.window.close()),
+    #                 ]
+    #             )
+    #         ]
+    #     )
+
+    # def __create_navigation_rail(self, modules: list[Module]):
+    #     return ft.NavigationRail(
+    #         col=1.20,
+    #         elevation=30,
+    #         group_alignment=-1,
+    #         destinations=[*modules],
+    #         on_change=self.handle_on_change,
+    #     )
+    
+    # def __create_shape(self, rail: ft.NavigationRail, home_content: HomeContent, user: Dict[str, Any]):
+    #     return ft.ResponsiveRow(
+    #         controls=[
+    #             rail,
+    #             HomeContent(user=user.username),
+    #         ],
+    #         expand=True,
+    #         col=12,
+    #     )
+    
+    # def handle_on_change(self, event: ft.ControlEvent):
+    #     index = event.control.selected_index
+    #     if self.__user:
+    #         modules = self.__user.modules
+    #         for i, module in enumerate(modules):
+    #             if i == index:
+    #                 self.shape.controls[1] = module.content
+    #                 self.shape.update()
+    #                 self.__appbar.title = ft.Text(module.name)
+    #                 self.__appbar.update()
+    #                 break
