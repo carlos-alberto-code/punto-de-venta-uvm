@@ -60,10 +60,31 @@ class AppView(ft.View):
         )
 
         self.rail = ft.NavigationRail(
+            destinations=[
+                ft.NavigationRailDestination(
+                    icon=module.icon,
+                    selected_icon=module.selected_icon,
+                    label=module.name,
+                ) for module in self._user_modules
+            ],
+            on_change=self.handler_on_change,
 
         )
         self.controls = [
         ]
+    
+    def handler_on_change(self, event: ft.ControlEvent):
+        index: int = event.control.selected_index
+        for i, module in enumerate(self._user_modules):
+            if i == index:
+                self.controls = [module.content]
+                self.change_appbar_title(module.name)
+                self.update()
+                break
+    
+    def change_appbar_title(self, title: str):
+        self.appbar.title = ft.Text(title) # type: ignore
+        
 
     
     # def build_view(self):
