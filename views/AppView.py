@@ -1,19 +1,22 @@
 import flet as ft
-from typing import Optional
+from typing import Optional, Dict, Any, Union
 
-from users.user  import User
-from naveasey.naveasey      import Module
-from modules.home_content           import HomeContent
-from theme.change_theme     import change_theme
+from users.user           import User
+from naveasey.naveasey    import Module
+from modules.home_content import HomeContent
+from theme.change_theme   import change_theme
 
 
 class AppView(ft.View):
 
-    def __init__(self, page: ft.Page):
+    def __init__(self, page: ft.Page, user: Union[Dict[str, Any], str]):
         super().__init__()
-        self.__screen = page
         self.route: str = 'app/'
-        self.__user: Optional[User] = None
+        self.user = user if isinstance(user, dict) else {}
+        if not self.user:
+            raise ValueError('No existe un usuario para mostrar la vista.')
+        self.__screen = page
+        
         
     
     @property
@@ -21,8 +24,11 @@ class AppView(ft.View):
         return self.__user
     
     @user.setter
-    def user(self, user: User):
-        self.__user = user
+    def user(self, user: Union[User, Dict[str, Any]]):
+        if isinstance(user, User):
+            self.__user = user
+        else:
+            self.__user = User(**user)
         self.build_view()
         
     def build_view(self):

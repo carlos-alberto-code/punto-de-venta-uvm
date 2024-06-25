@@ -1,5 +1,6 @@
 import flet as ft
 from users.session      import Session
+from views.AppView      import AppView
 from users.LoginForm    import LoginForm
 
 
@@ -32,11 +33,7 @@ class LoginView(ft.View):
         ]
     
     def _handler_on_login_click(self, event: ft.ControlEvent):
-        # Comprobar que haya datos usuario y contraseña
-        if self.login_form.username == '':
-            self._show_snackbar_message('Debes ingresar un nombre de usuario', event)
-        if self.login_form.password == '':
-            self._show_snackbar_message('Debes ingresar una contraseña', event)
+        self._validate_data_exist(event)
         # Comprobar que las credenciales sean correctas
         if self.login_form.username and self.login_form.password:
             session = Session(username=self.login_form.username, password=self.login_form.password)
@@ -45,9 +42,18 @@ class LoginView(ft.View):
             elif not session.password_is_correct():
                 self._show_snackbar_message('La contraseña es incorrecta.', event)
             else:
-                print(session.data)
                 page: ft.Page = event.page
+                page.views.append(AppView(page=page, user=session.data))
                 page.go('app/')
+
+    def _validate_data_exist(self, event):
+        if self.login_form.username == '':
+            self._show_snackbar_message('Debes ingresar un nombre de usuario', event)
+        if self.login_form.password == '':
+            self._show_snackbar_message('Debes ingresar una contraseña', event)
+    
+    def is_user_valid(self):
+        return
 
     def _handler_on_close_click(self, event: ft.ControlEvent): # Ready
         page: ft.Page = event.page
