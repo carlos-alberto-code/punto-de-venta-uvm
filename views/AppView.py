@@ -25,8 +25,6 @@ class AppView(ft.View):
         page.window.frameless = True
         page.padding = 0
 
-        self.appbar_actions = []
-
         self.appbar = ft.AppBar(
             title=ft.Text('Inicio'),
             center_title=True,
