@@ -28,7 +28,6 @@ class AppView(ft.View):
         self.appbar = ft.AppBar(
             title=ft.Text('Inicio'),
             center_title=True,
-            elevation=30,
             automatically_imply_leading=False,
             toolbar_height=70,
             actions=[
@@ -55,11 +54,28 @@ class AppView(ft.View):
                         ),
                     ]
                 ),
-                ft.Container(width=20),
+                ft.Container(width=15),
             ]
         )
-
-        self.rail = ft.NavigationRail(
+        self.controls = [self.create_controls(HomeContent(self.__user['username']))]
+        
+    
+    def handler_on_change(self, event: ft.ControlEvent):
+        index: int = event.control.selected_index
+        for i, module in enumerate(self._user_modules):
+            print(i, module.name)
+            if i == index:
+                self.content_page = module.content
+                self.controls = [self.create_controls(module.content)]
+                self.change_appbar_title(module.name)
+                self.update()
+                break
+    
+    def change_appbar_title(self, title: str):
+        self.appbar.title = ft.Text(title) # type: ignore
+    
+    def create_rail(self) -> ft.NavigationRail:
+        return ft.NavigationRail(
             destinations=[
                 ft.NavigationRailDestination(
                     icon=module.icon,
@@ -67,79 +83,17 @@ class AppView(ft.View):
                     label=module.name,
                 ) for module in self._user_modules
             ],
+            col=1.20,
             on_change=self.handler_on_change,
-
         )
-        self.controls = [
-        ]
-    
-    def handler_on_change(self, event: ft.ControlEvent):
-        index: int = event.control.selected_index
-        for i, module in enumerate(self._user_modules):
-            if i == index:
-                self.controls = [module.content]
-                self.change_appbar_title(module.name)
-                self.update()
-                break
-    
-    def change_appbar_title(self, title: str):
-        self.appbar.title = ft.Text(title) # type: ignore
-        
 
-    
-    # def build_view(self):
-            
-    #         self.__appbar = self.__create_appbar()
-    #         self.__screen.appbar = self.__appbar
-    #         self.rail = self.__create_navigation_rail(self.__user.modules)
-    #         self.shape = self.__create_shape(rail=self.rail, home_content=HomeContent(user=self.__user.username), user=self.__user)
-    #         self.__screen.add(self.shape)
-            
-        
-    
-    # def __create_appbar(self):
-    #     return ft.AppBar(
-    #         center_title=True,
-    #         actions=[
-    #             ft.IconButton(icon='dark_mode', tooltip='Cambiar tema', on_click=change_theme),
-    #             ft.PopupMenuButton(
-    #                 icon=ft.icons.MORE_VERT,
-    #                 items=[
-    #                     ft.PopupMenuItem(text='Perfil de usuario', icon='person'),
-    #                     ft.PopupMenuItem(text='Configuración', icon='settings'),
-    #                     ft.PopupMenuItem(text='Cerrar sesión', icon='logout', on_click=lambda e: self.__screen.window.close()),
-    #                 ]
-    #             )
-    #         ]
-    #     )
-
-    # def __create_navigation_rail(self, modules: list[Module]):
-    #     return ft.NavigationRail(
-    #         col=1.20,
-    #         elevation=30,
-    #         group_alignment=-1,
-    #         destinations=[*modules],
-    #         on_change=self.handle_on_change,
-    #     )
-    
-    # def __create_shape(self, rail: ft.NavigationRail, home_content: HomeContent, user: Dict[str, Any]):
-    #     return ft.ResponsiveRow(
-    #         controls=[
-    #             rail,
-    #             HomeContent(user=user.username),
-    #         ],
-    #         expand=True,
-    #         col=12,
-    #     )
-    
-    # def handle_on_change(self, event: ft.ControlEvent):
-    #     index = event.control.selected_index
-    #     if self.__user:
-    #         modules = self.__user.modules
-    #         for i, module in enumerate(modules):
-    #             if i == index:
-    #                 self.shape.controls[1] = module.content
-    #                 self.shape.update()
-    #                 self.__appbar.title = ft.Text(module.name)
-    #                 self.__appbar.update()
-    #                 break
+    def create_controls(self, content: ft.Container) -> ft.ResponsiveRow:
+        content.col = 10.80
+        return ft.ResponsiveRow(
+            controls=[
+                self.create_rail(),
+                content,
+            ],
+            col=12,
+            expand=True,
+        )
