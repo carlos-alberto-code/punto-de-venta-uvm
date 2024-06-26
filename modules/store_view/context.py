@@ -14,7 +14,7 @@ from modules.store_view.ProductItem import ProductItem
 from modules.store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
 
 
-from components.ProductListView import ProductListView
+from components.ProductList import ProductList
 from controllers.dto_controllers.product_dto_controller import ProductDTOController
 
 
@@ -69,7 +69,7 @@ searcher = ft.SearchBar( # Barra de búsqueda
     on_change=handle_on_searcher_change
 )
 
-product_list_view = ProductListView(
+product_list_view = ProductList(
     on_add_button_click=handle_on_add_button_click,
 )
 product_list_view.products = product_controller.get_all()

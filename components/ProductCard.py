@@ -7,8 +7,17 @@ class ProductCard(ft.Card):
     SHAPE = ft.RoundedRectangleBorder(radius=20)
     TEXT_SIZE = 13
 
-    def __init__(self, product: Product, on_button_click=None, on_card_click=None, on_long_press_card=None):
+    def __init__(
+            self,
+            product: Product,
+            button_card: ft.IconButton,
+            on_button_card_click=None,
+            on_card_click=None,
+            on_long_press_card=None
+    ):
         super().__init__()
+        self.button_card = button_card
+        self.button_card.on_click = on_button_card_click
         self.shape = self.SHAPE
         self.data: Product = product
         self.content = ft.ListTile(
@@ -27,7 +36,7 @@ class ProductCard(ft.Card):
             ),
             trailing=ft.IconButton(
                 icon=ft.icons.ADD,
-                on_click=on_button_click,
+                on_click=on_button_card_click,
                 data=product,
             ),
             toggle_inputs=True,
