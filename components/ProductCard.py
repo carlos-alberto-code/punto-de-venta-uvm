@@ -28,6 +28,7 @@ class ProductCard(ft.Card):
             trailing=ft.IconButton(
                 icon=ft.icons.ADD,
                 on_click=on_button_click,
+                data=product,
             ),
             toggle_inputs=True,
             shape=self.SHAPE,
