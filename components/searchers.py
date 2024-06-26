@@ -2,7 +2,7 @@ from time import sleep
 from typing import Optional
 import flet as ft
 
-from controllers.ControllerInterface import ControllerInterface as Controller
+from interface.ControllerInterface import ControllerInterface as Controller
 from modules.inventory_view.ProductTable import ProductTable
 
 

@@ -1,6 +1,6 @@
 import flet as ft
 from typing import Optional
-from controllers.ControllerInterface import ControllerInterface as Controller
+from interface.ControllerInterface import ControllerInterface as Controller
 
 
 class SupplierSearcher(ft.SearchBar):

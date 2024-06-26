@@ -187,3 +187,4 @@ class FloatCounters(ft.Card):
         if self.on_click is not None:
             self._minus_button.data = self.value
             self.on_click(event)
+            

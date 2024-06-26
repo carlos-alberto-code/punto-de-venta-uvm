@@ -2,7 +2,7 @@
     "carlos": {
         "username": "carlos",
         "password": "cabh",
-        "modules": ["Tienda"]
+        "modules": ["Tienda", "Productos", "Compras", "Ventas", "Clientes", "Proveedores", "Empleados"]
     },
     "jose": {
         "username": "jose",

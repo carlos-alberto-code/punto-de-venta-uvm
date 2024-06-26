@@ -8,7 +8,7 @@ from database.models import (
 )
 
 from controllers.repository import Repository, PurchaseRepository
-from controllers.ControllerInterface import ControllerInterface
+from interface.ControllerInterface import ControllerInterface
 
 
 class ProductController(ControllerInterface):

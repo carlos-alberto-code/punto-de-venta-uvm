@@ -37,7 +37,7 @@ class AppView(ft.View):
                     ),
                     ft.PopupMenuItem(
                         text='Cambiar tema',
-                        icon=ft.icons.CHANGE_CIRCLE,
+                        icon=ft.icons.DARK_MODE,
                         on_click=change_theme,
                     ),
                     ft.PopupMenuItem(
