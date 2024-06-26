@@ -1,6 +1,7 @@
 import flet as ft
 from business_classes.Product import Product
-from components.counters import IntCounter, FloatCounter
+from components.counters import IntCounter
+from components.EditableField import EditableField
 
 
 TEXT_SIZE = 13
@@ -89,27 +90,6 @@ class SellingProductCard(ProductCard):
         self.content.update()
 
 
-class EditableField(ft.TextField):
-
-    def __init__(self, prefix_text: str, value: float | int, suffix_text: str, input_filter=None, on_change=None, on_submit=None):
-        super().__init__()
-        self.text_size = TEXT_SIZE
-        self.text_align = ft.TextAlign.CENTER
-        self.prefix_text = prefix_text
-        self.suffix_text = suffix_text
-        self.value = f'{value:,.2f}'
-        self.border = ft.InputBorder.NONE
-        self.width = 200
-        if input_filter:
-            self.input_filter = ft.InputFilter(regex_string=input_filter)
-        self.on_change = on_change
-        self.on_submit = on_submit
-    
-    @property
-    def get_value(self):
-        return self.value
-
-
 class PurchaseProductCard(ProductCard):
 
     def __init__(self, product: Product, on_button_card_click=None, on_card_click=None, on_long_press_card=None):
@@ -119,8 +99,15 @@ class PurchaseProductCard(ProductCard):
             readonly=False,
             on_counter_change=self.handler_on_counter_change,
         )
-        self.editable_field = EditableField('Precio de compra: $', product.cost_price, 'MXN', on_submit=self.
-        handler_on_field_submit)
+        self.editable_field = EditableField(
+            text_size=TEXT_SIZE,
+            prefix_text='Costo de compra: $',
+            value=product.cost_price,
+            suffix_text='MXN',
+            on_submit=self.handler_on_field_submit,
+            # Permitir sólo dos números decimales
+            input_filter=r'^\d{1,6}(\.\d{0,2})?$',
+        )
         display_controls = [
             self.editable_field,
             ft.Row(
@@ -150,3 +137,4 @@ class PurchaseProductCard(ProductCard):
         total = float(field.value) * int(self.int_counter.value)
         self._subtitle.controls[-1] = ft.Text(f'Costo total: {total:,.2f} MXN', size=TEXT_SIZE)
         self.content.update()
+        
