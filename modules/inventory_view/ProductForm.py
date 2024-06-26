@@ -1,6 +1,6 @@
 import flet as ft
 
-from components.counters import IntCounter, FloatCounters
+from components.counters import IntCounter, FloatCounter
 from components.searchers import SimpleModelSearcher
 from controllers.controllers import UnitController, CategoryController, BrandController, ProductController
 
@@ -52,8 +52,8 @@ class ProductForm(ft.AlertDialog):
         self.brand_searcher.bar_hint_text = 'Selecciona una marca'
         # Contadores
         self.quantity_counter = IntCounter()
-        self.cost_counter = FloatCounters()
-        self.sell_price_counter = FloatCounters()
+        self.cost_counter = FloatCounter()
+        self.sell_price_counter = FloatCounter()
         self.reorder_level_counter = IntCounter()
         self.content = ContentShape(
             unit_field=self.unit_searcher,

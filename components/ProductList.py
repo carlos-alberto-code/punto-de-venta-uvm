@@ -6,15 +6,48 @@ from components.ProductCard     import ProductCard
 
 class ProductList(ft.ListView):
     '''
-    El propósito de esta clase es que pueda anidar ProductCard's. La ingesta de ProductCard's puede darse de muchas formas, y es por eso que sea ha diseñado de esta forma; puede provenir de una fábrica de ProductCard's, puede implementarse mediante herencia y recibir un "tipo" de ProductCard, o simplemente puede ser una lista de ProductCard's que se añaden a la lista de ProductListView de forma configurable.
+    Clase que representa una lista de productos.
 
-    Esta clase tiene métodos para añadir, remover y limpiar ProductCard's de la lista, así como también para obtener el número de ProductCard's que contiene (para el caso en donde es necesario saber el número de items que hay en la lista).
+    Esta clase permite añadir, remover y limpiar ProductCard's de la lista, así como obtener el número de ProductCard's que contiene.
 
-    Esta clase debría poder usarse para mostrar una lista de productos con un aspecto ligeramente grande, por ejemplo, en lugares donde se necesita buscar productos y poder seleccionarlos para añadirlos a una lista de compra. Pero también debería ser posible usarla para mostrar esos productos con otra presentación dentro de la lista de compra. Para ello se ha establecidgo el ProductCard como interfaz (aunque no es una interfaz).
+    Métodos disponibles:
+    - add_product_card(product_card: ProductCard): Añade un ProductCard a la lista.
+    - remove_product_card(product_card: ProductCard): Remueve un ProductCard de la lista.
+    - clear_product_cards(): Limpia la lista de ProductCard's.
+    
+    Interfaces públicas:
+    - number_of_product_cards: Propiedad de solo lectura que devuelve el número de ProductCard's en la lista.
+    - product_cards: Propiedad de solo lectura que devuelve la lista de ProductCard's en la lista.
+    - product_cards(product_cards: list[ProductCard]): Propiedad que permite establecer la lista de ProductCard's en la lista.
 
-    Se permitieron los getters y setters a nivel general para los controles para los casos en donde se deben inyectar muchos ProductCard's, por ejemplo, la muestra general de productos.
+    Ejemplo de uso adecuado:
+    ```python
+    # Crear una instancia de ProductList
+    product_list = ProductList()
+
+    # Crear una instancia de ProductCard
+    product_card = ProductCard()
+
+    # Añadir el ProductCard a la lista
+    product_list.add_product_card(product_card)
+
+    # Obtener el número de ProductCard's en la lista
+    num_cards = product_list.number_of_product_cards
+
+    # Obtener la lista de ProductCard's en la lista
+    cards = product_list.product_cards
+
+    # Establecer una nueva lista de ProductCard's en la lista
+    new_cards = [ProductCard(), ProductCard()]
+    product_list.product_cards = new_cards
+
+    # Remover un ProductCard de la lista
+    product_list.remove_product_card(product_card)
+
+    # Limpiar la lista de ProductCard's
+    product_list.clear_product_cards()
+    ```
     '''
-
     def __init__(self, product_cards: list[ProductCard] = []):
         super().__init__()
         self.controls: list[ProductCard] = product_cards

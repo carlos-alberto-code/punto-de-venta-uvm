@@ -13,7 +13,7 @@ class ProductFormCard(ft.Card):
         
         self.data: Product = product
 
-        self.counter = IntCounter(on_click=self.handle_on_counter_change)
+        self.counter = IntCounter(on_counter_change=self.handle_on_counter_change)
         self.cost_textfield = self.create_textfield(product.cost_price)
         self.cost_textfield.on_change = self.handle_on_cost_change
         # self.selling_textfield = self.create_textfield(product.selling_price)

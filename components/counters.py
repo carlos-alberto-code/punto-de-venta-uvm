@@ -11,7 +11,7 @@ class IntCounter(ft.Card):
             start_value: Optional[int] = 1,
             end_value: Optional[int] = 100,
             readonly: Optional[bool] = True,
-            on_click=None,
+            on_counter_change=None,
             # step_increment: Optional[int] = 1,
             # negative_values: Optional[bool] = False,
     ):
@@ -21,7 +21,7 @@ class IntCounter(ft.Card):
             # alignment=ft.alignment.center,
              
         )
-        self.on_click = on_click
+        self.on_click = on_counter_change
         self._start_value = start_value
         self._end_value = end_value
         # self._step_increment = step_increment
@@ -36,6 +36,7 @@ class IntCounter(ft.Card):
             text_vertical_align=ft.VerticalAlignment.START,
             input_filter=ft.NumbersOnlyInputFilter(),
             read_only=readonly,
+            on_change=on_counter_change
         )
         self._minus_button = ft.IconButton(
             icon=ft.icons.REMOVE,
@@ -59,6 +60,7 @@ class IntCounter(ft.Card):
             ],
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            height=40,
         )
     
     @property
@@ -90,7 +92,7 @@ class IntCounter(ft.Card):
             self._minus_button.data = self.value
             self.on_click(event)
 
-class FloatCounters(ft.Card):
+class FloatCounter(ft.Card):
     def __init__(
             self,
             width: Optional[int] = 150,
