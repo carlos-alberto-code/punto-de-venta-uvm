@@ -60,7 +60,7 @@ class IntCounter(ft.Card):
             ],
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
-            height=40,
+            # height=40,
         )
     
     @property

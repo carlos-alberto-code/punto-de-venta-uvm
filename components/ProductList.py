@@ -1,7 +1,7 @@
 import flet as ft
 
 from business_classes.Product   import Product
-from components.ProductCard     import ProductCard
+from components.product_cards     import ProductCard
 
 
 class ProductList(ft.ListView):

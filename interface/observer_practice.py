@@ -4,7 +4,7 @@ from purchase_view.ItemList import PurchaseList
 from business_classes.Product import Product as Product
 
 
-from interface.observer import Observer, Subject
+from interface.single_observer import SingleObserver, Subject
 
 
 class TextOne(ft.TextField, Subject):
@@ -22,10 +22,10 @@ class TextOne(ft.TextField, Subject):
         self.data = event.control.value
         self.inform_observers()
 
-    def subscribe_observer(self, observer: Observer):
+    def subscribe_observer(self, observer: SingleObserver):
         self.observers.append(observer)
 
-    def unsubscribe_observer(self, observer: Observer):
+    def unsubscribe_observer(self, observer: SingleObserver):
         self.observers.remove(observer)
 
     def inform_observers(self):
@@ -47,10 +47,10 @@ class TextTwo(ft.TextField, Subject):
         self.data = event.control.value
         self.inform_observers()
 
-    def subscribe_observer(self, observer: Observer):
+    def subscribe_observer(self, observer: SingleObserver):
         self.observers.append(observer)
 
-    def unsubscribe_observer(self, observer: Observer):
+    def unsubscribe_observer(self, observer: SingleObserver):
         self.observers.remove(observer)
 
     def inform_observers(self):
@@ -71,10 +71,10 @@ class TextThree(ft.TextField, Subject):
         self.data = event.control.value
         self.inform_observers()
 
-    def subscribe_observer(self, observer: Observer):
+    def subscribe_observer(self, observer: SingleObserver):
         self.observers.append(observer)
 
-    def unsubscribe_observer(self, observer: Observer):
+    def unsubscribe_observer(self, observer: SingleObserver):
         self.observers.remove(observer)
 
     def inform_observers(self):
@@ -82,11 +82,11 @@ class TextThree(ft.TextField, Subject):
             observer.synchronize(self)
 
 
-class TextSum(ft.Text, Observer):
+class TextSum(ft.Text, SingleObserver):
     
     def __init__(self):
         super().__init__()
-        Observer.__init__(self)
+        SingleObserver.__init__(self)
         self.subjects = []
         self.data = 0
         self.value = f'{self.data}'
