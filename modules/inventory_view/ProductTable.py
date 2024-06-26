@@ -32,6 +32,7 @@ class ProductTable(ft.DataTable):
         self.__update_table()
 
         self.__non_editable_columns = [Column.UNIT.value[0], Column.CATEGORY.value[0], Column.BRAND.value[0]]
+        self.__currently_edited_cell = None
 
         self.__product_controller = ProductController()
         
@@ -79,7 +80,8 @@ class ProductTable(ft.DataTable):
 
     def __handle_on_tap_cell(self, event: ft.ControlEvent):
         cell: ft.DataCell = event.control
-        if cell.data['column'][0] not in self.__non_editable_columns:
+        if cell.data['column'][0] not in self.__non_editable_columns and self.__currently_edited_cell is None:
+            self.__currently_edited_cell = cell
             self.__convert_to_text_field(event)
     
     def __convert_to_text_field(self, event: ft.ControlEvent):
@@ -89,6 +91,7 @@ class ProductTable(ft.DataTable):
     def __convert_to_text(self, event: ft.ControlEvent):
         self.__selected_txt_field: ft.TextField = event.control
         self.__update_cell_content(ft.Text(value=self.__selected_txt_field.value))
+        self.__currently_edited_cell = None
 
     def __update_cell_content(self, new_content):
         self.__selected_cell.content = new_content
