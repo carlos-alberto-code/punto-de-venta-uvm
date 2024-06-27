@@ -1,4 +1,5 @@
 # TODO: Implementar funciones en la base de datos para que al procesar la compra, se actualice el inventario
+# TODO: Verificar que la cantidad en el card sea mayor a cero para poder procesar la compra. Si es posible, los productos que estén en cero deberían mosstrarse pero deshabilitarse para evitar agregarlos al carrito de compra.
 # TODO: Guardar la compra en la base de datos
 # TODO: Permitir que los productos puedan ser ordenados en función de ciertas propiedades
 # TODO: Permitir que los productos puedan ser filtrados en función de ciertas propiedades
