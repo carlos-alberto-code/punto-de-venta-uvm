@@ -9,76 +9,73 @@
 
 import flet as ft
 
-from modules.store_view.ProductCard import ProductCard
-from modules.store_view.ProductItem import ProductItem
-from modules.store_view.ProductDTO import ProductDTO as Product # Data Transfer Object
-
-
-from components.ProductList import ProductList
+from business_classes.Product                           import Product
+from components.ProductList                             import ProductList
+from components.ShoppingCart                            import ShoppingCart
 from controllers.dto_controllers.product_dto_controller import ProductDTOController
+from components.product_cards                           import ProductCard, ProductCardFactory, CardType
 
 
 # HANDLERS ---------------------------------------------------------------------
 
-def handle_on_searcher_tap(event: ft.ControlEvent):
-    searcher.close_view()
-    products = product_controller.get_all()
-    product_list_view.products = products
-    product_list_view.update()
-    
-def handle_on_searcher_change(event: ft.ControlEvent):
-    results = product_controller.search(str(searcher.value))
-    product_list_view.products = results
-    product_list_view.update()
 
-def handle_on_add_button_click(event: ft.ControlEvent):
-    button: ft.IconButton = event.control
-    form_items.add(button.data)
-    product_form.content = ft.Column(
-        [create_form_item_cart(product) for product in form_items]
-    )
-    product_form.update()
-
-def create_form_item(product: Product): # Crea un item del formulario de compra
-    return ProductCard(product=product)
-
-def create_form_item_cart(product: Product): # Crea un item del formulario de compra
-    return ProductItem(product=product,on_click=remove_form_item_cart)
-
-def remove_form_item_cart(event: ft.ControlEvent):
+def handler_on_remove_button_card_click(event: ft.ControlEvent): # Al presionar en el botón de remover
     button = event.control
-    product = button.data
-    form_items.remove(product)
-    product_form.content = ft.Column(
-        [create_form_item_cart(product) for product in form_items]
+    card: ProductCard = button.data['card']
+    shopping_cart.remove_product_card(card)
+    shopping_cart.update()
+
+def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en el botón de añadir
+    button = event.control
+    product: Product = button.data['product']
+    card: ProductCard = cards_factory.create_product_card(
+        product=product,
+        card_type=CardType.SELLING,
+        on_button_card_click=handler_on_remove_button_card_click
     )
-    product_form.update()
+    shopping_cart.add_product_card(card)
+    shopping_cart.update()
+
+def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el botón de limpiar
+    shopping_cart.clear_product_list_cards()
+    shopping_cart.update()
+
+# def create_form_item(product: Product): # Crea un item del formulario de compra
+#     return ProductCard(product=product)
+
+# def create_form_item_cart(product: Product): # Crea un item del formulario de compra
+#     return ProductItem(product=product,on_click=remove_form_item_cart)
+
+# def remove_form_item_cart(event: ft.ControlEvent):
+#     button = event.control
+#     product = button.data
+#     form_items.remove(product)
+#     product_form.content = ft.Column(
+#         [create_form_item_cart(product) for product in form_items]
+#     )
+#     product_form.update()
 
 
 # CONTEXT ----------------------------------------------------------------------
-
+cards_factory = ProductCardFactory()
 product_controller = ProductDTOController()
-
-products: list[Product] # Lista de productos en la vista
-
 searcher = ft.SearchBar( # Barra de búsqueda
     bar_hint_text='Buscar producto',
     height=40,
     bar_leading=ft.Icon(ft.icons.SEARCH, size=20),
-    on_tap=handle_on_searcher_tap,
-    on_change=handle_on_searcher_change
+    # on_tap=handle_on_searcher_tap,
+    # on_change=handle_on_searcher_change
 )
-
-product_list_view = ProductList(
-    on_add_button_click=handle_on_add_button_click,
-)
-product_list_view.products = product_controller.get_all()
-
-form_items = set()
-product_form = ft.Card(
-    width=350,
-    height=800,
-    elevation=10,
+product_list_view = ProductList()
+product_list_view.product_cards = [
+    cards_factory.create_product_card(
+        product=product,
+        card_type=CardType.DISPLAY,
+        on_button_card_click=handler_on_add_button_card_click
+    ) for product in product_controller.get_all()
+]
+shopping_cart = ShoppingCart(
+    on_clear_button_click=handler_on_clear_button_click
 )
 
 # SHAPE CONTENT-----------------------------------------------------------------
@@ -88,24 +85,21 @@ StoreShape = ft.ResponsiveRow( # Capa general de la vista
         ft.Column( # Capa de búsqueda y productos
             [
                 ft.Container( # Capa de búsqueda
-                    #width=900,
                     height=50,
                     content=searcher,
                 ),
                 ft.Container( # Capa de productos
-                    # Abarca el resto de la pantalla
-                    #width=900,
-                    height=800,
                     content=product_list_view,
+                    expand=True,
                 ),
             ],
-            col=8,
+            col=7.5,
         ),
         ft.Container( # Capa de formulario
-            #width=350,
-            height=900,
-            content=product_form,
-            col=4,
+            content=shopping_cart,
+            expand=True,
+            col=4.5,
         ),
-    ]
+    ],
+    spacing=0,
 )

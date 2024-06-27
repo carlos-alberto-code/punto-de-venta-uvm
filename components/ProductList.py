@@ -48,7 +48,7 @@ class ProductList(ft.ListView):
     product_list.clear_product_cards()
     ```
     '''
-    def __init__(self, product_cards: list[ProductCard] = []):
+    def __init__(self, product_cards: list[ProductCard] = []) -> None:
         super().__init__(expand=True)
         self.controls: list[ProductCard] = product_cards
     

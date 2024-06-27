@@ -1,3 +1,5 @@
+# TODO: Desacoplar los calculos del producto en sí y dejarlo todo en los componentes.
+
 import flet as ft
 from enum import Enum
 
@@ -19,13 +21,16 @@ class ProductCard(ft.Card):
     ):
         super().__init__()
         self.shape = self.SHAPE
-        self.data: Product = product
+        self.data = {
+            'product': product,
+            'card': self,
+        }
         self._subtitle: ft.Column = ft.Column(
             controls=[ft.Container()],
             spacing=0,
         )
         self.content:ft.ListTile = ft.ListTile(
-            data=self.data,
+            data=product,
             leading=ft.Lottie(
                 src='https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',
                 animate=True,
@@ -78,17 +83,17 @@ class SellingProductCard(ProductCard):
         self.content.trailing = ft.IconButton(
             icon=ft.icons.DELETE,
             on_click=on_button_card_click,
-            data=self,
+            data=self.data,
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
-        total_selling = int(self.counter.value) * self.data.selling_price
+        total_selling = int(self.counter.value) * self.data['product'].selling_price
         self._subtitle.controls[-1] = ft.Text(f'Precio total: {total_selling:,.2f} MXN', size=TEXT_SIZE)
         self.content.update()
     
     @property
     def get_total_card(self):
-        return self.data.selling_price * int(self.counter.value)
+        return self.data['product'].selling_price * int(self.counter.value)
 
 
 class PurchaseProductCard(ProductCard):
@@ -123,7 +128,7 @@ class PurchaseProductCard(ProductCard):
         self.content.trailing = ft.IconButton(
             icon=ft.icons.DELETE,
             on_click=on_button_card_click,
-            data=self,
+            data=product,
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
