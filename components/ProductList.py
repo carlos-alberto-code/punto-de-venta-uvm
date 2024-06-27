@@ -49,7 +49,7 @@ class ProductList(ft.ListView):
     ```
     '''
     def __init__(self, product_cards: list[ProductCard] = []):
-        super().__init__()
+        super().__init__(expand=True)
         self.controls: list[ProductCard] = product_cards
     
     @property

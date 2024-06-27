@@ -16,8 +16,6 @@ class ProductCard(ft.Card):
             self,
             product: Product,
             on_button_card_click=None,
-            on_card_click=None,
-            on_long_press_card=None,
     ):
         super().__init__()
         self.shape = self.SHAPE
@@ -34,17 +32,14 @@ class ProductCard(ft.Card):
                 repeat=False,
             ),
             title=ft.Text(f'{product.name}', size=TEXT_SIZE, weight=ft.FontWeight.BOLD),
-            toggle_inputs=True,
             shape=self.SHAPE,
-            on_click=on_card_click,
-            on_long_press=on_long_press_card,
         )
 
 
 class DisplayProductCard(ProductCard):
 
-    def __init__(self, product: Product, on_button_card_click=None, on_card_click=None, on_long_press_card=None):
-        super().__init__(product, on_button_card_click, on_card_click, on_long_press_card)
+    def __init__(self, product: Product, on_button_card_click=None):
+        super().__init__(product, on_button_card_click)
         display_controls = [
             ft.Text(f'Precio de venta: {product.selling_price:,.2f} MXN', size=TEXT_SIZE),
             ft.Text(f'Existencias: {product.quantity}', size=TEXT_SIZE),
@@ -61,8 +56,8 @@ class DisplayProductCard(ProductCard):
 
 class SellingProductCard(ProductCard):
 
-    def __init__(self, product: Product, on_button_card_click=None, on_card_click=None, on_long_press_card=None):
-        super().__init__(product, on_button_card_click, on_card_click, on_long_press_card)
+    def __init__(self, product: Product, on_button_card_click=None):
+        super().__init__(product, on_button_card_click)
         self.counter = IntCounter(
             start_value=int(1),
             readonly=False,
@@ -94,8 +89,8 @@ class SellingProductCard(ProductCard):
 
 class PurchaseProductCard(ProductCard):
 
-    def __init__(self, product: Product, on_button_card_click=None, on_card_click=None, on_long_press_card=None):
-        super().__init__(product, on_button_card_click, on_card_click, on_long_press_card)
+    def __init__(self, product: Product, on_button_card_click=None):
+        super().__init__(product, on_button_card_click)
         self.int_counter = IntCounter(
             start_value=1,
             readonly=False,
@@ -107,7 +102,6 @@ class PurchaseProductCard(ProductCard):
             value=product.cost_price,
             suffix_text='MXN',
             on_submit=self.handler_on_field_submit,
-            # Permitir sólo dos números decimales
             input_filter=r'^\d{1,6}(\.\d{0,2})?$',
         )
         display_controls = [
