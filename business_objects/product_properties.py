@@ -1,6 +1,9 @@
+from typing import Optional
+
+
 class Category:
-    def __init__(self, category_id: int, name: str):
-        self.category_id = category_id
+    def __init__(self, id: int, name: str):
+        self.id = id
         self.name = name
     
     def __repr__(self):
@@ -8,17 +11,47 @@ class Category:
     
     
 class Brand:
-    def __init__(self, brand_id: int, name: str):
-        self.brand_id = brand_id
+    def __init__(self, id: int, name: str):
+        self.id = id
         self.name = name
 
     def __repr__(self):
         return f'Brand(name={self.name})'
 
 class Unit:
-    def __init__(self, unit_id: int, name: str):
-        self.unit_id = unit_id
+    def __init__(self, id: int, name: str):
+        self.id = id
         self.name = name
 
     def __repr__(self):
         return f'Unit(name={self.name})'
+
+
+class Product:
+    def __init__(
+            self,
+            id: Optional[int],
+            unit: Unit,
+            category: Category,
+            brand: Brand,
+            quantity: int,
+            cost_price: float,
+            selling_price: float,
+            reorder_level: int,
+    ) -> None:
+        self.id = id
+        self.unit = unit
+        self.category = category
+        self.brand = brand
+        self.quantity = quantity
+        self.cost_price = cost_price
+        self.selling_price = selling_price
+        self.reorder_level = reorder_level
+    
+    @property
+    def name(self):
+        return f'{self.brand.name} {self.category.name}'
+    
+    def __repr__(self):
+        return f'Product(name={self.name})'
+    

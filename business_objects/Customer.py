@@ -11,3 +11,4 @@ class Customer:
     
     def __repr__(self) -> str:
         return f"Customer({self.id}, {self.full_name}, {self.age}, {self.email})"
+    
