@@ -1,6 +1,6 @@
 import flet as ft
 
-from business_classes.Product   import Product
+from business_objects.Product   import Product
 from components.product_cards     import ProductCard
 
 

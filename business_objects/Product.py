@@ -1,4 +1,4 @@
-from business_classes.product_properties import Category, Brand, Unit
+from business_objects.product_properties import Category, Brand, Unit
 
 
 class Product:

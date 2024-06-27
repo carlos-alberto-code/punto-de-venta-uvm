@@ -5,7 +5,7 @@
 
 import flet as ft
 
-from business_classes.Product                           import Product
+from business_objects.Product                           import Product
 from components.ProductList                             import ProductList
 from components.ShoppingCart                            import ShoppingCart
 from repository.dto_controllers.product_dto_controller import ProductDTOController

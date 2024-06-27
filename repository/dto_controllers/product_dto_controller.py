@@ -1,4 +1,4 @@
-from business_classes.Product import Product
+from business_objects.Product import Product
 from repository.controllers  import ProductController
 from interface.ControllerInterface import ControllerInterface as Controller
 

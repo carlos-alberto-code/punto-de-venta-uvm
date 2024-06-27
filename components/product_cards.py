@@ -3,7 +3,7 @@
 import flet as ft
 from enum import Enum
 
-from business_classes.Product import Product
+from business_objects.Product import Product
 from components.counters      import IntCounter
 from components.EditableField import EditableField
 
