@@ -1,5 +1,5 @@
 import flet as ft
-from business_classes.Product import Product # Data Transfer Object
+from business_objects.Product import Product # Data Transfer Object
 
 
 class ProductViewCard(ft.Card):

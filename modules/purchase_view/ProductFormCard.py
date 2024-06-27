@@ -1,6 +1,6 @@
 import flet as ft
 from components.counters import IntCounter
-from business_classes.Product import Product # Data Transfer Object
+from business_objects.Product import Product # Data Transfer Object
 
 
 class ProductFormCard(ft.Card):

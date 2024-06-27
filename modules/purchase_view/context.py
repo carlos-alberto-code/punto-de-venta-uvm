@@ -4,7 +4,7 @@ import flet as ft
 from repository.controllers import ProductController
 from modules.purchase_view.ProductViewCard import ProductViewCard
 from modules.purchase_view.ItemList import PurchaseList
-from business_classes.Product import Product as Product # Data Transfer Object
+from business_objects.Product import Product as Product # Data Transfer Object
 
 
 # HANDLERS ---------------------------------------------------------------------
