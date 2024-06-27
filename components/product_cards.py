@@ -39,6 +39,10 @@ class ProductCard(ft.Card):
             title=ft.Text(f'{product.name}', size=TEXT_SIZE, weight=ft.FontWeight.BOLD),
             shape=self.SHAPE,
         )
+    
+    @property
+    def get_total_card(self) -> float | str | None:
+        pass
 
 
 class DisplayProductCard(ProductCard):
@@ -92,7 +96,7 @@ class SellingProductCard(ProductCard):
         self.content.update()
     
     @property
-    def get_total_card(self):
+    def get_total_card(self) -> float | str | None:
         return self.data['product'].selling_price * int(self.counter.value)
 
 
@@ -144,9 +148,8 @@ class PurchaseProductCard(ProductCard):
         self.content.update()
     
     @property
-    def get_total_card(self):
-        if self.editable_field.value:
-            return self.editable_field.value * int(self.int_counter.value)
+    def get_total_card(self) -> float | str | None:
+        return float(self.editable_field.get_value) * int(self.int_counter.value)
 
 
 class CardType(Enum):
