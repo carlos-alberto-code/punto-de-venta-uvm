@@ -73,16 +73,17 @@ list_view = ft.ListView( # Vista de productos
     spacing=10,
 )
 
-purchase_list = PurchaseList(title='Lista de compras')
+purchase_list = PurchaseList(title='Lista de compras purchase')
 
 
 # SHAPE CONTENT-----------------------------------------------------------------
 
 shape = ft.ResponsiveRow( # Capa general de la vista
     controls=[
-        ft.Column(
-            [purchase_list,],
-            col=4
+        ft.Container(
+            content=purchase_list,
+            expand=True,
+            col=4.5
         ),
         ft.Column( # Capa de búsqueda y productos
             [   
@@ -91,16 +92,12 @@ shape = ft.ResponsiveRow( # Capa general de la vista
                     content=searcher,
                 ),
                 ft.Container(
-                    content=ft.Column(
-                        [list_view],
-                        scroll=ft.ScrollMode.ALWAYS
-                    ),
+                    content=list_view,
+                    expand=True
                 ),
             ],
-            expand=True,
-            col=8,
-            scroll=ft.ScrollMode.ALWAYS
+            col=7.5,
         )
     ],
-    expand=2,
+    spacing=0
 )
