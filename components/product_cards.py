@@ -78,13 +78,17 @@ class SellingProductCard(ProductCard):
         self.content.trailing = ft.IconButton(
             icon=ft.icons.DELETE,
             on_click=on_button_card_click,
-            data=self.data,
+            data=self,
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
         total_selling = int(self.counter.value) * self.data.selling_price
         self._subtitle.controls[-1] = ft.Text(f'Precio total: {total_selling:,.2f} MXN', size=TEXT_SIZE)
         self.content.update()
+    
+    @property
+    def get_total_card(self):
+        return self.data.selling_price * int(self.counter.value)
 
 
 class PurchaseProductCard(ProductCard):
@@ -119,7 +123,7 @@ class PurchaseProductCard(ProductCard):
         self.content.trailing = ft.IconButton(
             icon=ft.icons.DELETE,
             on_click=on_button_card_click,
-            data=self.data,
+            data=self,
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
@@ -133,6 +137,11 @@ class PurchaseProductCard(ProductCard):
         total = float(field.value) * int(self.int_counter.value)
         self._subtitle.controls[-1] = ft.Text(f'Costo total: {total:,.2f} MXN', size=TEXT_SIZE)
         self.content.update()
+    
+    @property
+    def get_total_card(self):
+        if self.editable_field.value:
+            return self.editable_field.value * int(self.int_counter.value)
 
 
 class CardType(Enum):

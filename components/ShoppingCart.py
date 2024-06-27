@@ -30,7 +30,8 @@ class ShoppingCart(ft.Card):
         )
         self.actions = ft.Row(
             [
-                ft.ElevatedButton('Limpiar', expand=True, style=self.BUTTON_STYLE),
+                ft.ElevatedButton('Limpiar', expand=True, style=self.BUTTON_STYLE, on_click=self.handler_on_clear_click),
+                ft.ElevatedButton('Calcular', expand=True, style=self.BUTTON_STYLE, on_click=self.handler_on_calculate_click),
                 ft.ElevatedButton('Guardar', expand=True, style=self.BUTTON_STYLE),
             ],
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN
@@ -52,11 +53,22 @@ class ShoppingCart(ft.Card):
     def add_product(self, product: Product):
         card = self.card_factory.create_product_card(
             product=product,
-            card_type=CardType.SELLING
+            card_type=CardType.SELLING,
+            on_button_card_click=self.handler_on_button_card_click,
         )
         self.product_list_view.add_product_card(card)
         self.product_list_view.update()
+    
+    def handler_on_clear_click(self, event: ft.ControlEvent):
+        self.product_list_view.clear_product_cards()
+        self.product_list_view.update()
+    
+    def handler_on_button_card_click(self, event: ft.ControlEvent):
+        button = event.control
+        self.product_list_view.remove_product_card(button.data)
+        self.product_list_view.update()
 
-'''
-Este es el contexto en donde se determina el tipo de ProductCard que se visualizará en el ProductListView. Se puede usar una fábrica para construir un determinado tipo de ProductCard o se puede usar la clase ProductCard e inyectarle los controles de presentación que se requieren. 
-'''
+    def handler_on_calculate_click(self, event: ft.ControlEvent):
+        self.total_value = sum([card.get_total_card for card in self.product_list_view.product_cards]) # type: ignore
+        self.total_text.controls[0] = ft.Text(f'Total: ${self.total_value:,.2f} MXN', size=18)
+        self.total_text.update()
