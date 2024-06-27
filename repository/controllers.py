@@ -7,7 +7,7 @@ from database.models import (
     Product, Unit, Category, Brand, Supplier, Purchase
 )
 
-from controllers.repository import Repository, PurchaseRepository
+from repository.repository import Repository, PurchaseRepository
 from interface.ControllerInterface import ControllerInterface
 
 

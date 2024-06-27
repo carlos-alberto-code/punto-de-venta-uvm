@@ -5,8 +5,8 @@ from business_classes.Product import Product  # Data Transfer Object
 from modules.purchase_view.ProductFormCard import ProductFormCard
 
 from components.searchers import SimpleModelSearcher
-from controllers.controllers import SuplierController
-from controllers.controllers import PurchaseDetailController
+from repository.controllers import SuplierController
+from repository.controllers import PurchaseDetailController
 
 
 class PurchaseList(ft.Card):

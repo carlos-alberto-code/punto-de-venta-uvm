@@ -1,6 +1,6 @@
 # Script para insertar 10 proveedores en la base de datos
 from database.connection import get_db
-from controllers.controllers import SuplierController
+from repository.controllers import SuplierController
 
 # Una lista de 10 proveedores de una tienda de abarrotes en México
 suppliers = [

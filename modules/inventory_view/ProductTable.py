@@ -1,6 +1,6 @@
 import flet as ft
 from enum import Enum
-from controllers.controllers import ProductController
+from repository.controllers import ProductController
 
 
 class Column(Enum):

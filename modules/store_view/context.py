@@ -1,4 +1,3 @@
-# TODO: Evitar que se agreguen productos (cards) duplicados en la lista de compra: Esto debe estar listo antes de implementar el evento para procesar la compra
 # TODO: Implementar funciones en la base de datos para que al procesar la compra, se actualice el inventario
 # TODO: Guardar la compra en la base de datos
 # TODO: Permitir que los productos puedan ser ordenados en función de ciertas propiedades
@@ -9,7 +8,7 @@ import flet as ft
 from business_classes.Product                           import Product
 from components.ProductList                             import ProductList
 from components.ShoppingCart                            import ShoppingCart
-from controllers.dto_controllers.product_dto_controller import ProductDTOController
+from repository.dto_controllers.product_dto_controller import ProductDTOController
 from components.product_cards                           import ProductCard, ProductCardFactory, CardType
 
 

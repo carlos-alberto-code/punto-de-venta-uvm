@@ -1,5 +1,5 @@
 from business_classes.Product import Product
-from controllers.controllers  import ProductController
+from repository.controllers  import ProductController
 from interface.ControllerInterface import ControllerInterface as Controller
 
 

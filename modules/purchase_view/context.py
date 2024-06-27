@@ -1,7 +1,7 @@
 # Aquí se maneja la lógica de los eventos de los diferentes componentes de la vista de la compra
 # Además se sigue un principio que es es cada componente se modifica en su contexto.
 import flet as ft
-from controllers.controllers import ProductController
+from repository.controllers import ProductController
 from modules.purchase_view.ProductViewCard import ProductViewCard
 from modules.purchase_view.ItemList import PurchaseList
 from business_classes.Product import Product as Product # Data Transfer Object

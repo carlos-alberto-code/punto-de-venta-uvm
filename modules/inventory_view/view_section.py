@@ -1,6 +1,6 @@
 import flet as ft
 
-from controllers.controllers import ProductController
+from repository.controllers import ProductController
 
 from modules.inventory_view.ProductForm import ProductForm
 from modules.inventory_view.ProductTable import ProductTable

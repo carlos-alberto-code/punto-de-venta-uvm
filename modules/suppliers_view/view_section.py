@@ -1,6 +1,6 @@
 import flet as ft
 
-from controllers.controllers import SuplierController
+from repository.controllers import SuplierController
 
 from modules.suppliers_view.SupplierForm import SupplierForm
 from modules.suppliers_view.SupplierTable import SupplierTable

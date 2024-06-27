@@ -2,7 +2,7 @@ import flet as ft
 
 from components.counters import IntCounter, FloatCounter
 from components.searchers import SimpleModelSearcher
-from controllers.controllers import UnitController, CategoryController, BrandController, ProductController
+from repository.controllers import UnitController, CategoryController, BrandController, ProductController
 
 
 class ContentShape(ft.Column):
