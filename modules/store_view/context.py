@@ -7,6 +7,13 @@
 # - handle_on_clear_button_click: Evento de click en el botón de limpiar la lista de compra
 # - handle_on_process_button_click: Evento de click en el botón de procesar la compra
 
+# TODO: Evitar que se agreguen productos (cards) duplicados en la lista de compra: Esto debe estar listo antes de implementar el evento para procesar la compra
+# TODO: Calculo del total de la compra
+# TODO: Implementar funciones en la base de datos para que al procesar la compra, se actualice el inventario
+# TODO: Guardar la compra en la base de datos
+# TODO: Permitir que los productos puedan ser ordenados en función de ciertas propiedades
+# TODO: Permitir que los productos puedan ser filtrados en función de ciertas propiedades
+
 import flet as ft
 
 from business_classes.Product                           import Product
@@ -40,31 +47,43 @@ def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el 
     shopping_cart.clear_product_list_cards()
     shopping_cart.update()
 
-# def create_form_item(product: Product): # Crea un item del formulario de compra
-#     return ProductCard(product=product)
+def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en el botón de procesar
+    pass
 
-# def create_form_item_cart(product: Product): # Crea un item del formulario de compra
-#     return ProductItem(product=product,on_click=remove_form_item_cart)
+def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
+    searcher.close_view('')
+    product_list_view.product_cards = [
+        cards_factory.create_product_card(
+            product=product,
+            card_type=CardType.DISPLAY,
+            on_button_card_click=handler_on_add_button_card_click
+        ) for product in product_controller.get_all()
+    ]
+    product_list_view.update()
 
-# def remove_form_item_cart(event: ft.ControlEvent):
-#     button = event.control
-#     product = button.data
-#     form_items.remove(product)
-#     product_form.content = ft.Column(
-#         [create_form_item_cart(product) for product in form_items]
-#     )
-#     product_form.update()
-
+def handle_on_searcher_change(event: ft.ControlEvent): # Al cambiar el texto en la barra de búsqueda
+    search_term = searcher.value
+    results = product_controller.search(str(search_term))
+    if results:
+        product_list_view.product_cards = [
+            cards_factory.create_product_card(
+                product=product,
+                card_type=CardType.DISPLAY,
+                on_button_card_click=handler_on_add_button_card_click
+            ) for product in results
+        ]
+        product_list_view.update()
 
 # CONTEXT ----------------------------------------------------------------------
 cards_factory = ProductCardFactory()
 product_controller = ProductDTOController()
+
 searcher = ft.SearchBar( # Barra de búsqueda
     bar_hint_text='Buscar producto',
     height=40,
     bar_leading=ft.Icon(ft.icons.SEARCH, size=20),
-    # on_tap=handle_on_searcher_tap,
-    # on_change=handle_on_searcher_change
+    on_tap=handler_on_searcher_tap,
+    on_change=handle_on_searcher_change
 )
 product_list_view = ProductList()
 product_list_view.product_cards = [
