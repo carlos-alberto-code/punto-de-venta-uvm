@@ -1,6 +1,8 @@
 import flet as ft
+from enum import Enum
+
 from business_classes.Product import Product
-from components.counters import IntCounter
+from components.counters      import IntCounter
 from components.EditableField import EditableField
 
 
@@ -137,4 +139,23 @@ class PurchaseProductCard(ProductCard):
         total = float(field.value) * int(self.int_counter.value)
         self._subtitle.controls[-1] = ft.Text(f'Costo total: {total:,.2f} MXN', size=TEXT_SIZE)
         self.content.update()
-        
+
+
+class CardType(Enum):
+    DISPLAY = 'display'
+    SELLING = 'selling'
+    PURCHASE = 'purchase'
+
+
+class ProductCardFactory:
+
+    def __init__(self):
+        self._product_cards = {
+            CardType.DISPLAY:   DisplayProductCard,
+            CardType.SELLING:   SellingProductCard,
+            CardType.PURCHASE:  PurchaseProductCard,
+        }
+
+    def create_product_card(self, product: Product, card_type: CardType, **kwargs):
+        return self._product_cards[card_type](product, **kwargs)
+    
