@@ -44,6 +44,10 @@ class ProductCard(ft.Card):
     def get_total_card(self) -> float | str | None:
         pass
 
+    @property
+    def quantity(self) -> int:
+        return 0
+
 
 class DisplayProductCard(ProductCard):
 
@@ -61,6 +65,7 @@ class DisplayProductCard(ProductCard):
             on_click=on_button_card_click,
             data=self.data,
         )
+
     
 
 class SellingProductCard(ProductCard):
@@ -91,13 +96,17 @@ class SellingProductCard(ProductCard):
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
-        total_selling = int(self.counter.value) * self.data['product'].selling_price
+        total_selling = int(self.counter.value) * self.data['product'].selling_price # type: ignore
         self._subtitle.controls[-1] = ft.Text(f'Precio total: {total_selling:,.2f} MXN', size=TEXT_SIZE)
         self.content.update()
     
     @property
     def get_total_card(self) -> float | str | None:
-        return self.data['product'].selling_price * int(self.counter.value)
+        return self.data['product'].selling_price * int(self.counter.value) # type: ignore
+
+    @property
+    def quantity(self):
+        return int(self.counter.value)
 
 
 class PurchaseProductCard(ProductCard):
@@ -149,7 +158,11 @@ class PurchaseProductCard(ProductCard):
     
     @property
     def get_total_card(self) -> float | str | None:
-        return float(self.editable_field.get_value) * int(self.int_counter.value)
+        return float(self.editable_field.get_value) * int(self.int_counter.value) # type: ignore
+    
+    @property
+    def quantity(self):
+        return int(self.int_counter.value)
 
 
 class CardType(Enum):

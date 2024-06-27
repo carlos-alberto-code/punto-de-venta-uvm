@@ -60,8 +60,8 @@ def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en e
     cards = shopping_cart.product_list_view.product_cards
     products = []
     for card in cards:
-        product = card.data['product']
-        print(f'{product.quantity} {product.name} {product.selling_price} - {product.selling_price * product.quantity}')
+        product = card.data['product'] # type: ignore
+        print(f'{card.quantity} {product.name} {product.selling_price} - {card.get_total_card}')
     print(f'Número de productos: {number_of_items}')
     print(f'Total de venta: {total_selling}')
     print(f'Fecha de transacción: {date_transaction}')
