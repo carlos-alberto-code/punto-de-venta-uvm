@@ -11,6 +11,7 @@ class ShoppingCart(ft.Card):
     def __init__(
             self,
             title: str = 'Carrito de compras',
+            icon: str = 'shopping_cart',
             on_clear_button_click=None,
     ):
         super().__init__(expand=True)
@@ -21,6 +22,7 @@ class ShoppingCart(ft.Card):
         self._product_list_view  = ProductList()
 
         self.top_controls = [
+            ft.Row([ft.Icon(icon, size=30)], alignment=ft.MainAxisAlignment.CENTER),
             ft.Row([ft.Text(title, size=21)], alignment=ft.MainAxisAlignment.CENTER),
             ft.Row([ft.Text(f'{self.date}')], alignment=ft.MainAxisAlignment.CENTER),
         ]
