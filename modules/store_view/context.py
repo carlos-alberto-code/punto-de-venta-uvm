@@ -1,14 +1,4 @@
-# En el contexto del punto de venta (tienda) se manejan los siguientes eventos:
-# - handle_on_tap: Evento tap de la barra de búsqueda (si existe)
-# - handle_on_change: Evento de búsqueda en tiempo real
-# - handle_on_add_button_click: Evento de click en el botón de la tarjeta
-# - handle_on_card_button_click: Evento de click en el botón de la tarjeta
-# - handle_on_remove_button_click: Evento de click en el botón de la tarjeta (de la lista de compra)
-# - handle_on_clear_button_click: Evento de click en el botón de limpiar la lista de compra
-# - handle_on_process_button_click: Evento de click en el botón de procesar la compra
-
 # TODO: Evitar que se agreguen productos (cards) duplicados en la lista de compra: Esto debe estar listo antes de implementar el evento para procesar la compra
-# TODO: Calculo del total de la compra
 # TODO: Implementar funciones en la base de datos para que al procesar la compra, se actualice el inventario
 # TODO: Guardar la compra en la base de datos
 # TODO: Permitir que los productos puedan ser ordenados en función de ciertas propiedades
@@ -36,13 +26,15 @@ def handler_on_remove_button_card_click(event: ft.ControlEvent): # Al presionar 
 def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en el botón de añadir
     button = event.control
     product: Product = button.data['product']
-    card: ProductCard = cards_factory.create_product_card(
-        product=product,
-        card_type=CardType.SELLING,
-        on_button_card_click=handler_on_remove_button_card_click
-    )
-    shopping_cart.add_product_card(card)
-    shopping_cart.update()
+    existing_card = next((card for card in shopping_cart.product_list_view.product_cards if card.data['product'].product_id == product.product_id), None)
+    if not existing_card:
+        card: ProductCard = cards_factory.create_product_card(
+            product=product,
+            card_type=CardType.SELLING,
+            on_button_card_click=handler_on_remove_button_card_click
+        )
+        shopping_cart.add_product_card(card)
+        shopping_cart.update()
     # Ready
 
 def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el botón de limpiar
