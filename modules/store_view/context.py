@@ -56,7 +56,6 @@ def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en e
     # TODO: Usuario (opcional)
     date_transaction = shopping_cart.date
     hour_transaction = shopping_cart.time
-    # Productos
     cards = shopping_cart.product_list_view.product_cards
     products = []
     for card in cards:
