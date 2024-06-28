@@ -1,5 +1,4 @@
 # TODO: Implementar funciones en la base de datos para que al procesar la compra, se actualice el inventario
-# TODO: Verificar que la cantidad en el card sea mayor a cero para poder procesar la compra. Si es posible, los productos que estén en cero deberían mosstrarse pero deshabilitarse para evitar agregarlos al carrito de compra.
 # TODO: Guardar la compra en la base de datos
 # TODO: Permitir que los productos puedan ser ordenados en función de ciertas propiedades
 # TODO: Permitir que los productos puedan ser filtrados en función de ciertas propiedades
@@ -26,12 +25,7 @@ def handler_on_remove_button_card_click(event: ft.ControlEvent): # Al presionar 
 def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en el botón de añadir
     button = event.control
     product: Product = button.data['product']
-    existing_card = next(
-        (
-            card for card in shopping_cart.product_list_view.product_cards
-            if card.data['product'].product_id == product.product_id # type: ignore
-        ), None
-    )
+    existing_card = next((card for card in shopping_cart.product_list_view.product_cards if card.data['product'].product_id == product.product_id), None)
     if not existing_card:
         card: ProductCard = cards_factory.create_product_card(
             product=product,
@@ -39,6 +33,7 @@ def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en 
             on_button_card_click=handler_on_remove_button_card_click
         )
         shopping_cart.add_product_card(card)
+        calculate_total(event)
         shopping_cart.update()
     # Ready
 
@@ -49,22 +44,7 @@ def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el 
     # Ready
 
 def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en el botón de procesar
-    button = event.control
-    number_of_items = shopping_cart.number_of_items
-    total_selling = shopping_cart.total_selling
-    # TODO: Cliente (opcional)
-    # TODO: Usuario (opcional)
-    date_transaction = shopping_cart.date
-    hour_transaction = shopping_cart.time
-    cards = shopping_cart.product_list_view.product_cards
-    products = []
-    for card in cards:
-        product = card.data['product'] # type: ignore
-        print(f'{card.quantity} {product.name} {product.selling_price} - {card.get_total_card}')
-    print(f'Número de productos: {number_of_items}')
-    print(f'Total de venta: {total_selling}')
-    print(f'Fecha de transacción: {date_transaction}')
-    print(f'Hora de transacción: {hour_transaction}')
+    pass
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
     searcher.close_view('')
@@ -124,7 +104,6 @@ product_list_view.product_cards = [
 shopping_cart = ShoppingCart(
     on_clear_button_click=handler_on_clear_button_click,
     on_calculate_button_click=calculate_total,
-    on_process_button_click=handler_on_process_button_click,
 )
 
 # SHAPE CONTENT-----------------------------------------------------------------
