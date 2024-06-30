@@ -141,7 +141,7 @@ class PurchaseProductCard(ProductCard):
         self.content.trailing = ft.IconButton(
             icon=ft.icons.DELETE,
             on_click=on_button_card_click,
-            data=product,
+            data=self.data,
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
