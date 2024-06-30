@@ -33,7 +33,7 @@ def handle_on_add(event: ft.ControlEvent): # Evento de añadir producto a la lis
 def _wrap_productDTO_list(results: list) -> list[Product]: # Envuelve las instancias en una lista de ProductDTO
     return [
         Product(
-            product_id=product.sku,
+            product_id=product.id,
             unit_name=product.unit,
             category_name=product.category,
             brand_name=product.brand,
