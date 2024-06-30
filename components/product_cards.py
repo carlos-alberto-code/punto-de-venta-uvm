@@ -73,8 +73,9 @@ class SellingProductCard(ProductCard):
     def __init__(self, product: Product, on_button_card_click=None):
         super().__init__(product, on_button_card_click)
         self.counter = IntCounter(
-            start_value=int(1),
+            start_value=1,
             readonly=False,
+            end_value=product.quantity,
             on_counter_change=self.handler_on_counter_change,
         )
         display_controls = [
@@ -96,9 +97,11 @@ class SellingProductCard(ProductCard):
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
-        total_selling = int(self.counter.value) * self.data['product'].selling_price # type: ignore
-        self._subtitle.controls[-1] = ft.Text(f'Precio total: {total_selling:,.2f} MXN', size=TEXT_SIZE)
-        self.content.update()
+        # Si el valor del campo es mayor que el valor final, hacer el calculo sólo hasta el valor final
+        if  not int(self.counter.value) > self.data['product'].quantity: # type: ignore
+            total_selling = int(self.counter.value) * self.data['product'].selling_price # type: ignore
+            self._subtitle.controls[-1] = ft.Text(f'Precio total: {total_selling:,.2f} MXN', size=TEXT_SIZE)
+            self.content.update()
     
     @property
     def get_total_card(self) -> float | str | None:

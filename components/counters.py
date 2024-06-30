@@ -14,6 +14,7 @@ class IntCounter(ft.Card):
             on_counter_change=None,
             # step_increment: Optional[int] = 1,
             # negative_values: Optional[bool] = False,
+            
     ):
         super().__init__(
             width=width,
@@ -36,7 +37,8 @@ class IntCounter(ft.Card):
             text_vertical_align=ft.VerticalAlignment.START,
             input_filter=ft.NumbersOnlyInputFilter(),
             read_only=readonly,
-            on_change=on_counter_change
+            on_change=on_counter_change,
+            on_blur=self.handle_on_blur,
         )
         self._minus_button = ft.IconButton(
             icon=ft.icons.REMOVE,
@@ -70,6 +72,12 @@ class IntCounter(ft.Card):
     @value.setter
     def value(self, value: int):
         self._txtfld.value = str(value)
+    
+    def handle_on_blur(self, event: ft.ControlEvent):
+        # Si el valor del campo es mayor que el valor final, se establece el valor final
+        if self.value is not None and self._end_value is not None and int(self.value) > int(self._end_value):
+            self.value = int(self._end_value)
+            self._txtfld.update()
 
     def increment(self, event):
         if self.value is not None and self._end_value is not None and int(self.value) < int(self._end_value):
