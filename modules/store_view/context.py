@@ -49,6 +49,9 @@ def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el 
     # Ready
 
 def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en el botón de procesar
+    # Extraer los productos en el carrito
+    # Formatear para poder usar el ticket
+    # Guardar en la base de datos
     pass
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
