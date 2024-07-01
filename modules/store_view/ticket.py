@@ -1,14 +1,34 @@
+import os
+import tempfile
+import webbrowser
+
 from fpdf import FPDF
+
 
 class Ticket(FPDF):
     def __init__(self, negocio: str, fecha: str, hora: str, productos: list[tuple], total: int):
+        """
+        Inicializa una instancia de la clase Ticket.
+
+        Args:
+            negocio (str): El nombre del negocio.
+            fecha (str): La fecha del ticket.
+            hora (str): La hora del ticket.
+            productos (list[tuple]): Una lista de tuplas que representan los productos del ticket.
+                Cada tupla debe contener cuatro valores: cantidad, descripción del producto,
+                precio de venta unitario y total (cantidad multiplicado por el precio de venta unitario).
+            total (int): El total del ticket.
+
+        Returns:
+            None
+        """
         super().__init__(orientation='P', unit='mm', format='A5')
         self.negocio = negocio
         self.fecha = fecha
         self.hora = hora
         self.productos = productos
         self.total = total
-        self.set_margins(10, 10, 10)  # Ajustar márgenes
+        self.set_margins(10, 10, 10)
 
     def header(self):
         self.set_font("Arial", "B", 18)
@@ -27,7 +47,7 @@ class Ticket(FPDF):
         total = self.total
         self.cell(0, 10, f"Total: ${total:,.2f} MXN", 0, 0, "R")
 
-    def generar_ticket(self):
+    def build_ticket(self):
         self.add_page()
         self.set_font("Arial", "B", 10)
         # Ajustar los anchos de las celdas para acomodar la nueva columna
@@ -44,6 +64,13 @@ class Ticket(FPDF):
             self.cell(30, 7, f"${precio_total:.2f}", ln=True, align="R")
         
         self.output("ticket.pdf", "F")
+    
+    def show_in_browser(self):
+    # Guardar el PDF en un archivo temporal
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmpfile:
+            self.output(tmpfile.name, 'F')
+            # Abrir el archivo temporal en el navegador
+            webbrowser.open('file://' + os.path.realpath(tmpfile.name))
 
 # Ejemplo de uso
 productos = [
@@ -54,4 +81,5 @@ productos = [
 ]
 
 ticket = Ticket("Mi Negocio", "2022-01-01", "12:00 PM", productos, 128)
-ticket.generar_ticket()
+ticket.build_ticket()
+ticket.show_in_browser()
