@@ -1,12 +1,13 @@
 from fpdf import FPDF
 
 class Ticket(FPDF):
-    def __init__(self, negocio: str, fecha: str, hora: str, productos: list[tuple]):
+    def __init__(self, negocio: str, fecha: str, hora: str, productos: list[tuple], total: int):
         super().__init__(orientation='P', unit='mm', format='A5')
         self.negocio = negocio
         self.fecha = fecha
         self.hora = hora
         self.productos = productos
+        self.total = total
         self.set_margins(10, 10, 10)  # Ajustar márgenes
 
     def header(self):
@@ -23,40 +24,34 @@ class Ticket(FPDF):
         self.set_y(-20)  # Posiciona el pie de página 20 mm antes del final de la página
         self.cell(0, 0, "", "T", 1, 'C')  # Línea de separación antes del pie de página
         self.set_font("Arial", "I", 10)
-        total = sum(cantidad * precio for cantidad, _, precio in self.productos)
+        total = self.total
         self.cell(0, 10, f"Total: ${total:,.2f} MXN", 0, 0, "R")
 
     def generar_ticket(self):
         self.add_page()
-        self.set_font("Arial", "B", 12)
-        # lineas de separación
-        self.cell(30, 10, "Cantidad", ln=False, align="C")
-        self.cell(70, 10, "Producto", ln=False, align="L")
-        self.cell(40, 10, "Total", ln=True, align="C")
-        self.set_font("Arial", "", 10)
+        self.set_font("Arial", "B", 10)
+        # Ajustar los anchos de las celdas para acomodar la nueva columna
+        self.cell(20, 10, "Cantidad", ln=False, align="C")
+        self.cell(50, 10, "Producto", ln=False, align="L")
+        self.cell(30, 10, "Precio de venta", ln=False, align="L")
+        self.cell(30, 10, "Total", ln=True, align="R")
+        self.set_font("Arial", "", 8)
         
-        espacio_disponible = self.h - self.b_margin - self.get_y()  # Altura disponible en la página
-        altura_producto = 10  # Altura que ocupa cada producto en la lista
+        for cantidad, descripcion, precio_venta, precio_total in self.productos:
+            self.cell(20, 7, str(cantidad), ln=False, align="C")
+            self.cell(50, 7, descripcion, ln=False, align="L")
+            self.cell(30, 7, f"${precio_venta:.2f}", ln=False, align="L")
+            self.cell(30, 7, f"${precio_total:.2f}", ln=True, align="R")
         
-        for cantidad, producto, precio in self.productos:
-            if espacio_disponible >= altura_producto:
-                self.cell(30, 10, str(cantidad), ln=False, align="C")
-                self.cell(70, 10, producto, ln=False, align="L")  # Se ajusta el ancho aquí también
-                self.cell(40, 10, f"${precio * cantidad:.2f}", ln=True, align="C")  # Y aquí
-                espacio_disponible -= altura_producto
-            else:
-                # Si no hay suficiente espacio, se podría agregar una nueva página o ajustar el diseño.
-                # Por simplicidad, aquí detenemos la adición de más productos.
-                break
-    
         self.output("ticket.pdf", "F")
 
 # Ejemplo de uso
 productos = [
-    (3, "Coca-Cola 355 ML", 100),
-    (2, "Bolsa Arroz Morelos", 200),
-    (7, "Mostaza MacCormic", 300)
+    # (cantidad(int), descripcion(str), precio_de_venta(float), precio_total(float))
+    (3, "Coca-Cola 355 ML", 10, 30),
+    (2, "Bolsa Arroz Morelos", 42, 84),
+    (7, "Mostaza MacCormic", 2, 14)
 ]
 
-ticket = Ticket("Mi Negocio", "2022-01-01", "12:00 PM", productos)
+ticket = Ticket("Mi Negocio", "2022-01-01", "12:00 PM", productos, 128)
 ticket.generar_ticket()
