@@ -3,6 +3,10 @@ import tempfile
 import webbrowser
 
 from fpdf import FPDF
+import os
+import tempfile
+import webbrowser
+from fpdf import FPDF
 
 
 class Ticket(FPDF):
@@ -66,20 +70,8 @@ class Ticket(FPDF):
         self.output("ticket.pdf", "F")
     
     def show_in_browser(self):
-    # Guardar el PDF en un archivo temporal
+        # Guardar el PDF en un archivo temporal
         with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmpfile:
             self.output(tmpfile.name, 'F')
             # Abrir el archivo temporal en el navegador
             webbrowser.open('file://' + os.path.realpath(tmpfile.name))
-
-# Ejemplo de uso
-productos = [
-    # (cantidad(int), descripcion(str), precio_de_venta(float), precio_total(float))
-    (3, "Coca-Cola 355 ML", 10, 30),
-    (2, "Bolsa Arroz Morelos", 42, 84),
-    (7, "Mostaza MacCormic", 2, 14)
-]
-
-ticket = Ticket("Mi Negocio", "2022-01-01", "12:00 PM", productos, 128)
-ticket.build_ticket()
-ticket.show_in_browser()
