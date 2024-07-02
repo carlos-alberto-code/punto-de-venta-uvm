@@ -18,6 +18,8 @@ from components.ShoppingCart                            import ShoppingCart
 from repository.dto_controllers.product_dto_controller  import ProductDTOController
 from components.product_cards                           import ProductCard, ProductCardFactory, CardType
 
+from database.backup_script import backup_database
+
 
 # HANDLERS ---------------------------------------------------------------------
 
@@ -106,6 +108,7 @@ def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en e
             ) for product in product_controller.get_all()
         ]
         product_list_view.update()
+        backup_database('database/backup.sql')
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
     searcher.close_view('')
