@@ -101,9 +101,9 @@ class ProductForm(ft.AlertDialog):
                 'reorder_level': self.reorder_level_counter.value,
             }
             prod_controller.insert(
-                unit_id=self.data['unit']['id'],
-                category_id=self.data['category']['id'],
-                brand_id=self.data['brand']['id'],
+                unit_id=self.data['unit']['id'], # type: ignore
+                category_id=self.data['category']['id'], # type: ignore
+                brand_id=self.data['brand']['id'], # type: ignore
                 quantity=self.data['quantity'],
                 cost_price=self.data['cost_price'],
                 selling_price=self.data['selling_price'],
@@ -122,15 +122,17 @@ class ProductForm(ft.AlertDialog):
         )
         snackbar.open = True
         event.page.overlay.append(snackbar)
+        event.page.update()
     
     def _close_form(self, event: ft.ControlEvent):
-        event.page.dialog.open = False
+        self.open = False
         event.page.update()
     
     def show_error_snack_bar(self, event: ft.ControlEvent):
-        event.page.snack_bar = ft.SnackBar(
+        snackbar= ft.SnackBar(
             bgcolor=ft.colors.RED,
             content=ft.Text(value='Error al guardar el producto: Los campos no pueden estar vacíos'),
         )
-        event.page.snack_bar.open = True
+        snackbar.open = True
+        event.page.overlay.append(snackbar)
         event.page.update()
