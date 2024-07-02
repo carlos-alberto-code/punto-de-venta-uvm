@@ -45,11 +45,15 @@ class Ticket(FPDF):
         self.ln(5)  # Espacio después de la línea de separación
 
     def footer(self):
-        self.set_y(-20)  # Posiciona el pie de página 20 mm antes del final de la página
+        self.set_y(-40)  # Posiciona el pie de página 20 mm antes del final de la página
         self.cell(0, 0, "", "T", 1, 'C')  # Línea de separación antes del pie de página
         self.set_font("Arial", "I", 10)
         total = self.total
-        self.cell(0, 10, f"Total: ${total:,.2f} MXN", 0, 0, "R")
+        iva = self.calculate_iva()
+        subtotal = float(total) - iva
+        self.cell(0, 10, f"Subtotal: ${subtotal:,.2f} MXN", 0, 1, "R")  # Asegurarse de que el subtotal se muestre correctamente
+        self.cell(0, 10, f"IVA: ${iva:,.2f} MXN", 0, 1, "R")  # Mostrar el IVA
+        self.cell(0, 10, f"Total: ${total:,.2f} MXN", 0, 1, "R")  # Mostrar el total
 
     def build_ticket(self):
         self.add_page()
@@ -75,3 +79,7 @@ class Ticket(FPDF):
             self.output(tmpfile.name, 'F')
             # Abrir el archivo temporal en el navegador
             webbrowser.open('file://' + os.path.realpath(tmpfile.name))
+
+    def calculate_iva(self) -> float:
+        return float(self.total) * 0.16
+    

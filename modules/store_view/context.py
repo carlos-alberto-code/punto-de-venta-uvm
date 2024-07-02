@@ -106,8 +106,6 @@ def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en e
             ) for product in product_controller.get_all()
         ]
         product_list_view.update()
-    
-    
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
     searcher.close_view('')
@@ -119,7 +117,6 @@ def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra 
         ) for product in product_controller.get_all()
     ]
     product_list_view.update()
-    # Ready
 
 def handle_on_searcher_change(event: ft.ControlEvent): # Al cambiar el texto en la barra de búsqueda
     search_term = searcher.value
@@ -133,7 +130,6 @@ def handle_on_searcher_change(event: ft.ControlEvent): # Al cambiar el texto en 
             ) for product in results
         ]
         product_list_view.update()
-    # Ready
 
 def calculate_total(event: ft.ControlEvent):
     total = 0
