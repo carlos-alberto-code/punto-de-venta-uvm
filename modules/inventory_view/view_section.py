@@ -13,8 +13,8 @@ product_form = ProductForm() # Instancia del formulario de productos
 
 def open_form(event: ft.ControlEvent): # Función (evento) para abrir el formulario
     page = event.page
-    page.dialog = product_form
-    page.dialog.open = True
+    product_form.open = True
+    page.overlay.append(product_form)
     page.update()
     
 add_product_option = ft.PopupMenuItem( # Opción para agregar un producto

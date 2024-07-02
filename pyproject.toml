@@ -12,6 +12,7 @@ mysql-connector-python = "^8.4.0"
 flet = "^0.23.0"
 alembic = "^1.13.1"
 python-dotenv = "^1.0.1"
+fpdf = "^1.7.2"
 
 
 [build-system]

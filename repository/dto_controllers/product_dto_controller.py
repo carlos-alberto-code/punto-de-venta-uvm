@@ -12,7 +12,7 @@ class ProductDTOController(Controller):
         all_products = self.product_controller.get_all()
         return [
             Product(
-                product_id=product.sku,
+                product_id=product.id,
                 unit_name=product.unit,
                 category_name=product.category,
                 brand_name=product.brand,
@@ -27,7 +27,7 @@ class ProductDTOController(Controller):
         product = self.product_controller.get_by_id(id)
         if product:
             return Product(
-                product_id=product.sku,
+                product_id=product.id,
                 unit_name=product.unit,
                 category_name=product.category,
                 brand_name=product.brand,
@@ -47,7 +47,7 @@ class ProductDTOController(Controller):
         results = self.product_controller.search(search_term)
         return [
             Product(
-                product_id=product.sku,
+                product_id=product.id,
                 unit_name=product.unit,
                 category_name=product.category,
                 brand_name=product.brand,

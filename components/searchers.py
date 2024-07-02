@@ -88,11 +88,12 @@ class SimpleModelSearcher(ft.SearchBar):
         def save_instance(event: ft.ControlEvent):
             instance_name = txt_field.value
             self.controller.insert(name=instance_name)
-            event.page.bottom_sheet.open = False
+            bottom_sheet.open = False
             event.page.update()
+            # TODO: Mostrar un snackbar con un mensaje de éxito
             update_search_results()
 
-        event.page.bottom_sheet = ft.BottomSheet(
+        bottom_sheet = ft.BottomSheet(
             content=ft.Column(
                 [
                     ft.Container(height=20),
@@ -107,7 +108,8 @@ class SimpleModelSearcher(ft.SearchBar):
             ),
             
         )
-        event.page.bottom_sheet.open = True
+        bottom_sheet.open = True
+        event.page.overlay.append(bottom_sheet)
         event.page.update()
     
     def create_search_results(self, intances: list) -> list[ft.Control]: # Función útil dentro y fuera del contexto

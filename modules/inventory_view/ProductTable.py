@@ -79,8 +79,9 @@ class ProductTable(ft.DataTable):
         self.update()
 
     def __handle_on_tap_cell(self, event: ft.ControlEvent):
+        # TODO: Existe un bug en donde la actualización de celda maneja una variable que cambia de tipo de datos, en algunas veces es un ft.TextField y en otras es un ft.Text, esto ocasiona que cuando detecta el ft.TextField detecte un valor vacío y no pueda convertir a float. Pero un manejo de excepciones normal no puede lidiar con una situación como esta.
         cell: ft.DataCell = event.control
-        if cell.data['column'][0] not in self.__non_editable_columns and self.__currently_edited_cell is None:
+        if cell.data['column'][0] not in self.__non_editable_columns and self.__currently_edited_cell is None: # type: ignore
             self.__currently_edited_cell = cell
             self.__convert_to_text_field(event)
     
@@ -96,14 +97,14 @@ class ProductTable(ft.DataTable):
     def __update_cell_content(self, new_content):
         self.__selected_cell.content = new_content
         self.__selected_cell.update()
-        prod_id = self.__selected_cell.data['product'].sku
-        atrr = self.__selected_cell.data['column'][1]
+        prod_id = self.__selected_cell.data['product'].id # type: ignore
+        atrr = self.__selected_cell.data['column'][1] # type: ignore
         self.__product_controller.update(prod_id, **{atrr: float(new_content.value)})
         self.products = self.__product_controller.get_all()
         self.__show_snack_bar(self.page)
 
     def __show_snack_bar(self, page):
         snack_bar = ft.SnackBar(content=ft.Text(value='Producto actualizado correctamente'), bgcolor='blue')
-        page.snack_bar = snack_bar
         snack_bar.open = True
+        page.overlay.append(snack_bar)
         page.update()

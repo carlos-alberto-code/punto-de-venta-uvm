@@ -19,7 +19,12 @@ def handler_on_remove_button_card_click(event: ft.ControlEvent): # Al presionar 
 def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en el botón de añadir
     button = event.control
     product: Product = button.data['product']
-    existing_card = next((card for card in shopping_cart.product_list_view.product_cards if card.data['product'].product_id == product.product_id), None)
+    existing_card = next(
+        (
+            card for card in shopping_cart.product_list_view.product_cards
+            if card.data['product'].product_id == product.product_id # type: ignore
+        ), None
+    )
     if not existing_card:
         card: ProductCard = cards_factory.create_product_card(
             product=product,

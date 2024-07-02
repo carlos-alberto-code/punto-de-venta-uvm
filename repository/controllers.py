@@ -20,7 +20,7 @@ class ProductController(ControllerInterface):
     def get_all(self):
         with get_db() as db:
             return db.query(
-                Product.sku,
+                Product.id,
                 Product.quantity,
                 Product.cost_price,
                 Product.selling_price,
@@ -45,7 +45,7 @@ class ProductController(ControllerInterface):
     def search(self, search_term: str):
         with get_db() as db:
             return db.query(
-                Product.sku,
+                Product.id,
                 Product.quantity,
                 Product.cost_price,
                 Product.selling_price,

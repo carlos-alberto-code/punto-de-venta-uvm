@@ -35,7 +35,7 @@ class Product(Base):
         CheckConstraint('reorder_level >= 0'),
     )
 
-    sku: Mapped[int]               = mapped_column(Integer, primary_key=True, autoincrement=True)
+    id: Mapped[int]               = mapped_column(Integer, primary_key=True, autoincrement=True)
     unit_id: Mapped[int]           = mapped_column(Integer, ForeignKey('units.id'), nullable=False)
     category_id: Mapped[int]       = mapped_column(Integer, ForeignKey('categories.id'), nullable=False)
     brand_id: Mapped[int]          = mapped_column(Integer, ForeignKey('brands.id'), nullable=False)
@@ -82,7 +82,7 @@ class PurchaseDetail(Base):
     )
 
     purchase_id:         Mapped[int]     = mapped_column(Integer, ForeignKey('purchases.id'), primary_key=True, nullable=False)
-    product_id:          Mapped[int]     = mapped_column(Integer, ForeignKey('products.sku'), primary_key=True, nullable=False)
+    product_id:          Mapped[int]     = mapped_column(Integer, ForeignKey('products.id'), primary_key=True, nullable=False)
     quantity:            Mapped[int]     = mapped_column(Integer, nullable=False)
     unit_purchase_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
     total_unit_price:    Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
@@ -110,7 +110,7 @@ class Sale(Base):
     )
 
     id:          Mapped[int]     = mapped_column(Integer, primary_key=True, autoincrement=True)
-    customer_id: Mapped[int]     = mapped_column(Integer, ForeignKey('customers.id'), nullable=False)
+    customer_id: Mapped[int]     = mapped_column(Integer, ForeignKey('customers.id'), nullable=True)
     date:        Mapped[Date]    = mapped_column(Date, nullable=False)
     total:       Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
 
@@ -125,7 +125,7 @@ class SaleDetail(Base):
     )
 
     sale_id:          Mapped[int]     = mapped_column(Integer, ForeignKey('sales.id'), primary_key=True, nullable=False)
-    product_id:       Mapped[int]     = mapped_column(Integer, ForeignKey('products.sku'), primary_key=True, nullable=False)
+    product_id:       Mapped[int]     = mapped_column(Integer, ForeignKey('products.id'), primary_key=True, nullable=False)
     quantity:         Mapped[int]     = mapped_column(Integer, nullable=False)
     unit_sale_price:  Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
     total_unit_price: Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)

@@ -4,7 +4,14 @@
 # TODO: Permitir que los productos puedan ser filtrados en función de ciertas propiedades
 
 import flet as ft
+from typing import Any
+from datetime import datetime
 
+from business_objects.Sale import Sale
+from business_objects.SaleDetail import SaleDetail
+from repository.sales_register_management import SalesRegisterManagement
+
+from modules.store_view.ticket                          import Ticket
 from business_objects.Product                           import Product
 from components.ProductList                             import ProductList
 from components.ShoppingCart                            import ShoppingCart
@@ -20,12 +27,16 @@ def handler_on_remove_button_card_click(event: ft.ControlEvent): # Al presionar 
     card: ProductCard = button.data['card']
     shopping_cart.remove_product_card(card)
     shopping_cart.update()
-    # Ready
 
 def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en el botón de añadir
     button = event.control
     product: Product = button.data['product']
-    existing_card = next((card for card in shopping_cart.product_list_view.product_cards if card.data['product'].product_id == product.product_id), None)
+    existing_card = next(
+        (
+            card for card in shopping_cart.product_list_view.product_cards
+            if card.data['product'].product_id == product.product_id # type: ignore
+        ), None
+    )
     if not existing_card:
         card: ProductCard = cards_factory.create_product_card(
             product=product,
@@ -35,16 +46,57 @@ def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en 
         shopping_cart.add_product_card(card)
         calculate_total(event)
         shopping_cart.update()
-    # Ready
 
 def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el botón de limpiar
     shopping_cart.clear_all_cards()
     shopping_cart.update()
     calculate_total(event)
-    # Ready
 
 def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en el botón de procesar
-    pass
+
+    products: list[tuple] = []
+    total = 0
+    sale_details: list[SaleDetail] = []
+    for card in shopping_cart.product_list_view.product_cards:
+        total += card.product.selling_price * card.quantity
+        products.append(
+            (
+                card.quantity,
+                card.product.name,
+                card.product.selling_price,
+                card.product.selling_price * card.quantity
+            )
+        )
+        sale_details.append(
+            SaleDetail(
+                product=card.product,
+                quantity=card.quantity,
+            )
+        )
+    date = shopping_cart.date
+    hour = shopping_cart.time
+    
+    sale = Sale(
+        id=None,
+        customer=None,
+        datetime=datetime.now(),
+        total=total,
+        sale_details=sale_details
+    )
+
+    sales_register_management = SalesRegisterManagement()
+    sales_register_management.register_sale(sale=sale)
+    ticket = Ticket(
+        business_name='Tienda de abarrotes',
+        date=str(date),
+        hour=str(hour),
+        products=products,
+        total=total,
+    )
+    ticket.build_ticket()
+    ticket.show_in_browser()
+    
+    
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
     searcher.close_view('')
@@ -66,7 +118,7 @@ def handle_on_searcher_change(event: ft.ControlEvent): # Al cambiar el texto en 
             cards_factory.create_product_card(
                 product=product,
                 card_type=CardType.DISPLAY,
-                on_button_card_click=handler_on_add_button_card_click
+                on_button_card_click=handler_on_add_button_card_click,
             ) for product in results
         ]
         product_list_view.update()
@@ -104,6 +156,7 @@ product_list_view.product_cards = [
 shopping_cart = ShoppingCart(
     on_clear_button_click=handler_on_clear_button_click,
     on_calculate_button_click=calculate_total,
+    on_process_button_click=handler_on_process_button_click
 )
 
 # SHAPE CONTENT-----------------------------------------------------------------
