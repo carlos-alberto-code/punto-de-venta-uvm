@@ -37,9 +37,9 @@ class ShoppingCart(ft.Card):
         )
         self.actions = ft.Row(
             [
-                ft.IconButton(icon=ft.icons.DELETE,on_click=on_clear_button_click),
-                ft.IconButton(icon=ft.icons.CALCULATE,on_click=on_calculate_button_click),
-                ft.IconButton(icon=ft.icons.CHECK_CIRCLE,on_click=on_process_button_click),
+                ft.IconButton(icon=ft.icons.DELETE,on_click=on_clear_button_click,tooltip='Limpiar Carrito'),
+                ft.IconButton(icon=ft.icons.CALCULATE,on_click=on_calculate_button_click,tooltip='Calcular Total'),
+                ft.IconButton(icon=ft.icons.CHECK_CIRCLE,on_click=on_process_button_click,tooltip='Comprar'),
 
                 #ft.ElevatedButton('Limpiar', expand=True, style=self.BUTTON_STYLE, on_click=on_clear_button_click),
                 #ft.ElevatedButton('Calcular', expand=True, style=self.BUTTON_STYLE, on_click=on_calculate_button_click),
