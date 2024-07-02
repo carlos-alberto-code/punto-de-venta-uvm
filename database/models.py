@@ -110,7 +110,7 @@ class Sale(Base):
     )
 
     id:          Mapped[int]     = mapped_column(Integer, primary_key=True, autoincrement=True)
-    customer_id: Mapped[int]     = mapped_column(Integer, ForeignKey('customers.id'), nullable=False)
+    customer_id: Mapped[int]     = mapped_column(Integer, ForeignKey('customers.id'), nullable=True)
     date:        Mapped[Date]    = mapped_column(Date, nullable=False)
     total:       Mapped[DECIMAL] = mapped_column(DECIMAL(10, 2), nullable=False)
 
