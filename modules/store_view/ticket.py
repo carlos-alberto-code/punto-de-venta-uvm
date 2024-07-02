@@ -10,7 +10,7 @@ from fpdf import FPDF
 
 
 class Ticket(FPDF):
-    def __init__(self, negocio: str, fecha: str, hora: str, productos: list[tuple], total: int):
+    def __init__(self, business_name: str, date: str, hour: str, products: list[tuple], total: float):
         """
         Inicializa una instancia de la clase Ticket.
 
@@ -27,10 +27,10 @@ class Ticket(FPDF):
             None
         """
         super().__init__(orientation='P', unit='mm', format='A5')
-        self.negocio = negocio
-        self.fecha = fecha
-        self.hora = hora
-        self.productos = productos
+        self.negocio = business_name
+        self.fecha = date
+        self.hora = hour
+        self.productos = products
         self.total = total
         self.set_margins(10, 10, 10)
 

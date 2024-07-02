@@ -6,6 +6,7 @@
 import flet as ft
 from typing import Any
 
+from modules.store_view.ticket                          import Ticket
 from business_objects.Product                           import Product
 from components.ProductList                             import ProductList
 from components.ShoppingCart                            import ShoppingCart
@@ -50,14 +51,31 @@ def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el 
     # Ready
 
 def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en el botón de procesar
-    products: list[dict[str, Any]] = []
+
+    products: list[tuple] = []
+    total = 0
     for card in shopping_cart.product_list_view.product_cards:
+        total += card.product.selling_price * card.quantity
         products.append(
-            {
-                'product': card.product,
-                'quantity': card.quantity,
-            }
+            (
+                card.quantity,
+                card.product.name,
+                card.product.selling_price,
+                card.product.selling_price * card.quantity
+            )
         )
+    date = shopping_cart.date
+    hour = shopping_cart.time
+    ticket = Ticket(
+        business_name='Tienda de abarrotes',
+        date=str(date),
+        hour=str(hour),
+        products=products,
+        total=total,
+    )
+    ticket.build_ticket()
+    ticket.show_in_browser()
+    
     
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
