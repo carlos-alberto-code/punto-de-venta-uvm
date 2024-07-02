@@ -19,7 +19,7 @@ class Product:
         self.category_name = category_name
         self.brand_name = brand_name
         self.quantity = quantity 
-        self.cost_price = cost_price
+        self._cost_price = cost_price
         self.selling_price = selling_price
         self.reorder_level = reorder_level
     
@@ -28,8 +28,12 @@ class Product:
         return f'{self.brand_name} {self.unit_name}'
     
     @property
+    def cost_price(self) -> float:
+        return self._cost_price
+    
+    @property
     def total_cost(self) -> float:
-        return round(self.quantity * self.cost_price, 2)
+        return round(self.quantity * self._cost_price, 2)
     
     @property
     def total_selling(self) -> float:

@@ -126,23 +126,23 @@ class PurchaseProductCard(ProductCard):
             readonly=False,
             on_counter_change=self.handler_on_counter_change,
         )
-        self.editable_field = EditableField(
+        self._editable_field = EditableField(
             text_size=TEXT_SIZE,
             prefix_text='Costo de compra: $',
-            value=product.cost_price,
+            value=product._cost_price,
             suffix_text='MXN',
             on_submit=self.handler_on_field_submit,
             input_filter=r'^\d{1,6}(\.\d{0,2})?$',
         )
         display_controls = [
-            self.editable_field,
+            self._editable_field,
             ft.Row(
                 [
                     ft.Text('Cantidad: ', size=TEXT_SIZE),
                     self.int_counter,
                 ]
             ),
-            ft.Text(f'Costo total: {product.cost_price * int(self.int_counter.value):,.2f} MXN', size=TEXT_SIZE),
+            ft.Text(f'Costo total: {product._cost_price * int(self.int_counter.value):,.2f} MXN', size=TEXT_SIZE),
         ]
         self._subtitle.controls += display_controls
         self.content.subtitle = self._subtitle
@@ -153,8 +153,8 @@ class PurchaseProductCard(ProductCard):
         )
     
     def handler_on_counter_change(self, event: ft.ControlEvent):
-        if self.editable_field.get_value:
-            total_purchase = float(self.editable_field.get_value) * int(self.int_counter.value)
+        if self._editable_field.get_value:
+            total_purchase = float(self._editable_field.get_value) * int(self.int_counter.value)
             self._subtitle.controls[-1] = ft.Text(f'Costo total: {total_purchase:,.2f} MXN', size=TEXT_SIZE)
             self.content.update()
 
@@ -164,9 +164,19 @@ class PurchaseProductCard(ProductCard):
         self._subtitle.controls[-1] = ft.Text(f'Costo total: {total:,.2f} MXN', size=TEXT_SIZE)
         self.content.update()
     
+    
+    @property
+    def editable_field(self) -> EditableField:
+        return self._editable_field
+    
+    @property
+    def cost_price(self) -> float | None:
+        if self.editable_field.get_value:
+            return float(self.editable_field.get_value)
+    
     @property
     def get_total_card(self) -> float | str | None:
-        return float(self.editable_field.get_value) * int(self.int_counter.value) # type: ignore
+        return float(self._editable_field.get_value) * int(self.int_counter.value) # type: ignore
     
     @property
     def quantity(self):

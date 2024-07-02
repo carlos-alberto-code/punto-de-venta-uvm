@@ -52,7 +52,7 @@ class PurchaseList(ft.Card):
                 {
                     'product_id': product.product_id,
                     'quantity': product.quantity,
-                    'unit_purchase_price': product.cost_price,
+                    'unit_purchase_price': product._cost_price,
                     'total_unit_price': product.total_cost,
 
                 } for product in self.product_set

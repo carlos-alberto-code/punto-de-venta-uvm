@@ -1,12 +1,18 @@
 # Aquí se maneja la lógica de los eventos de los diferentes componentes de la vista de la compra
 # Además se sigue un principio que es es cada componente se modifica en su contexto.
+from datetime import datetime
+from typing import List
 import flet as ft
 
+from business_objects.Purchase import Purchase
 from business_objects.Product                           import Product
+from business_objects.PurchaseDetail import PurchaseDetail
 from components.ProductList                             import ProductList
 from components.ShoppingCart                            import ShoppingCart
+from database.backup_script import backup_database
 from repository.dto_controllers.product_dto_controller  import ProductDTOController
 from components.product_cards                           import ProductCard, ProductCardFactory, CardType
+from repository.purchase_register_management import PurchaseRegisterManagement
 
 # HANDLERS ---------------------------------------------------------------------
 def handler_on_remove_button_card_click(event: ft.ControlEvent): # Al presionar en el botón de remover
@@ -34,7 +40,6 @@ def handler_on_add_button_card_click(event: ft.ControlEvent): # Al presionar en 
         shopping_cart.add_product_card(card)
         calculate_total(event)
         shopping_cart.update()
-    # Ready
 
 def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el botón de limpiar
     shopping_cart.clear_all_cards()
@@ -42,8 +47,42 @@ def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el 
     calculate_total(event)
     # Ready
 
-def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en el botón de procesar
-    pass
+def handler_on_process_button_click(event: ft.ControlEvent):
+    purchase_details: List[PurchaseDetail] = []
+    total = 0
+    for card in shopping_cart.product_list_view.product_cards:
+        total += card.product.cost_price * card.quantity
+        purchase_details.append(
+            PurchaseDetail(
+                product=card.product,
+                quantity=card.quantity,
+                unit_purchase_price=card.cost_price * card.quantity # type: ignore
+            )
+        )
+    
+    purchase = Purchase(
+        id=None,
+        supplier=None,
+        datetime=datetime.now(),
+        total=total,
+        purchase_details=purchase_details,
+    )
+    purchase_register_management = PurchaseRegisterManagement()
+    purchase_register_management.register_purchase(purchase=purchase)
+
+    # Assuming similar post-purchase cleanup and UI update logic as in sales context
+    shopping_cart.clear_all_cards()
+    shopping_cart.update()
+    product_list_view.product_cards = [
+        cards_factory.create_product_card(
+            product=product,
+            card_type=CardType.DISPLAY,
+            on_button_card_click=handler_on_add_button_card_click
+        ) for product in product_controller.get_all()
+    ]
+    product_list_view.update()
+    # Assuming a similar backup mechanism is desired
+    backup_database('database/backup.sql')
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
     searcher.close_view('')
@@ -102,6 +141,7 @@ product_list_view.product_cards = [
 shopping_cart = ShoppingCart(
     on_clear_button_click=handler_on_clear_button_click,
     on_calculate_button_click=calculate_total,
+    on_process_button_click=handler_on_process_button_click
 )
 
 # SHAPE CONTENT-----------------------------------------------------------------

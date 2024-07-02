@@ -14,10 +14,10 @@ class ProductFormCard(ft.Card):
         self.data: Product = product
 
         self.counter = IntCounter(on_counter_change=self.handle_on_counter_change)
-        self.cost_textfield = self.create_textfield(product.cost_price)
+        self.cost_textfield = self.create_textfield(product._cost_price)
         self.cost_textfield.on_change = self.handle_on_cost_change
         # self.selling_textfield = self.create_textfield(product.selling_price)
-        self.total_text = self.create_text(product.cost_price)
+        self.total_text = self.create_text(product._cost_price)
 
         self.content = self.create_content()
 
@@ -69,11 +69,11 @@ class ProductFormCard(ft.Card):
         self.data = self.product
     
     def handle_on_cost_change(self, event: ft.ControlEvent):
-        self.product.cost_price = float(self.cost_textfield.value or 0)
+        self.product._cost_price = float(self.cost_textfield.value or 0)
         self.total_text.value = str(self.product.total_cost)
         self.total_text.update()
         # Cambiar el precio de venta si el costo cambia (20% de ganancia)
-        self.product.selling_price = round(self.product.cost_price * 1.2, 2)
+        self.product.selling_price = round(self.product._cost_price * 1.2, 2)
         # self.selling_textfield.value = str(self.product.selling_price)
         # self.selling_textfield.update()
         self.data = self.product

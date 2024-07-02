@@ -4,7 +4,7 @@ from database.models import (
     Purchase as PurchaseModel,
     PurchaseDetail as PurchaseDetailModel
 )
-from business_objects.Purchase import Pruchase as PurchaseBusinessObject
+from business_objects.Purchase import Purchase as PurchaseBusinessObject
 
 class PurchaseRegisterManagement:
     def __init__(self) -> None:
@@ -31,8 +31,8 @@ class PurchaseRegisterManagement:
                     purchase_id=purchase_id,
                     product_id=detail.product.product_id,
                     quantity=detail.quantity,
-                    unit_purchase_price=detail.unit_price,
-                    total_unit_price=detail.total_price,
+                    unit_purchase_price=detail.unit_purchase_price,
+                    total_unit_price=detail.total_purchase_price,
                 )
             )
         self._session.commit()
