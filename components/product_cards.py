@@ -21,6 +21,7 @@ class ProductCard(ft.Card):
     ):
         super().__init__()
         self.shape = self.SHAPE
+        self._product = product
         self.data = {
             'product': product,
             'card': self,
@@ -39,6 +40,10 @@ class ProductCard(ft.Card):
             title=ft.Text(f'{product.name}', size=TEXT_SIZE, weight=ft.FontWeight.BOLD),
             shape=self.SHAPE,
         )
+    
+    @property
+    def product(self) -> Product:
+        return self._product
     
     @property
     def get_total_card(self) -> float | str | None:
