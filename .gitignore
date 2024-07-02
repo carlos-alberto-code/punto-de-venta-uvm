@@ -68,3 +68,5 @@ __pycache__/
 
 # Necesito ignorar todos los archivos en la raíz del proyecto que empiecen con "test"
 /test*
+
+# Necesito excluir todo lo que termine con .sql
