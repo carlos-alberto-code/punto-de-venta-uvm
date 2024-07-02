@@ -2,11 +2,11 @@
     "carlos": {
         "username": "carlos",
         "password": "cabh",
-        "modules": ["Tienda", "Productos", "Compras", "Ventas", "Clientes", "Proveedores", "Empleados"]
+        "modules": ["Tienda", "Productos"]
     },
     "jose": {
         "username": "jose",
         "password": "yei",
-        "modules": ["Productos", "Compras", "Ventas", "Clientes", "Proveedores", "Empleados"]
+        "modules": ["Productos", "Compras", "Ventas", "Proveedores"]
     }
 }
