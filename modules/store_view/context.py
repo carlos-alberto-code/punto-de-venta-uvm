@@ -4,6 +4,7 @@
 # TODO: Permitir que los productos puedan ser filtrados en función de ciertas propiedades
 
 import flet as ft
+from typing import Any
 
 from business_objects.Product                           import Product
 from components.ProductList                             import ProductList
@@ -49,10 +50,15 @@ def handler_on_clear_button_click(event: ft.ControlEvent): # Al presionar en el 
     # Ready
 
 def handler_on_process_button_click(event: ft.ControlEvent): # Al presionar en el botón de procesar
-    # Extraer los productos en el carrito
-    # Formatear para poder usar el ticket
-    # Guardar en la base de datos
-    pass
+    products: list[dict[str, Any]] = []
+    for card in shopping_cart.product_list_view.product_cards:
+        products.append(
+            {
+                'product': card.product,
+                'quantity': card.quantity,
+            }
+        )
+    
 
 def handler_on_searcher_tap(event: ft.ControlEvent): # Al presionar en la barra de búsqueda
     searcher.close_view('')
@@ -74,7 +80,7 @@ def handle_on_searcher_change(event: ft.ControlEvent): # Al cambiar el texto en 
             cards_factory.create_product_card(
                 product=product,
                 card_type=CardType.DISPLAY,
-                on_button_card_click=handler_on_add_button_card_click
+                on_button_card_click=handler_on_add_button_card_click,
             ) for product in results
         ]
         product_list_view.update()
@@ -112,6 +118,7 @@ product_list_view.product_cards = [
 shopping_cart = ShoppingCart(
     on_clear_button_click=handler_on_clear_button_click,
     on_calculate_button_click=calculate_total,
+    on_process_button_click=handler_on_process_button_click
 )
 
 # SHAPE CONTENT-----------------------------------------------------------------
