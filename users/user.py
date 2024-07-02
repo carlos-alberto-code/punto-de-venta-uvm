@@ -13,15 +13,15 @@ class User:
     def __init__(self, username: str, password: str):
         self.username = username
         self.password = password
-        self.__session: Session = Session(username=username)
-        self.__role: str = self.__session.data['role']
-        self.__module_names: list[str] = self.__session.data['modules']
+        self.__session: Session = Session(username=username, password=password)
+        self.__role: str = self.__session.data['role'] # type: ignore
+        self.__module_names: list[str] = self.__session.data['modules'] # type: ignore
         self.__modules: list[Module] = [
             module for module_name, module 
             in Rail.repo.items() 
             if module_name in self.__module_names
         ]
-        self.__theme_mode: str = self.__session.data['theme_mode']
+        self.__theme_mode: str = self.__session.data['theme_mode'] # type: ignore
         User.users[username] = self
     
     @property
