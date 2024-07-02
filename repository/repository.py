@@ -9,7 +9,7 @@ from database.models import PurchaseDetail
 class Repository:
     # TODO: Establecer comprobaciones y manejo de errores
     
-    def __init__(self, model: DeclarativeMeta, session: Session) -> None:
+    def __init__(self, model, session: Session) -> None:
         self.model = model
         self.db = session    
 
@@ -57,15 +57,15 @@ class Repository:
         """
         Update the fields of an instance in the repository.
         Executes necessary validations through decorators to ensure data integrity.
-    
+
         Args:
             id (int): The ID of the instance to update.
             **kwargs: The field names and their corresponding new values.
-    
+
         Returns:
             None
         """
-        instance = self.db.query(self.model).get(id)
+        instance = self.db.get(self.model, id)
         if instance is not None:
             for key, value in kwargs.items():
                 if hasattr(instance, key):

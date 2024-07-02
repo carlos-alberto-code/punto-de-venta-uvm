@@ -43,7 +43,6 @@ if exist_data():
             # Crear e insertar 100 productos
             for i in range(100):
                 producto = Product(
-                    sku=i+1,
                     # Una unidad aleatoria
                     unit_id=random.choice(units_ids),
                     # Una categoría aleatoria
@@ -69,7 +68,7 @@ if exist_data():
                 # Insertar productos adicionales hasta llegar a 100
                 for i in range(existing_products + 1, 101):
                     producto = Product(
-                        sku=i,
+                        id=i,
                         # Una unidad aleatoria
                         unit_id=random.choice(units_ids),
                         # Una categoría aleatoria
