@@ -50,4 +50,3 @@ class SalesRegisterManagement:
                 }
             )
         self._session.commit()
-
